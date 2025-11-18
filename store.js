@@ -1,6 +1,5 @@
 /* CONFIGURACIÓN */
-const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec"; // ← reemplazar
-
+const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec";
 
 const ICONOS = {
   "Armaduras": "fa-solid fa-shield",
@@ -13,17 +12,11 @@ const ICONOS = {
   "General": "fa-solid fa-gear"
 };
 
-
 document.addEventListener("DOMContentLoaded", async () => {
   if (!document.getElementById("tienda")) return;
 
-  // Obtener productos desde Google Sheets
   const productos = await fetch(API_URL).then(r => r.json());
 
-  // Construir categorías (se mantienen por si las necesitas en el futuro)
-  const categorias = [...new Set(productos.map(p => p.Categoría))];
-
-  // Generar listado SIN separar por secciones: cada producto muestra su categoría e ícono
   let html = "";
   productos.forEach(p => {
     const precioExp = p.PrecioEXP || 0;
@@ -40,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         </div>
 
-        <desc>${p.Descripción || ''}</desc>
+        <small>${p.Descripción || ''}</small>
 
         <p-price>
           ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
@@ -59,12 +52,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("tienda").innerHTML = html;
 
   /* ==========================
-      CARRITO DE COMPRAS
+      CARRITO
      ========================== */
-
   let carrito = [];
 
-  // Agregar al carrito con contador
   document.querySelectorAll(".btn-add").forEach(btn => {
     btn.onclick = () => {
       const nombre = btn.dataset.nombre;
@@ -73,16 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       let item = carrito.find(i => i.nombre === nombre);
 
-      if (item) {
-        item.cantidad++;
-      } else {
-        carrito.push({
-          nombre,
-          exp,
-          yen,
-          cantidad: 1
-        });
-      }
+      if (item) item.cantidad++;
+      else carrito.push({ nombre, exp, yen, cantidad: 1 });
 
       renderCarrito();
     };
@@ -100,42 +83,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalEXP = carrito.reduce((s, p) => s + (p.exp * p.cantidad), 0);
     const totalYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
 
-    let html = carrito
-      .map((p, index) => {
-        let linea = `• ${p.nombre} x${p.cantidad} – `;
+    let html = carrito.map((p, index) => {
+      let costo = [];
+      if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
+      if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
 
-        let costo = [];
-        if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
-        if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
+      // Use \n inside join so the resulting string is safe
+      const costoStr = costo.join(" + ");
 
-        linea += costo.join(" + ");
+      return `• ${p.nombre} x${p.cantidad} – ${costoStr} ` +
+             `<button class="btn-remove" data-index="${index}" style="margin-left:8px;"><i class="fa-solid fa-circle-xmark"></i></button>`;
+    }).join("<br>");
 
-        // Botón eliminar
-        linea += ` <button class="btn-remove" data-index="${index}" style="margin-left:8px;"><i class="fa-solid fa-circle-xmark"></i></button>`;
+    caja.innerHTML = html + `<br><br><b>Total EXP:</b> ${totalEXP}<br><b>Total ¥:</b> ${totalYEN}`;
 
-        return linea;
-      })
-      .join("<br>");
-
-    html += `<br><br><b>Total EXP:</b> ${totalEXP}`;
-    html += `<br><b>Total ¥:</b> ${totalYEN}`;
-
-    caja.innerHTML = html;
-
-    // Activar botones de eliminar
     caja.querySelectorAll(".btn-remove").forEach(btn => {
       btn.onclick = () => {
-        const index = Number(btn.dataset.index);
-        carrito.splice(index, 1);
+        carrito.splice(Number(btn.dataset.index), 1);
         renderCarrito();
       };
     });
   }
 
   /* ==========================
-      FINALIZAR COMPRA
+      PUBLICAR COMPRA
      ========================== */
-
   document.getElementById("btn-finalizar").onclick = () => {
     if (carrito.length === 0) {
       alert("El carrito está vacío.");
@@ -146,18 +118,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
 
     const lines = carrito.map(p => {
-      let linea = `• ${p.nombre} x${p.cantidad} – `;
       let costo = [];
       if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
       if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
-      return linea + costo.join(' + ');
-    });
+      return `• ${p.nombre} x${p.cantidad} – ${costo.join(' + ')}`;
+    }).join("\n");
 
-    const texto = `[b]Compra realizada:[/b]\n\n${lines.join('\n')}\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
+    const texto = `[b]Compra realizada:[/b]\n\n${lines}\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
 
     const textarea = document.getElementById("mensaje-post");
     if (textarea) textarea.value = texto;
+
     const form = document.getElementById("form-post");
-    if (form) form.submit();
+    if (!form) {
+      alert('No se encontró el formulario de posteo (form-post). El mensaje fue copiado al portapapeles.');
+      // copiar al portapapeles como fallback
+      try { navigator.clipboard.writeText(texto); } catch(e){}
+      return;
+    }
+
+    // Mostrar loading si existe
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "block";
+
+    // Enviar post automáticamente sin abrir vista previa
+    const send = document.createElement("input");
+    send.type = "hidden";
+    send.name = "post";
+    send.value = "Enviar";
+    form.appendChild(send);
+
+    form.submit();
   };
 });
