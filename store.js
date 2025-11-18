@@ -20,46 +20,41 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Obtener productos desde Google Sheets
   const productos = await fetch(API_URL).then(r => r.json());
 
-  // Construir categorías
+  // Construir categorías (se mantienen por si las necesitas en el futuro)
   const categorias = [...new Set(productos.map(p => p.Categoría))];
 
+  // Generar listado SIN separar por secciones: cada producto muestra su categoría e ícono
   let html = "";
-categorias.forEach(cat => {
-  html += `<h2>${cat}</h2><div class="product-list">`;
+  productos.forEach(p => {
+    const precioExp = p.PrecioEXP || 0;
+    const precioYen = p.PrecioYenes || 0;
+    const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
 
-  productos
-    .filter(p => p.Categoría === cat)
-    .forEach(p => {
-      const precioExp = p.PrecioEXP || 0;
-      const precioYen = p.PrecioYenes || 0;
-
-      // Usar icono según categoría, o uno genérico si no existe
-      const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
-
-      html += `
+    html += `
       <div class="product">
-        <p-title>${p.Nombre}</p-title>
-        <small>${p.Descripción}</small>
-        
+        <div class="product-header">
+          <i class="${icono} fa-2x producto-icon" aria-hidden="true"></i>
+          <div class="product-title">
+            <p-title>${p.Nombre}</p-title>
+            <div class="product-category">${p.Categoría}</div>
+          </div>
+        </div>
+
+        <small>${p.Descripción || ''}</small>
+
         <p-price>
           ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
-          ${precioYen > 0 ? `Precio eb ¥: ${precioYen}<br>` : ""}
+          ${precioYen > 0 ? `Precio en ¥: ${precioYen}<br>` : ""}
         </p-price>
 
-        <i class="${icono} fa-3x producto-icon"></i>
-
-        <button class="btn-add"
+        <button class="btn-add" 
                 data-nombre="${p.Nombre}"
                 data-exp="${precioExp}"
                 data-yen="${precioYen}">
           Agregar al carrito
         </button>
       </div>`;
-    });
-
-  html += "</div>";
-});
-
+  });
 
   document.getElementById("tienda").innerHTML = html;
 
@@ -94,8 +89,11 @@ categorias.forEach(cat => {
   });
 
   function renderCarrito() {
+    const caja = document.getElementById("carrito");
+    if (!caja) return;
+
     if (carrito.length === 0) {
-      document.getElementById("carrito").innerHTML = "<i>Carrito vacío</i>";
+      caja.innerHTML = "<i>Carrito vacío</i>";
       return;
     }
 
@@ -122,11 +120,10 @@ categorias.forEach(cat => {
     html += `<br><br><b>Total EXP:</b> ${totalEXP}`;
     html += `<br><b>Total ¥:</b> ${totalYEN}`;
 
-    const box = document.getElementById("carrito");
-    box.innerHTML = html;
+    caja.innerHTML = html;
 
     // Activar botones de eliminar
-    box.querySelectorAll(".btn-remove").forEach(btn => {
+    caja.querySelectorAll(".btn-remove").forEach(btn => {
       btn.onclick = () => {
         const index = Number(btn.dataset.index);
         carrito.splice(index, 1);
@@ -148,20 +145,19 @@ categorias.forEach(cat => {
     const totalEXP = carrito.reduce((s, p) => s + (p.exp * p.cantidad), 0);
     const totalYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
 
-    const texto =
-      `[b]Compra realizada:[/b]\n\n` +
-      carrito
-        .map(p => {
-          let linea = `• ${p.nombre} x${p.cantidad} – `;
-          let costo = [];
-          if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
-          if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
-          return linea + costo.join(" + ");
-        })
-        .join("\n") +
-      `\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
+    const lines = carrito.map(p => {
+      let linea = `• ${p.nombre} x${p.cantidad} – `;
+      let costo = [];
+      if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
+      if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
+      return linea + costo.join(' + ');
+    });
 
-    document.getElementById("mensaje-post").value = texto;
-    document.getElementById("form-post").submit();
+    const texto = `[b]Compra realizada:[/b]\n\n${lines.join('\n')}\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
+
+    const textarea = document.getElementById("mensaje-post");
+    if (textarea) textarea.value = texto;
+    const form = document.getElementById("form-post");
+    if (form) form.submit();
   };
 });
