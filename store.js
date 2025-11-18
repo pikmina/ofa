@@ -1,5 +1,5 @@
 /* CONFIGURACIÓN */
-const API_URL = "https://script.google.com/macros/s/AKfycby2eRhCGKI5LakEIHlxkUDjSIOrd86nsx2XlX2GwlNAuXPdumBtAhIAtKKKYshYMfVY_g/exec"; // ← reemplazar
+const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec"; // ← reemplazar
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!document.getElementById("tienda")) return;
