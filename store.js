@@ -1,6 +1,19 @@
 /* CONFIGURACIÓN */
 const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec"; // ← reemplazar
 
+
+const ICONOS = {
+  "Armaduras": "fa-solid fa-shield",
+  "Armas": "fa-solid fa-gun",
+  "Habilidades": "fa-solid fa-hand-fist",
+  "Técnicas": "fa-solid fa-burst",
+  "Rasgos": "fa-solid fa-person-burst",
+  "Debilidades": "fa-solid fa-person-falling-burst",
+  "Accesorios": "fa-solid fa-screwdriver-wrench",
+  "General": "fa-solid fa-gear"
+};
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   if (!document.getElementById("tienda")) return;
 
@@ -11,36 +24,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   const categorias = [...new Set(productos.map(p => p.Categoría))];
 
   let html = "";
-  categorias.forEach(cat => {
-    html += `<h2>${cat}</h2><div class="product-list">`;
-    productos
-      .filter(p => p.Categoría === cat)
-      .forEach(p => {
-        const precioExp = p.PrecioEXP || 0;
-        const precioYen = p.PrecioYenes || 0;
+categorias.forEach(cat => {
+  html += `<h2>${cat}</h2><div class="product-list">`;
 
-        html += `
-        <div class="product">
-          <p-title>${p.Nombre}</p-title>
-          <small>${p.Descripción}</small>
-          
-          <p-price>
-            ${precioExp > 0 ? `Coste en EXP: ${precioExp}<br>` : ""}
-            ${precioYen > 0 ? `Coste en ¥: ${precioYen}<br>` : ""}
-          </p-price>
+  productos
+    .filter(p => p.Categoría === cat)
+    .forEach(p => {
+      const precioExp = p.PrecioEXP || 0;
+      const precioYen = p.PrecioYenes || 0;
 
-          ${p.Imagen ? `<img src="${p.Imagen}" class="producto-img">` : ""}
+      // Usar icono según categoría, o uno genérico si no existe
+      const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
 
-          <button class="btn-add"
-            data-nombre="${p.Nombre}"
-            data-exp="${precioExp}"
-            data-yen="${precioYen}">
-            Agregar al carrito
-          </button>
-        </div>`;
-      });
-    html += "</div>";
-  });
+      html += `
+      <div class="product">
+        <p-title>${p.Nombre}</p-title>
+        <small>${p.Descripción}</small>
+        
+        <p-price>
+          ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
+          ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
+        </p-price>
+
+        <i class="${icono} fa-3x producto-icon"></i>
+
+        <button class="btn-add"
+                data-nombre="${p.Nombre}"
+                data-exp="${precioExp}"
+                data-yen="${precioYen}">
+          Agregar al carrito
+        </button>
+      </div>`;
+    });
+
+  html += "</div>";
+});
+
 
   document.getElementById("tienda").innerHTML = html;
 
