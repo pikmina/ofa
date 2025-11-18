@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         html += `
         <div class="product">
-          <p-title>${p.Nombre}</p-title><br>
-          <small>${p.Descripción}</small><br>
+          <p-title>${p.Nombre}</p-title>
+          <small>${p.Descripción}</small>
           
           <p-price>
           ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
@@ -70,13 +70,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     let html = carrito
       .map(p => {
         let linea = `• ${p.nombre} – `;
-        if (p.exp > 0) linea += `${p.exp} EXP `;
+        if (p.exp > 0) linea += `${p.exp} EXP`;
         if (p.yen > 0) linea += `${p.yen} ¥`;
         return linea;
       })
       .join("<br>");
 
-    html += `<br><br><b>Total EXP:</b> ${totalEXP}`;
+    html += `<br><b>Total EXP:</b> ${totalEXP}`;
     html += `<br><b>Total ¥:</b> ${totalYEN}`;
 
     document.getElementById("carrito").innerHTML = html;

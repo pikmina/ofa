@@ -11,6 +11,8 @@
     width: 200px;
     border: 1px solid lightgray;
     padding: 10px;
+    background: #f8f8f8;
+    border-radius: 5px;
 }
 
 button.btn-add {
@@ -36,9 +38,28 @@ p-price {
 
 div#tienda-container {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    align-content: flex-start;
+    align-content: space-around;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+}
+
+div#carrito-container {
+    width: 300px;
+    background: #f8f8f8;
+    margin-right: 20px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+button#btn-finalizar {
+    background: #3793ff;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 5px;
 }
