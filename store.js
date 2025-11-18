@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           <small>${p.Descripción}</small>
           
           <p-price>
-            ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
-            ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
+            ${precioExp > 0 ? `Coste en EXP: ${precioExp}<br>` : ""}
+            ${precioYen > 0 ? `Coste en ¥: ${precioYen}<br>` : ""}
           </p-price>
 
           ${p.Imagen ? `<img src="${p.Imagen}" class="producto-img">` : ""}

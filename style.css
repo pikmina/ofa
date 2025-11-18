@@ -13,6 +13,7 @@
     padding: 10px;
     background: #f8f8f8;
     border-radius: 5px;
+    margin: 5px 10px;
 }
 
 button.btn-add {
@@ -30,10 +31,10 @@ p-title {
 }
 
 p-price {
-    background: yellow;
     padding: 4px;
     border-radius: 3px;
     margin: 4px;
+    display: block;
 }
 
 div#tienda-container {
@@ -62,4 +63,11 @@ button#btn-finalizar {
     border-radius: 5px;
     font-weight: bold;
     margin-top: 5px;
+}
+
+button.btn-remove {
+    border-radius: 100%;
+    float: right;
+    color: red;
+    font-weight: bold;
 }
