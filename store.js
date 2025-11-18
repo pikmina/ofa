@@ -14,7 +14,8 @@ const ICONOS = {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Asegurarnos de que la zona exista
-  if (!document.getElementById("tienda")) return;
+  const tiendaEl = document.getElementById("tienda");
+  if (!tiendaEl) return;
 
   // Mostrar loading mientras carga Google Sheets (si existe un elemento #loader)
   const loader = document.getElementById("loader");
@@ -23,11 +24,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Obtener productos desde Google Sheets
   let productos = [];
   try {
-    productos = await fetch(API_URL).then(r => r.json());
+    const res = await fetch(API_URL);
+    productos = await res.json();
   } catch (e) {
     console.error('Error cargando productos:', e);
     if (loader) loader.style.display = "none";
-    document.getElementById('tienda').innerHTML = '<div class="error">Error cargando la tienda.</div>';
+    tiendaEl.innerHTML = '<div class="error">Error cargando la tienda.</div>';
     return;
   }
 
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>`;
   });
 
-  document.getElementById("tienda").innerHTML = html;
+  tiendaEl.innerHTML = html;
 
   // Ocultar loading después de cargar
   if (loader) loader.style.display = "none";
@@ -76,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let carrito = [];
 
   // Delegación: los botones pueden agregarse dinámicamente
-  document.getElementById('tienda').addEventListener('click', (e) => {
+  tiendaEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.btn-add');
     if (!btn) return;
     const nombre = btn.dataset.nombre;
@@ -130,9 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  /* ==========================
-      PUBLICAR COMPRA (llenar formulario)
-     ========================== */
+  /* ========================== FINALIZAR COMPRA ========================== */
   const btnFinalizar = document.getElementById("btn-finalizar");
   if (btnFinalizar) {
     btnFinalizar.onclick = () => {
@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const totalEXP = carrito.reduce((s, p) => s + (p.exp * p.cantidad), 0);
       const totalYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
 
+      // Construir líneas del resumen
       const lines = carrito.map(p => {
         const costo = [];
         if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
@@ -151,6 +152,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `• ${p.nombre} x${p.cantidad} – ${costo.join(' + ')}`;
       }).join('\n');
 
+      // Texto final en BBCode
       const texto = `[b]Compra realizada:[/b]\n\n${lines}\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
 
       const textarea = document.getElementById("mensaje-post");
