@@ -13,18 +13,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   let html = "";
   categorias.forEach(cat => {
     html += `<h2>${cat}</h2><div class="product-list">`;
-    productos.filter(p => p.Categoría === cat).forEach(p => {
-      html += `
+    productos
+      .filter(p => p.Categoría === cat)
+      .forEach(p => {
+        const precioExp = p.PrecioEXP || 0;
+        const precioYen = p.PrecioYenes || 0;
+
+        html += `
         <div class="product">
-          <p-title>${p.Nombre}</p-title> <p-price> $${p.Precio} </p-price>
-          <small>${p.Descripción}</small>
+          <p-title>${p.Nombre}</p-title><br>
+          <small>${p.Descripción}</small><br>
+          
+          <p-price>
+          ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
+          ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
+          </p-price>
+
           ${p.Imagen ? `<img src="${p.Imagen}" class="producto-img">` : ""}
-         
-          <button class="btn-add" data-nombre="${p.Nombre}" data-precio="${p.Precio}">
+          
+          <button class="btn-add" 
+                  data-nombre="${p.Nombre}" 
+                  data-exp="${precioExp}" 
+                  data-yen="${precioYen}">
             Agregar al carrito
           </button>
         </div>`;
-    });
+      });
     html += "</div>";
   });
 
@@ -37,18 +51,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     btn.onclick = () => {
       carrito.push({
         nombre: btn.dataset.nombre,
-        precio: Number(btn.dataset.precio)
+        exp: Number(btn.dataset.exp),
+        yen: Number(btn.dataset.yen)
       });
       renderCarrito();
     };
   });
 
   function renderCarrito() {
-    const total = carrito.reduce((s, p) => s + p.precio, 0);
+    const totalEXP = carrito.reduce((s, p) => s + p.exp, 0);
+    const totalYEN = carrito.reduce((s, p) => s + p.yen, 0);
 
-    const html = carrito.length
-      ? carrito.map(p => `${p.nombre} – $${p.precio}`).join("<br>") + `<br><b>Total: $${total}</b>`
-      : "<i>Carrito vacío</i>";
+    if (carrito.length === 0) {
+      document.getElementById("carrito").innerHTML = "<i>Carrito vacío</i>";
+      return;
+    }
+
+    let html = carrito
+      .map(p => {
+        let linea = `• ${p.nombre} – `;
+        if (p.exp > 0) linea += `${p.exp} EXP `;
+        if (p.yen > 0) linea += `${p.yen} ¥`;
+        return linea;
+      })
+      .join("<br>");
+
+    html += `<br><br><b>Total EXP:</b> ${totalEXP}`;
+    html += `<br><b>Total ¥:</b> ${totalYEN}`;
 
     document.getElementById("carrito").innerHTML = html;
   }
@@ -60,11 +89,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const total = carrito.reduce((s, p) => s + p.precio, 0);
+    const totalEXP = carrito.reduce((s, p) => s + p.exp, 0);
+    const totalYEN = carrito.reduce((s, p) => s + p.yen, 0);
 
-    const texto = `[b]Compra realizada:[/b]\n\n`
-      + carrito.map(p => `• ${p.nombre} – $${p.precio}`).join("\n")
-      + `\n\nTotal: $${total}`;
+    const texto =
+      `[b]Compra realizada:[/b]\n\n` +
+      carrito
+        .map(p => {
+          let linea = `• ${p.nombre} – `;
+          if (p.exp > 0) linea += `${p.exp} EXP `;
+          if (p.yen > 0) linea += `${p.yen} ¥`;
+          return linea;
+        })
+        .join("\n") +
+      `\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
 
     document.getElementById("mensaje-post").value = texto;
     document.getElementById("form-post").submit();
