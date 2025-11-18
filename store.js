@@ -12,17 +12,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let html = "";
   categorias.forEach(cat => {
-    html += `<h2>${cat}</h2><ul>`;
+    html += `<h2>${cat}</h2><div class=""product-list>`;
     productos.filter(p => p.Categoría === cat).forEach(p => {
       html += `
-        <li class="producto">
-          <b>${p.Nombre}</b> – $${p.Precio}<br>
+        <div class="product">
+          <p-title>${p.Nombre}</p-title> <p-price> $${p.Precio} </p-price><br>
           <small>${p.Descripción}</small><br>
           ${p.Imagen ? `<img src="${p.Imagen}" class="producto-img">` : ""}
           <button class="btn-add" data-nombre="${p.Nombre}" data-precio="${p.Precio}">
             Agregar al carrito
           </button>
-        </li>`;
+        </div>`;
     });
     html += "</ul>";
   });
