@@ -42,8 +42,8 @@ categorias.forEach(cat => {
         <small>${p.Descripción}</small>
         
         <p-price>
-          ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
-          ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
+          ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
+          ${precioYen > 0 ? `Precio eb ¥: ${precioYen}<br>` : ""}
         </p-price>
 
         <i class="${icono} fa-3x producto-icon"></i>
