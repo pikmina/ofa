@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      // No enviamos automáticamente; el formulario ya está rellenado para que el usuario revise y envíe.
+      form.submit(); // Enviar automáticamente como antes
     };
   }
 
