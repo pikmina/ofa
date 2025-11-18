@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         </div>
 
-        <small>${p.Descripción || ''}</small>
+        <desc>${p.Descripción || ''}</desc>
 
         <p-price>
           ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         linea += costo.join(" + ");
 
         // Botón eliminar
-        linea += ` <button class="btn-remove" data-index="${index}" style="margin-left:8px;">✖</button>`;
+        linea += ` <button class="btn-remove" data-index="${index}" style="margin-left:8px;"><i class="fa-solid fa-circle-xmark"></i></button>`;
 
         return linea;
       })
