@@ -83,28 +83,122 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Finalizar compra: postea al foro
-  document.getElementById("btn-finalizar").onclick = () => {
-    if (carrito.length === 0) {
-      alert("El carrito está vacío.");
-      return;
-    }
+document.getElementById("btn-finalizar").onclick = async () => {
+  if (carrito.length === 0) {
+    alert("El carrito está vacío.");
+    return;
+  }
 
-    const totalEXP = carrito.reduce((s, p) => s + p.exp, 0);
-    const totalYEN = carrito.reduce((s, p) => s + p.yen, 0);
+  const totalEXP = carrito.reduce((s, p) => s + p.exp, 0);
+  const totalYEN = carrito.reduce((s, p) => s + p.yen, 0);
 
-    const texto =
-      `[b]Compra realizada:[/b]\n\n` +
-      carrito
-        .map(p => {
-          let linea = `• ${p.nombre} – `;
-          if (p.exp > 0) linea += `${p.exp} EXP `;
-          if (p.yen > 0) linea += `${p.yen} ¥`;
-          return linea;
-        })
-        .join("\n") +
-      `\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
+  /* ========== 1. Obtener saldo del usuario ========== */
+  const saldoEXP = await getExperiencia();
+  const saldoYEN = await getYenes();
 
-    document.getElementById("mensaje-post").value = texto;
-    document.getElementById("form-post").submit();
-  };
+  /* ========== 2. Verificar si alcanza ========== */
+  if (saldoEXP < totalEXP) {
+    alert(`No tienes suficiente EXP.\nNecesitas: ${totalEXP}\nTienes: ${saldoEXP}`);
+    return;
+  }
+
+  if (saldoYEN < totalYEN) {
+    alert(`No tienes suficientes Yenes.\nNecesitas: ${totalYEN}\nTienes: ${saldoYEN}`);
+    return;
+  }
+
+  /* ========== 3. Descontar monedas ========== */
+  await setExperiencia(saldoEXP - totalEXP);
+  await setYenes(saldoYEN - totalYEN);
+
+  /* ========== 4. Crear mensaje final ========== */
+  const texto =
+    `[b]Compra realizada:[/b]\n\n` +
+    carrito
+      .map(p => {
+        let linea = `• ${p.nombre} – `;
+        if (p.exp > 0) linea += `${p.exp} EXP `;
+        if (p.yen > 0) linea += `${p.yen} ¥`;
+        return linea;
+      })
+      .join("\n") +
+    `\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
+
+  document.getElementById("mensaje-post").value = texto;
+  document.getElementById("form-post").submit();
+};
+
+
+  /* ============================================
+   FUNCIONES PARA LEER Y EDITAR PUNTOS EN FOROACTIVO
+   ============================================ */
+
+/* Leer valor actual de un campo de puntos (por field_id) */
+async function getPuntos(fieldId) {
+  const url = `/profile?mode=editprofile&page_profil=${fieldId}`;
+
+  const html = await fetch(url, {
+    method: "GET",
+    credentials: "include"
+  }).then(r => r.text());
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  const input = doc.querySelector("input[name='field_"+fieldId+"']");
+  if (!input) return null;
+
+  return Number(input.value || 0);
+}
+
+
+/* Descontar puntos y guardarlos */
+async function setPuntos(fieldId, nuevoValor) {
+  const url = `/profile?mode=editprofile&page_profil=${fieldId}`;
+
+  const html = await fetch(url, {
+    method: "GET",
+    credentials: "include"
+  }).then(r => r.text());
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  const form = doc.querySelector("form[name='formulaire']");
+  if (!form) {
+    alert("No se pudo acceder al formulario del perfil.");
+    return false;
+  }
+
+  const formData = new FormData(form);
+  formData.set("field_" + fieldId, nuevoValor);
+
+  // submit real
+  const res = await fetch(url, {
+    method: "POST",
+    body: formData,
+    credentials: "include"
+  });
+
+  return res.ok;
+}
+
+
+/* Funciones directas para tus monedas */
+async function getYenes() {
+  return await getPuntos(13);
+}
+
+async function getExperiencia() {
+  return await getPuntos(1);
+}
+
+async function setYenes(valor) {
+  return await setPuntos(13, valor);
+}
+
+async function setExperiencia(valor) {
+  return await setPuntos(1, valor);
+}
+
 });
