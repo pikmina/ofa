@@ -138,4 +138,11 @@ div#filtro-categorias {
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+select#select-categoria {
+    min-width: 300px;
 }

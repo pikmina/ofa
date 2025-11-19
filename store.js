@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         html += `
       <div class="product">
         <div class="product-header">
-         <div class="product-category" style="color:${color}"> <i class="${icono} fa-2x producto-icon" style="color:${color}" aria-hidden="true"></i> ${p.Categoría || 'General'}</div>
+         <div class="product-category" style="color:${color}"> <i class="${icono} producto-icon" style="color:${color}" aria-hidden="true"></i> ${p.Categoría || 'General'}</div>
          
           <div class="product-title">
             <p-title>${p.Nombre}</p-title>
