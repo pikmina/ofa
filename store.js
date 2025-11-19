@@ -125,9 +125,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       return `
         <div class="carrito-item">
-          <span class="carrito-line">• ${p.nombre} x${p.cantidad} – ${costoStr}</span>
+          <span class="carrito-line">• ${p.nombre} x${p.cantidad} – ${costoStr}
           <button class="btn-remove" data-index="${index}" aria-label="Eliminar" title="Eliminar">✖</button>
-        </div>`;
+        </div></span>`;
     }).join('');
 
     inner += `<div class="carrito-totales"><b>Total EXP:</b> ${totalEXP}<br><b>Total ¥:</b> ${totalYEN}</div>`;
