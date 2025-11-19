@@ -12,6 +12,18 @@ const ICONOS = {
   "General": "fa-solid fa-gear"
 };
 
+// Colores por categoría
+const COLORES = {
+  "Armaduras": "#4A90E2",
+  "Armas": "#D0021B",
+  "Habilidades": "#7ED321",
+  "Técnicas": "#BD10E0",
+  "Rasgos": "#F5A623",
+  "Debilidades": "#9013FE",
+  "Accesorios": "#50E3C2",
+  "General": "#9B9B9B"
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
   // Asegurarnos de que la zona exista
   const tiendaEl = document.getElementById("tienda");
@@ -40,14 +52,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const precioExp = p.PrecioEXP || 0;
     const precioYen = p.PrecioYenes || 0;
     const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
+    const color = COLORES[p.Categoría] || "#666";
 
     html += `
       <div class="product">
         <div class="product-header">
-          <i class="${icono} fa-2x producto-icon" aria-hidden="true"></i>
+          <i class="${icono} fa-2x producto-icon" style="color:${color}" aria-hidden="true"></i>
           <div class="product-title">
             <p-title>${p.Nombre}</p-title>
-            <div class="product-category">${p.Categoría || 'General'}</div>
+            <div class="product-category" style="color:${color}">${p.Categoría || 'General'}</div>
           </div>
         </div>
 

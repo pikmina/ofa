@@ -22,6 +22,7 @@ button.btn-add {
     border-radius: 5px;
     font-weight: bold;
     margin: auto;
+    width: 100%;
 }
 
 p-title {
