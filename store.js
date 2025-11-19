@@ -45,25 +45,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  // === FILTRO POR CATEGORÍA ===
+  const categorias = [...new Set(productos.map(p => p.Categoría))];
+
+  // Insertar select antes de la tienda
+  const filtroHTML = `
+    <div id="filtro-categorias" style="margin-bottom:15px;">
+      <label><b>Filtrar por categoría:</b></label><br>
+      <select id="select-categoria">
+        <option value="">Todas</option>
+        ${categorias.map(c => `<option value="${c}">${c}</option>`).join('')}
+      </select>
+    </div>`;
+  tiendaEl.insertAdjacentHTML('beforebegin', filtroHTML);
+
   // Generar listado de productos (sin separar por categoría)
-  let html = "";
+  function renderProductos(filtro = "") {
+    let html = "";
 
-  productos.forEach(p => {
-    const precioExp = p.PrecioEXP || 0;
-    const precioYen = p.PrecioYenes || 0;
-    const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
-    const color = COLORES[p.Categoría] || "#666";
+    productos
+      .filter(p => !filtro || p.Categoría === filtro)
+      .forEach(p => {
+        const precioExp = p.PrecioEXP || 0;
+        const precioYen = p.PrecioYenes || 0;
+        const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
+        const color = COLORES[p.Categoría] || "#666";
 
-    html += `
+        html += `
       <div class="product">
         <div class="product-header">
-         <div class="product-category" style="color:${color}"> <i class="${icono} producto-icon" style="color:${color}" aria-hidden="true"></i> ${p.Categoría || 'General'}</div>
+          <i class="${icono} fa-2x producto-icon" style="color:${color}" aria-hidden="true"></i>
           <div class="product-title">
             <p-title>${p.Nombre}</p-title>
+            <div class="product-category" style="color:${color}">${p.Categoría || 'General'}</div>
           </div>
         </div>
 
-        <desc>${p.Descripción || ''}</desc>
+        <small>${p.Descripción || ''}</small>
 
         <p-price>
           ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
@@ -77,9 +95,19 @@ document.addEventListener("DOMContentLoaded", async () => {
           Agregar al carrito
         </button>
       </div>`;
-  });
+      });
 
-  tiendaEl.innerHTML = html;
+    tiendaEl.innerHTML = html;
+  }
+
+  // Render inicial
+  renderProductos();
+
+  // Listener del filtro
+  const selectCat = document.getElementById("select-categoria");
+  if (selectCat) {
+    selectCat.onchange = () => renderProductos(selectCat.value);
+  }
 
   // Ocultar loading después de cargar
   if (loader) loader.style.display = "none";
