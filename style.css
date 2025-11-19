@@ -87,3 +87,14 @@ button.btn-remove {
     border-bottom: 1px solid lightgray;
     margin: 5px 2px;
 }
+
+.product-category {
+    width: fit-content;
+    padding: 2px 5px;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0 auto 5px;
+    border: 1px solid;
+    font-size: 12px;
+    font-weight: bold;
+}
