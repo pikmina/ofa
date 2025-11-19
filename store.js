@@ -57,14 +57,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     html += `
       <div class="product">
         <div class="product-header">
-          <i class="${icono} fa-2x producto-icon" style="color:${color}" aria-hidden="true"></i>
+         <div class="product-category" style="color:${color}"> <i class="${icono} producto-icon" style="color:${color}" aria-hidden="true"></i> ${p.Categoría || 'General'}</div>
           <div class="product-title">
             <p-title>${p.Nombre}</p-title>
-            <div class="product-category" style="color:${color}">${p.Categoría || 'General'}</div>
           </div>
         </div>
 
-        <small>${p.Descripción || ''}</small>
+        <desc>${p.Descripción || ''}</desc>
 
         <p-price>
           ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
