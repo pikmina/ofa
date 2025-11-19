@@ -63,16 +63,16 @@ div#tienda-container {
 }
 
 div#carrito-container {
-    width: 300px;
+    width: 350px;
     background: #f8f8f8;
     margin-right: 20px;
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 5px;
-    position: absolute;
+    position: fixed;
     left: 0;
-    top: 360px;
-    height: 100vh;
+    bottom: 0;
+    min-height: 300px;
 }
 
 div#tienda {
