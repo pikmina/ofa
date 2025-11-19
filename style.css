@@ -114,5 +114,10 @@ button.btn-remove {
     margin-top: 20px;
     text-align: right;
     padding: 7px 10px;
-    border-top: 1px solid lightgray;
+}
+
+span.carrito-line {
+    padding: 5px;
+    display: block;
+    border-bottom: 1px dotted #e0e0e0;
 }
