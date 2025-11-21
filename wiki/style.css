@@ -1,0 +1,41 @@
+:root {
+  --bd-bg: rgba(255,255,255,0.02);
+  --bd-panel-bg: rgba(255,255,255,0.03);
+  --bd-border: rgba(255,255,255,0.06);
+  --bd-text: #808080;
+  --bd-muted: rgba(255,255,255,0.6);
+  --bd-accent: #808080;
+  --bd-width-sidebar: 300px;
+}
+.bd-root { display:flex; gap:18px; align-items:flex-start; margin:6px 4px; font-family: Arial, sans-serif; color:var(--bd-text); }
+.bd-sidebar { width:var(--bd-width-sidebar); background:var(--bd-panel-bg); border:1px solid var(--bd-border); padding:10px; border-radius:6px; box-sizing:border-box; }
+.bd-main { flex:1; min-width:300px; background:var(--bd-bg); padding:12px; border-radius:6px; border:1px solid var(--bd-border); }
+.bd-search input { width:100%; padding:8px; border-radius:4px; border:1px solid var(--bd-border); background:transparent; color:var(--bd-text); }
+.bd-search input::placeholder { color:var(--bd-muted); }
+.bd-cat { margin-bottom:6px; }
+.bd-cat-row { display:flex; gap:8px; align-items:center; }
+.bd-toggle { background:transparent; border:none; color:var(--bd-accent); cursor:pointer; font-weight:bold; width:20px; }
+.bd-cat-name { cursor:default; }
+.bd-children { padding-left:18px; margin-top:6px; }
+.bd-article-line { padding:4px 6px; border-radius:4px; }
+.bd-article-line a { color:var(--bd-text); text-decoration:none; }
+.bd-article-line a:hover { text-decoration:underline; }
+.bd-list .bd-list-item { padding:10px; border-bottom:1px dashed var(--bd-border); }
+.bd-list .bd-list-item h3 { margin:0; font-size:1rem; }
+.bd-article { margin-top:8px; }
+.bd-article-header h1 { margin:0 0 6px 0; font-size:1.4rem; color:var(--bd-accent); }
+.bd-meta { color:var(--bd-muted); margin-bottom:8px; }
+.bd-article-body { line-height:1.6; color:var(--bd-text); background:transparent; }
+.bd-toc { margin-top:14px; padding:10px; border-top:1px dashed var(--bd-border); }
+.bd-toc-inner ul { list-style:none; padding-left:0; margin:0; }
+.bd-toc-inner li { margin:6px 0; }
+.bd-toc-inner .bd-toc-h3 { padding-left:10px; }
+.bd-toc-inner .bd-toc-h4 { padding-left:18px; }
+.bd-toc-inner a { color:var(--bd-accent); text-decoration:none; }
+.bd-loading { color:var(--bd-muted); }
+.bd-empty { color:var(--bd-muted); }
+.bd-error { color:#ffb3b3; }
+@media (max-width:800px) {
+  .bd-root { flex-direction:column; }
+  .bd-sidebar { width:100%; }
+}
