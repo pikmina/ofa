@@ -59,9 +59,8 @@ html += "</ul>";
             filterByCategory(id);
         });
     });
-}
 
-// Evento: click en artículo → abrir artículo
+    // Evento: click en artículo → abrir artículo
 side.addEventListener("click", e => {
     if (e.target.matches(".wiki-doc a")) {
         e.preventDefault();
@@ -77,6 +76,7 @@ side.querySelectorAll(".wiki-cat-title").forEach(el => {
         filterByCategory(cat.id);
     });
 });
+}
 
 // ===============================
 // LOAD DOCS (LIST)
