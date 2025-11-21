@@ -8,6 +8,21 @@
   const CATEGORIES_ENDPOINT = `${WP_API_BASE}/wp/v2/doc_category?per_page=100`;
   const CUSTOM_WIKI_ENDPOINT = `${WP_API_BASE}/saxagenia/v1/wiki`;
 
+async function fetchFullArticle(id) {
+  const url = `${WP_API_BASE}/wp/v2/docs/${id}`;
+  const data = await tryFetchJson(url);
+  if (!data) return null;
+
+  return {
+    id: data.id,
+    link: data.link,
+    title: data.title?.rendered || "(Sin título)",
+    date: data.date,
+    content: data.content?.rendered || "",
+    excerpt: data.excerpt?.rendered || ""
+  };
+}
+
   /* util */
   function el(id){ return document.getElementById(id); }
   async function tryFetchJson(url){
@@ -147,21 +162,35 @@
     toc.appendChild(ul); return toc;
   }
 
-  function openArticle(articleObj){
-    const title = articleObj.title || '(Sin título)';
-    const date = articleObj.date ? new Date(articleObj.date).toLocaleDateString() : '';
-    const link = articleObj.link || '#';
-    const content = articleObj.content || articleObj.excerpt || '';
+async function openArticle(articleObj) {
+  let art = articleObj;
 
-    el('bd-list').style.display='none';
-    el('bd-article').style.display='block';
-    el('bd-article-title').innerHTML = title;
-    el('bd-article-date').textContent = date;
-    el('bd-article-link').href = link;
-    el('bd-article-body').innerHTML = sanitizeHtml(content);
-    const tocWrap = el('bd-toc'); tocWrap.innerHTML=''; tocWrap.appendChild(buildTOCFromContainer(el('bd-article-body')));
-    el('bd-article').scrollIntoView({ behavior:'smooth' });
+  // si solo vienen id y title, pedimos el artículo completo
+  if (!art.content) {
+    const full = await fetchFullArticle(art.id);
+    if (full) art = full;
   }
+
+  el('bd-list').style.display = 'none';
+  el('bd-article').style.display = 'block';
+
+  el('bd-article-title').innerHTML = art.title || '(Sin título)';
+  el('bd-article-date').textContent = art.date ? new Date(art.date).toLocaleDateString() : '';
+  el('bd-article-link').href = art.link || '#';
+
+  const safe = sanitizeHtml(art.content || art.excerpt || '');
+  el('bd-article-body').innerHTML = safe;
+
+  // reconstruir TOC
+  const tocWrap = el('bd-toc');
+  tocWrap.innerHTML = '<strong>Tabla de contenidos</strong>';
+  const toc = buildTOCFromContainer(el('bd-article-body'));
+  tocWrap.innerHTML = '';
+  tocWrap.appendChild(toc);
+
+  el('bd-article').scrollIntoView({ behavior: 'smooth' });
+}
+
 
   /* 4) search */
   function installSearch(){
