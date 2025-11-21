@@ -1,3 +1,13 @@
+<div id="wiki-wrapper">
+    <div id="wiki-sidebar">Cargando categorías…</div>
+    <div id="wiki-content">
+        <input id="wiki-search" type="text" placeholder="Buscar artículo…" />
+        <div id="wiki-list">Cargando artículos…</div>
+        <div id="wiki-article" style="display:none;">Cargando…</div>
+    </div>
+</div>
+
+<script>
 // ===============================
 // CONFIG
 // ===============================
@@ -14,43 +24,15 @@ let ALL_CATEGORIES = [];
 async function loadCategories(categories) {
     const side = document.getElementById("wiki-sidebar");
 
-let html = "<h3>Enciclopedia</h3><ul class='wiki-tree'>";
-
-// Ordenar categorías A–Z
-categories
-  .sort((a, b) => a.name.localeCompare(b.name))
-  .forEach(cat => {
-
-    // Filtrar los artículos que pertenezcan a esta categoría
-    const itemsForCat = articles.filter(a => {
-      // WordPress devuelve "docs_category": [id, id, ...]
-      return Array.isArray(a.docs_category) && a.docs_category.includes(cat.id);
+    let html = "<h3>Enciclopedia</h3><ul class='wiki-tree'>";
+    categories.sort((a, b) => a.name.localeCompare(b.name))
+    .forEach(cat => {
+        html += `
+        <li class="wiki-cat" data-cat="${cat.id}">
+            📁 ${cat.name}
+        </li>`;
     });
-
-    // Crear HTML de la categoría
-    html += `
-      <li class="wiki-cat">
-        <div class="wiki-cat-title">> ${cat.name}</div>
-        <ul class="wiki-articles">
-    `;
-
-    // Agregar artículos de esta categoría
-    itemsForCat.forEach(item => {
-      html += `
-        <li class="wiki-article">
-          <a href="?art=${encodeURIComponent(item.slug)}">${item.title.rendered}</a>
-        </li>
-      `;
-    });
-
-    // Cerrar sub-lista
-    html += `
-        </ul>
-      </li>
-    `;
-  });
-
-html += "</ul>";
+    html += "</ul>";
 
     side.innerHTML = html;
 
@@ -188,3 +170,68 @@ async function initWiki() {
 }
 
 initWiki();
+</script>
+
+<style>
+/* Layout */
+#wiki-wrapper {
+    display: flex;
+    gap: 20px;
+    font-family: Verdana;
+}
+
+/* Sidebar */
+#wiki-sidebar {
+    width: 230px;
+    border-right: 2px solid #ccc;
+    padding-right: 10px;
+}
+.wiki-tree li {
+    cursor: pointer;
+    margin: 5px 0;
+}
+.wiki-tree li:hover {
+    text-decoration: underline;
+}
+
+/* Cards */
+.wiki-card {
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    cursor: pointer;
+}
+.wiki-card:hover {
+    background: #f0f0f0;
+}
+.wiki-card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+.wiki-card-cat {
+    color: #666;
+    font-size: 12px;
+}
+
+/* Article viewer */
+#wiki-article {
+    padding: 10px;
+}
+#wiki-article h2 {
+    margin-top: 0;
+}
+
+/* ToC */
+.toc {
+    background: #f2f2f2;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.toc ul {
+    margin: 0;
+    padding-left: 20px;
+}
+</style>
