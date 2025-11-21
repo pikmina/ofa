@@ -14,43 +14,15 @@ let ALL_CATEGORIES = [];
 async function loadCategories(categories) {
     const side = document.getElementById("wiki-sidebar");
 
-let html = "<h3>Enciclopedia</h3><ul class='wiki-tree'>";
-
-// Ordenar categorías A–Z
-categories
-  .sort((a, b) => a.name.localeCompare(b.name))
-  .forEach(cat => {
-
-    // Filtrar los artículos que pertenezcan a esta categoría
-    const itemsForCat = articles.filter(a => {
-      // WordPress devuelve "docs_category": [id, id, ...]
-      return Array.isArray(a.docs_category) && a.docs_category.includes(cat.id);
+    let html = "<h3>Wiki</h3><ul class='wiki-tree'>";
+    categories.sort((a, b) => a.name.localeCompare(b.name))
+    .forEach(cat => {
+        html += `
+        <li class="wiki-cat" data-cat="${cat.id}">
+            > ${cat.name}
+        </li>`;
     });
-
-    // Crear HTML de la categoría
-    html += `
-      <li class="wiki-cat">
-        <div class="wiki-cat-title">> ${cat.name}</div>
-        <ul class="wiki-articles">
-    `;
-
-    // Agregar artículos de esta categoría
-    itemsForCat.forEach(item => {
-      html += `
-        <li class="wiki-article">
-          <a href="?art=${encodeURIComponent(item.slug)}">${item.title.rendered}</a>
-        </li>
-      `;
-    });
-
-    // Cerrar sub-lista
-    html += `
-        </ul>
-      </li>
-    `;
-  });
-
-html += "</ul>";
+    html += "</ul>";
 
     side.innerHTML = html;
 
