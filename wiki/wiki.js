@@ -14,15 +14,42 @@ let ALL_CATEGORIES = [];
 async function loadCategories(categories) {
     const side = document.getElementById("wiki-sidebar");
 
-    let html = "<h3>Wiki</h3><ul class='wiki-tree'>";
-    categories.sort((a, b) => a.name.localeCompare(b.name))
+let html = "<h3>Wiki</h3><ul class='wiki-tree'>";
+
+categories
+    .sort((a, b) => a.name.localeCompare(b.name))
     .forEach(cat => {
+
+        // Artículos que pertenecen a esta categoría
+        const docsForCat = ALL_DOCS
+            .filter(doc => Array.isArray(doc.doc_category) && doc.doc_category.includes(cat.id))
+            .sort((a, b) => a.title.rendered.localeCompare(b.title.rendered));
+
         html += `
-        <li class="wiki-cat" data-cat="${cat.id}">
-            > ${cat.name}
-        </li>`;
+        <li class="wiki-cat">
+            <div class="wiki-cat-title">> ${cat.name}</div>
+            <ul class="wiki-sublist">
+        `;
+
+        if (docsForCat.length === 0) {
+            html += `<li class="wiki-doc-empty">(sin artículos)</li>`;
+        } else {
+            docsForCat.forEach(doc => {
+                html += `
+                <li class="wiki-doc">
+                    <a href="#" data-id="${doc.id}">${doc.title.rendered}</a>
+                </li>`;
+            });
+        }
+
+        html += `
+            </ul>
+        </li>
+        `;
     });
-    html += "</ul>";
+
+html += "</ul>";
+
 
     side.innerHTML = html;
 
@@ -33,6 +60,23 @@ async function loadCategories(categories) {
         });
     });
 }
+
+// Evento: click en artículo → abrir artículo
+side.addEventListener("click", e => {
+    if (e.target.matches(".wiki-doc a")) {
+        e.preventDefault();
+        loadArticle(parseInt(e.target.dataset.id));
+    }
+});
+
+// Evento: click en categoría → filtrar lista principal
+side.querySelectorAll(".wiki-cat-title").forEach(el => {
+    el.addEventListener("click", () => {
+        const name = el.textContent.slice(2).trim();
+        const cat = categories.find(c => c.name === name);
+        filterByCategory(cat.id);
+    });
+});
 
 // ===============================
 // LOAD DOCS (LIST)
