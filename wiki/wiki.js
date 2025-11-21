@@ -332,8 +332,8 @@ if(full){
 }
 
 openArticle(art);
-
-
+}
+  
 /* Manejar navegación del historial (botón atrás) */
 window.addEventListener("popstate", handleURLRouting);
 
