@@ -3,6 +3,22 @@ const WP_API_BASE = "https://saxagenia.com/wp-json";
 const CATEGORIES_ENDPOINT = `${WP_API_BASE}/wp/v2/doc_category?per_page=100`;
 const CUSTOM_WIKI_ENDPOINT = `${WP_API_BASE}/saxagenia/v1/wiki`; // endpoint custom
 
+
+async function fetchFullArticle(slug){
+  const url = `${WP_API_BASE}/wp/v2/docs?slug=${slug}`;
+  const data = await tryFetchJson(url);
+  if (!data || !data.length) return null;
+
+  const a = data[0];
+  return {
+    title: a.title.rendered,
+    date: a.date,
+    link: a.link,
+    content: a.content.rendered
+  };
+}
+
+
 /* UTILIDADES */
 function el(id){ return document.getElementById(id); }
 async function tryFetchJson(url){
@@ -298,19 +314,25 @@ async function handleURLRouting(){
     return;
   }
 
-  // Buscar artículo
-  const art = articles.find(a => a.slug === artSlug);
+// Buscar artículo básico
+let art = articles.find(a => a.slug === artSlug);
 
-  if(!art){
-    el('bd-list').innerHTML='<div class="bd-error">Artículo no encontrado.</div>';
-    el('bd-list').style.display='';
-    el('bd-article').style.display='none';
-    return;
-  }
-
-  // Abrir artículo
-  openArticle(art);
+if(!art){
+  el('bd-list').innerHTML='<div class="bd-error">Artículo no encontrado.</div>';
+  el('bd-list').style.display='';
+  el('bd-article').style.display='none';
+  return;
 }
+
+// 🔥 Obtener artículo completo desde wp/v2/docs
+const full = await fetchFullArticle(artSlug);
+
+if(full){
+  art = full; // reemplazar datos limitados por datos completos
+}
+
+openArticle(art);
+
 
 /* Manejar navegación del historial (botón atrás) */
 window.addEventListener("popstate", handleURLRouting);
