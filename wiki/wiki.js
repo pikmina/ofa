@@ -8,75 +8,6 @@ const API_DOC = id => `https://saxagenia.com/wp-json/wp/v2/docs/${id}`;
 let ALL_DOCS = [];
 let ALL_CATEGORIES = [];
 
-// ===============================
-// LOAD CATEGORIES (SIDEBAR)
-// ===============================
-async function loadCategories(categories) {
-    const side = document.getElementById("wiki-sidebar");
-
-let html = "<h3>Wiki</h3><ul class='wiki-tree'>";
-
-categories
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .forEach(cat => {
-
-        // Artículos que pertenecen a esta categoría
-        const docsForCat = ALL_DOCS
-            .filter(doc => Array.isArray(doc.doc_category) && doc.doc_category.includes(cat.id))
-            .sort((a, b) => a.title.rendered.localeCompare(b.title.rendered));
-
-        html += `
-        <li class="wiki-cat">
-            <div class="wiki-cat-title">> ${cat.name}</div>
-            <ul class="wiki-sublist">
-        `;
-
-        if (docsForCat.length === 0) {
-            html += `<li class="wiki-doc-empty">(sin artículos)</li>`;
-        } else {
-            docsForCat.forEach(doc => {
-                html += `
-                <li class="wiki-doc">
-                    <a href="#" data-id="${doc.id}">${doc.title.rendered}</a>
-                </li>`;
-            });
-        }
-
-        html += `
-            </ul>
-        </li>
-        `;
-    });
-
-html += "</ul>";
-
-
-    side.innerHTML = html;
-
-    document.querySelectorAll(".wiki-cat").forEach(el => {
-        el.addEventListener("click", () => {
-            const id = parseInt(el.getAttribute("data-cat"));
-            filterByCategory(id);
-        });
-    });
-
-    // Evento: click en artículo → abrir artículo
-side.addEventListener("click", e => {
-    if (e.target.matches(".wiki-doc a")) {
-        e.preventDefault();
-        loadArticle(parseInt(e.target.dataset.id));
-    }
-});
-
-// Evento: click en categoría → filtrar lista principal
-side.querySelectorAll(".wiki-cat-title").forEach(el => {
-    el.addEventListener("click", () => {
-        const name = el.textContent.slice(2).trim();
-        const cat = categories.find(c => c.name === name);
-        filterByCategory(cat.id);
-    });
-});
-}
 
 // ===============================
 // LOAD DOCS (LIST)
@@ -87,6 +18,93 @@ function loadDocs(docs, categories) {
     renderDocs(docs);
 }
 
+
+// ===============================
+// LOAD CATEGORIES (SIDEBAR)
+// ===============================
+function loadCategories(categories) {
+    const side = document.getElementById("wiki-sidebar");
+
+    let html = "<h3>Wiki</h3><ul class='wiki-tree'>";
+
+    categories.sort((a, b) => a.name.localeCompare(b.name)).forEach(cat => {
+        
+        const docsForCat = ALL_DOCS
+            .filter(doc => {
+                const catsField = doc.docs_category ?? doc.doc_category ?? [];
+                return Array.isArray(catsField) && catsField.includes(cat.id);
+            })
+            .sort((a, b) => (a.title?.rendered || '').localeCompare(b.title?.rendered || ''));
+
+        html += `
+        <li class="wiki-cat" data-cat="${cat.id}">
+            <div class="wiki-cat-title">${cat.name}</div>
+            <ul class="wiki-sublist">
+        `;
+
+        if (docsForCat.length === 0) {
+            html += `<li class="wiki-doc-empty"><i>Sin Artículos</i></li>`;
+        } else {
+            docsForCat.forEach(doc => {
+                html += `
+                <li class="wiki-doc">
+                    <a href="#" data-id="${doc.id}" data-slug="${encodeURIComponent(doc.slug)}">
+                        ${doc.title.rendered}
+                    </a>
+                </li>`;
+            });
+        }
+
+        html += `</ul></li>`;
+    });
+
+    html += "</ul>";
+    side.innerHTML = html;
+
+
+    // === CLICK LISTENER (CATEGORÍAS + ARTÍCULOS) ===
+    side.addEventListener("click", function (e) {
+        const a = e.target.closest(".wiki-doc a");
+
+        // Click en un artículo
+        if (a) {
+            e.preventDefault();
+
+            const prev = side.querySelector(".wiki-doc a.active");
+            if (prev) prev.classList.remove("active");
+            a.classList.add("active");
+
+            const id = parseInt(a.dataset.id, 10);
+
+            if (!isNaN(id)) {
+                loadArticle(id);
+
+                // URL → ?art=slug
+                history.pushState({}, "", `?art=${a.dataset.slug}`);
+            }
+            return;
+        }
+
+        // Click en categoría
+        const catTitle = e.target.closest(".wiki-cat-title");
+        if (catTitle) {
+            const parent = catTitle.closest(".wiki-cat");
+            const catId = parseInt(parent.dataset.cat, 10);
+            if (!isNaN(catId)) {
+                filterByCategory(catId);
+
+                const cat = ALL_CATEGORIES.find(c => c.id === catId);
+                
+                // URL → ?cat=slug
+                if (cat?.slug) {
+                    history.pushState({}, "", `?cat=${encodeURIComponent(cat.slug)}`);
+                }
+            }
+        }
+    });
+}
+
+
 // ===============================
 // RENDER LIST (CARDS)
 // ===============================
@@ -96,29 +114,28 @@ function renderDocs(list) {
 
     listBox.style.display = "block";
     articleBox.style.display = "none";
-
     listBox.innerHTML = "";
 
     list.sort((a, b) => a.title.rendered.localeCompare(b.title.rendered))
-    .forEach(doc => {
-        const catId = doc.doc_category?.[0] ?? null;
-        const cat = ALL_CATEGORIES.find(c => c.id === catId);
+        .forEach(doc => {
+            const catId = doc.doc_category?.[0] ?? null;
+            const cat = ALL_CATEGORIES.find(c => c.id === catId);
 
-        listBox.innerHTML += `
-            <div class="wiki-card" data-id="${doc.id}">
-                <div class="wiki-card-title">${doc.title.rendered}</div>
-                <div class="wiki-card-cat">${cat?.name ?? "General"}</div>
-            </div>
-        `;
-    });
-
-    // Click → load article
-    document.querySelectorAll(".wiki-card").forEach(card => {
-        card.addEventListener("click", () => {
-            loadArticle(parseInt(card.getAttribute("data-id")));
+            listBox.innerHTML += `
+                <div class="wiki-card" data-id="${doc.id}">
+                    <div class="wiki-card-title">${doc.title.rendered}</div>
+                    <div class="wiki-card-cat">${cat?.name ?? "General"}</div>
+                </div>
+            `;
         });
+
+    document.querySelectorAll(".wiki-card").forEach(card => {
+        card.addEventListener("click", () =>
+            loadArticle(parseInt(card.dataset.id))
+        );
     });
 }
+
 
 // ===============================
 // FILTER BY CATEGORY
@@ -128,8 +145,9 @@ function filterByCategory(catId) {
     renderDocs(filtered);
 }
 
+
 // ===============================
-// LOAD ARTICLE CONTENT (INSIDE FORUM)
+// LOAD ARTICLE CONTENT
 // ===============================
 async function loadArticle(id) {
     const list = document.getElementById("wiki-list");
@@ -137,12 +155,15 @@ async function loadArticle(id) {
 
     list.style.display = "none";
     box.style.display = "block";
-
     box.innerHTML = "Cargando artículo…";
 
     const data = await fetch(API_DOC(id)).then(r => r.json());
 
-    // Insert article AND generate ToC
+    // ACTUALIZAR URL → ?art=slug
+    if (data.slug) {
+        history.pushState({}, "", `?art=${encodeURIComponent(data.slug)}`);
+    }
+
     box.innerHTML = `
         <h2>${data.title.rendered}</h2>
         <div id="wiki-toc"></div>
@@ -152,8 +173,9 @@ async function loadArticle(id) {
     generateTOC();
 }
 
+
 // ===============================
-// TABLE OF CONTENTS (HEADINGS)
+// TABLE OF CONTENTS
 // ===============================
 function generateTOC() {
     const body = document.getElementById("wiki-article-body");
@@ -177,6 +199,7 @@ function generateTOC() {
     toc.innerHTML = html;
 }
 
+
 // ===============================
 // SEARCH
 // ===============================
@@ -190,6 +213,37 @@ document.addEventListener("input", e => {
     }
 });
 
+
+// ===============================
+// AUTOLOAD BASED ON URL
+// ===============================
+function checkURLForAutoLoad() {
+    const params = new URLSearchParams(window.location.search);
+
+    // Cargar ARTÍCULO
+    if (params.has("art")) {
+        const slug = params.get("art");
+        const doc = ALL_DOCS.find(d => d.slug === slug);
+        if (doc) {
+            loadArticle(doc.id);
+            return true;
+        }
+    }
+
+    // Cargar CATEGORÍA
+    if (params.has("cat")) {
+        const slug = params.get("cat");
+        const cat = ALL_CATEGORIES.find(c => c.slug === slug);
+        if (cat) {
+            filterByCategory(cat.id);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 // ===============================
 // INITIAL LOAD
 // ===============================
@@ -199,8 +253,14 @@ async function initWiki() {
         fetch(API_DOCS).then(r => r.json())
     ]);
 
-    loadCategories(cats);
-    loadDocs(docs, cats);
+    ALL_CATEGORIES = Array.isArray(cats) ? cats : [];
+    ALL_DOCS = Array.isArray(docs) ? docs : [];
+
+    loadCategories(ALL_CATEGORIES);
+    loadDocs(ALL_DOCS, ALL_CATEGORIES);
+
+    // SI LA URL TIENE ?art= o ?cat=
+    checkURLForAutoLoad();
 }
 
 initWiki();
