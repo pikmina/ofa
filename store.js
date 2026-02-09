@@ -48,48 +48,54 @@ document.addEventListener("DOMContentLoaded", async () => {
   // === FILTRO POR CATEGORÍA ===
   const categorias = [...new Set(productos.map(p => p.Categoría))];
 
-  // Insertar select antes de la tienda
-  const filtroHTML = `
-    <div id="filtro-categorias" style="margin-bottom:15px;">
-      <label><b>Filtrar por categoría:</b></label><br>
-      <select id="select-categoria">
-        <option value="">Todas</option>
-        ${categorias.map(c => `<option value="${c}">${c}</option>`).join('')}
-      </select>
-    </div>`;
-  tiendaEl.insertAdjacentHTML('beforebegin', filtroHTML);
-
-  // Generar listado de productos (sin separar por categoría)
-  function renderProductos(filtro = "") {
-    let html = "";
+  let html = "";
+  categorias.forEach(cat => {
+    html += `<h2>${cat}</h2><div class="product-list">`;
 
     productos
-      .filter(p => !filtro || p.Categoría === filtro)
+      .filter(p => p.Categoría === cat)
       .forEach(p => {
         const precioExp = p.PrecioEXP || 0;
         const precioYen = p.PrecioYenes || 0;
+
+        // Usar icono según categoría, o uno genérico si no existe
         const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
-        const color = COLORES[p.Categoría] || "#666";
+
+        const niveles = [
+          { nombre: "Nivel 1", exp: p.Nivel1_EXP, yen: p.Nivel1_Yen },
+          { nombre: "Nivel 2", exp: p.Nivel2_EXP, yen: p.Nivel2_Yen },
+          { nombre: "Nivel 3", exp: p.Nivel3_Yen },
+          { nombre: "Nivel 4", exp: p.Nivel4_Yen },
+          { nombre: "Nivel 5", exp: p.Nivel5_Yen }
+        ].filter(n => n.exp || n.yen);
 
         html += `
       <div class="product">
-        <div class="product-header">
-         <div class="product-category" style="color:${color}"> <i class="${icono} producto-icon" style="color:${color}" aria-hidden="true"></i> ${p.Categoría || 'General'}</div>
-         
-          <div class="product-title">
-            <p-title>${p.Nombre}</p-title>
-           
-          </div>
-        </div>
-
-        <small>${p.Descripción || ''}</small>
-
+        <p-title>${p.Nombre}</p-title>
+        <small>${p.Descripción}</small>
+        
         <p-price>
           ${precioExp > 0 ? `Precio en EXP: ${precioExp}<br>` : ""}
           ${precioYen > 0 ? `Precio en ¥: ${precioYen}<br>` : ""}
         </p-price>
 
-        <button class="btn-add" 
+        <i class="${icono} fa-3x producto-icon"></i>
+
+        ${niveles.length > 0 ? `
+  <select class="select-nivel">
+    ${niveles.map(n =>
+          `<option 
+        data-exp="${n.exp || 0}" 
+        data-yen="${n.yen || 0}">
+        ${n.nombre} – 
+        ${n.exp ? n.exp + " EXP " : ""}
+        ${n.yen ? n.yen + " ¥" : ""}
+      </option>`
+        ).join("")}
+  </select>
+` : ""}
+
+        <button class="btn-add"
                 data-nombre="${p.Nombre}"
                 data-exp="${precioExp}"
                 data-yen="${precioYen}">
@@ -98,8 +104,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>`;
       });
 
-    tiendaEl.innerHTML = html;
-  }
+    html += "</div>";
+  });
 
   // Render inicial
   renderProductos();
@@ -118,13 +124,37 @@ document.addEventListener("DOMContentLoaded", async () => {
      ========================== */
   let carrito = [];
 
-  // Delegación: los botones pueden agregarse dinámicamente
-  tiendaEl.addEventListener('click', (e) => {
-    const btn = e.target.closest('.btn-add');
-    if (!btn) return;
-    const nombre = btn.dataset.nombre;
-    const exp = Number(btn.dataset.exp) || 0;
-    const yen = Number(btn.dataset.yen) || 0;
+  // Agregar al carrito con contador
+  document.querySelectorAll(".btn-add").forEach(btn => {
+    btn.onclick = () => {
+      const nombre = btn.dataset.nombre;
+      let exp = Number(btn.dataset.exp);
+      let yen = Number(btn.dataset.yen);
+      let nivel = "";
+
+      const selector = btn.parentElement.querySelector(".select-nivel");
+      if (selector) {
+        const opcion = selector.selectedOptions[0];
+        exp = Number(opcion.dataset.exp);
+        yen = Number(opcion.dataset.yen);
+        nivel = opcion.textContent;
+      }
+
+      let item = carrito.find(
+        i => i.nombre === nombre && i.nivel === nivel
+      );
+
+      if (item) {
+        item.cantidad++;
+      } else {
+        carrito.push({
+          nombre,
+          nivel,
+          exp,
+          yen,
+          cantidad: 1
+        });
+      }
 
     let item = carrito.find(i => i.nombre === nombre);
     if (item) item.cantidad++;
@@ -145,10 +175,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalEXP = carrito.reduce((s, p) => s + (p.exp * p.cantidad), 0);
     const totalYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
 
-    let inner = carrito.map((p, index) => {
-      const costo = [];
-      if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
-      if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
+    let html = carrito
+      .map((p, index) => {
+        let linea = `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – `;
+
+        let costo = [];
+        if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
+        if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
+
+        linea += costo.join(" + ");
 
       const costoStr = costo.join(' + ');
 
