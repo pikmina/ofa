@@ -16,15 +16,81 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!document.getElementById("tienda")) return;
 
   const productos = await fetch(API_URL).then(r => r.json());
-  const categorias = [...new Set(productos.map(p => p.Categoría))];
 
-  let html = "";
-  categorias.forEach(cat => {
-    html += `<h2>${cat}</h2><div class="product-list">`;
+  /* ==========================
+      FILTROS (estado)
+     ========================== */
+  let filtroTexto = "";
+  let filtroCategoria = "Todas";
+  let filtroCoste = "Todos";
 
-    productos
-      .filter(p => p.Categoría === cat)
-      .forEach(p => {
+  /* ==========================
+      INICIALIZAR FILTROS
+     ========================== */
+  const selectCategoria = document.getElementById("filtro-categoria");
+  const categorias = ["Todas", ...new Set(productos.map(p => p.Categoría))];
+
+  categorias.forEach(c => {
+    const opt = document.createElement("option");
+    opt.textContent = c;
+    selectCategoria.appendChild(opt);
+  });
+
+  document.getElementById("filtro-texto").addEventListener("input", e => {
+    filtroTexto = e.target.value.toLowerCase();
+    renderTienda(aplicarFiltros());
+  });
+
+  selectCategoria.addEventListener("change", e => {
+    filtroCategoria = e.target.value;
+    renderTienda(aplicarFiltros());
+  });
+
+  document.getElementById("filtro-coste").addEventListener("change", e => {
+    filtroCoste = e.target.value;
+    renderTienda(aplicarFiltros());
+  });
+
+  /* ==========================
+      APLICAR FILTROS
+     ========================== */
+  function aplicarFiltros() {
+    return productos.filter(p => {
+
+      if (filtroTexto && !p.Nombre.toLowerCase().includes(filtroTexto)) {
+        return false;
+      }
+
+      if (filtroCategoria !== "Todas" && p.Categoría !== filtroCategoria) {
+        return false;
+      }
+
+      const tieneEXP = Number(p.PrecioEXP) > 0 ||
+        [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
+          .some(v => Number(v) > 0);
+
+      const tieneYEN = Number(p.PrecioYenes) > 0 ||
+        [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
+          .some(v => Number(v) > 0);
+
+      if (filtroCoste === "EXP" && !tieneEXP) return false;
+      if (filtroCoste === "YEN" && !tieneYEN) return false;
+
+      return true;
+    });
+  }
+
+  /* ==========================
+      RENDER TIENDA
+     ========================== */
+  function renderTienda(lista) {
+    let html = "";
+    const cats = [...new Set(lista.map(p => p.Categoría))];
+
+    cats.forEach(cat => {
+      html += `<h2>${cat}</h2><div class="product-list">`;
+
+      lista.filter(p => p.Categoría === cat).forEach(p => {
 
         const precioExp = Number(p.PrecioEXP) || 0;
         const precioYen = Number(p.PrecioYenes) || 0;
@@ -50,17 +116,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           <i class="${icono} fa-3x producto-icon"></i>
 
-          ${niveles.length > 0 ? `
+          ${niveles.length ? `
             <select class="select-nivel">
               ${niveles.map(n => `
                 <option data-exp="${n.exp || 0}" data-yen="${n.yen || 0}">
-                  ${n.nombre} –
-                  ${n.exp ? n.exp + " EXP " : ""}
-                  ${n.yen ? n.yen + " ¥" : ""}
+                  ${n.nombre} – ${n.exp ? n.exp + " EXP " : ""}${n.yen ? n.yen + " ¥" : ""}
                 </option>
               `).join("")}
-            </select>
-          ` : ""}
+            </select>` : ""}
 
           <button class="btn-add"
                   data-nombre="${p.Nombre}"
@@ -71,46 +134,45 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>`;
       });
 
-    html += "</div>";
-  });
+      html += "</div>";
+    });
 
-  document.getElementById("tienda").innerHTML = html;
+    document.getElementById("tienda").innerHTML = html;
+    activarBotones();
+  }
 
   /* ==========================
       CARRITO
      ========================== */
-
   let carrito = [];
 
-  document.querySelectorAll(".btn-add").forEach(btn => {
-    btn.onclick = () => {
-      const nombre = btn.dataset.nombre;
-      let exp = Number(btn.dataset.exp);
-      let yen = Number(btn.dataset.yen);
-      let nivel = "";
+  function activarBotones() {
+    document.querySelectorAll(".btn-add").forEach(btn => {
+      btn.onclick = () => {
+        const nombre = btn.dataset.nombre;
+        let exp = Number(btn.dataset.exp);
+        let yen = Number(btn.dataset.yen);
+        let nivel = "";
 
-      const selector = btn.parentElement.querySelector(".select-nivel");
-      if (selector) {
-        const opcion = selector.selectedOptions[0];
-        exp = Number(opcion.dataset.exp);
-        yen = Number(opcion.dataset.yen);
-        nivel = opcion.textContent.trim();
-      }
+        const selector = btn.parentElement.querySelector(".select-nivel");
+        if (selector) {
+          const op = selector.selectedOptions[0];
+          exp = Number(op.dataset.exp);
+          yen = Number(op.dataset.yen);
+          nivel = op.textContent.trim();
+        }
 
-      let item = carrito.find(i => i.nombre === nombre && i.nivel === nivel);
+        let item = carrito.find(i => i.nombre === nombre && i.nivel === nivel);
+        if (item) item.cantidad++;
+        else carrito.push({ nombre, nivel, exp, yen, cantidad: 1 });
 
-      if (item) {
-        item.cantidad++;
-      } else {
-        carrito.push({ nombre, nivel, exp, yen, cantidad: 1 });
-      }
-
-      renderCarrito();
-    };
-  });
+        renderCarrito();
+      };
+    });
+  }
 
   function renderCarrito() {
-    if (carrito.length === 0) {
+    if (!carrito.length) {
       document.getElementById("carrito").innerHTML = "<i>Carrito vacío</i>";
       return;
     }
@@ -118,55 +180,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
     const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
 
-    let html = carrito.map((p, index) => {
-      let linea = `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – `;
-      let costo = [];
-      if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
-      if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
-      linea += costo.join(" + ");
-      linea += ` <button class="btn-remove" data-index="${index}">✖</button>`;
-      return linea;
-    }).join("<br>");
+    document.getElementById("carrito").innerHTML =
+      carrito.map((p, i) =>
+        `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – 
+        ${(p.exp * p.cantidad) || ""} ${(p.yen * p.cantidad) || ""} 
+        <button class="btn-remove" data-index="${i}">✖</button>`
+      ).join("<br>") +
+      `<br><br><b>Total EXP:</b> ${totalEXP}<br><b>Total ¥:</b> ${totalYEN}`;
 
-    html += `<br><br><b>Total EXP:</b> ${totalEXP}`;
-    html += `<br><b>Total ¥:</b> ${totalYEN}`;
-
-    const box = document.getElementById("carrito");
-    box.innerHTML = html;
-
-    box.querySelectorAll(".btn-remove").forEach(btn => {
-      btn.onclick = () => {
-        carrito.splice(Number(btn.dataset.index), 1);
+    document.querySelectorAll(".btn-remove").forEach(b => {
+      b.onclick = () => {
+        carrito.splice(Number(b.dataset.index), 1);
         renderCarrito();
       };
     });
   }
 
-  /* ==========================
-      FINALIZAR COMPRA
-     ========================== */
-
-  document.getElementById("btn-finalizar").onclick = () => {
-    if (carrito.length === 0) {
-      alert("El carrito está vacío.");
-      return;
-    }
-
-    const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
-    const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
-
-    const texto =
-      `[b]Compra realizada:[/b]\n\n` +
-      carrito.map(p => {
-        let linea = `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – `;
-        let costo = [];
-        if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
-        if (p.yen > 0) costo.push(`${p.yen * p.cantidad} ¥`);
-        return linea + costo.join(" + ");
-      }).join("\n") +
-      `\n\n[b]Total EXP:[/b] ${totalEXP}\n[b]Total ¥:[/b] ${totalYEN}`;
-
-    document.getElementById("mensaje-post").value = texto;
-    document.getElementById("form-post").submit();
-  };
+  renderTienda(productos);
 });
