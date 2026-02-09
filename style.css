@@ -108,7 +108,7 @@ button.btn-remove {
     margin: 5px 2px;
 }
 
-.product-category {
+.producto-icon {
     width: fit-content;
     padding: 2px 5px;
     border-radius: 3px;
@@ -134,7 +134,7 @@ span.carrito-line {
     border-bottom: 1px dotted #e0e0e0;
 }
 
-div#filtro-categorias, div#filtros {
+div#filtro-categorias, div#filters {
     background: #f8f8f8;
     padding: 10px;
     border: 1px solid lightgray;
