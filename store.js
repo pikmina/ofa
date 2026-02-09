@@ -24,19 +24,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   const categorias = [...new Set(productos.map(p => p.Categoría))];
 
   let html = "";
-categorias.forEach(cat => {
-  html += `<h2>${cat}</h2><div class="product-list">`;
+  categorias.forEach(cat => {
+    html += `<h2>${cat}</h2><div class="product-list">`;
 
-  productos
-    .filter(p => p.Categoría === cat)
-    .forEach(p => {
-      const precioExp = p.PrecioEXP || 0;
-      const precioYen = p.PrecioYenes || 0;
+    productos
+      .filter(p => p.Categoría === cat)
+      .forEach(p => {
+        const precioExp = p.PrecioEXP || 0;
+        const precioYen = p.PrecioYenes || 0;
 
-      // Usar icono según categoría, o uno genérico si no existe
-      const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
+        // Usar icono según categoría, o uno genérico si no existe
+        const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
 
-      html += `
+        const niveles = [
+          { nombre: "Nivel 1", exp: p.Nivel1_EXP, yen: p.Nivel1_Yen },
+          { nombre: "Nivel 2", exp: p.Nivel2_EXP, yen: p.Nivel2_Yen },
+          { nombre: "Nivel 3", exp: p.Nivel3_Yen },
+          { nombre: "Nivel 4", exp: p.Nivel4_Yen },
+          { nombre: "Nivel 5", exp: p.Nivel5_Yen }
+        ].filter(n => n.exp || n.yen);
+
+        html += `
       <div class="product">
         <p-title>${p.Nombre}</p-title>
         <small>${p.Descripción}</small>
@@ -48,6 +56,20 @@ categorias.forEach(cat => {
 
         <i class="${icono} fa-3x producto-icon"></i>
 
+        ${niveles.length > 0 ? `
+  <select class="select-nivel">
+    ${niveles.map(n =>
+          `<option 
+        data-exp="${n.exp || 0}" 
+        data-yen="${n.yen || 0}">
+        ${n.nombre} – 
+        ${n.exp ? n.exp + " EXP " : ""}
+        ${n.yen ? n.yen + " ¥" : ""}
+      </option>`
+        ).join("")}
+  </select>
+` : ""}
+
         <button class="btn-add"
                 data-nombre="${p.Nombre}"
                 data-exp="${precioExp}"
@@ -55,10 +77,10 @@ categorias.forEach(cat => {
           Agregar al carrito
         </button>
       </div>`;
-    });
+      });
 
-  html += "</div>";
-});
+    html += "</div>";
+  });
 
 
   document.getElementById("tienda").innerHTML = html;
@@ -73,16 +95,28 @@ categorias.forEach(cat => {
   document.querySelectorAll(".btn-add").forEach(btn => {
     btn.onclick = () => {
       const nombre = btn.dataset.nombre;
-      const exp = Number(btn.dataset.exp);
-      const yen = Number(btn.dataset.yen);
+      let exp = Number(btn.dataset.exp);
+      let yen = Number(btn.dataset.yen);
+      let nivel = "";
 
-      let item = carrito.find(i => i.nombre === nombre);
+      const selector = btn.parentElement.querySelector(".select-nivel");
+      if (selector) {
+        const opcion = selector.selectedOptions[0];
+        exp = Number(opcion.dataset.exp);
+        yen = Number(opcion.dataset.yen);
+        nivel = opcion.textContent;
+      }
+
+      let item = carrito.find(
+        i => i.nombre === nombre && i.nivel === nivel
+      );
 
       if (item) {
         item.cantidad++;
       } else {
         carrito.push({
           nombre,
+          nivel,
           exp,
           yen,
           cantidad: 1
@@ -104,7 +138,7 @@ categorias.forEach(cat => {
 
     let html = carrito
       .map((p, index) => {
-        let linea = `• ${p.nombre} x${p.cantidad} – `;
+        let linea = `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – `;
 
         let costo = [];
         if (p.exp > 0) costo.push(`${p.exp * p.cantidad} EXP`);
