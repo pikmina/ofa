@@ -74,32 +74,39 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* ==========================
       APLICAR FILTROS
      ========================== */
-  function aplicarFiltros() {
-    return productos.filter(p => {
+function aplicarFiltros() {
+  return productos.filter(p => {
 
-      if (filtroTexto && !p.Nombre.toLowerCase().includes(filtroTexto)) {
-        return false;
-      }
+    // TEXTO
+    if (filtroTexto && !p.Nombre.toLowerCase().includes(filtroTexto)) {
+      return false;
+    }
 
-      if (filtroCategoria !== "Todas" && p.Categoría !== filtroCategoria) {
-        return false;
-      }
+    // CATEGORÍAS (checkboxes)
+    if (categoriasActivas.length &&
+        !categoriasActivas.includes(p.Categoría)) {
+      return false;
+    }
 
-      const tieneEXP = Number(p.PrecioEXP) > 0 ||
-        [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
-          .some(v => Number(v) > 0);
+    // DETECTAR TIPOS DE COSTE
+    const tieneEXP = Number(p.PrecioEXP) > 0 ||
+      [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
+        .some(v => Number(v) > 0);
 
-      const tieneYEN = Number(p.PrecioYenes) > 0 ||
-        [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
-          .some(v => Number(v) > 0);
+    const tieneYEN = Number(p.PrecioYenes) > 0 ||
+      [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
+        .some(v => Number(v) > 0);
 
-      if (filtroCoste === "EXP" && !tieneEXP) return false;
-      if (filtroCoste === "YEN" && !tieneYEN) return false;
+    // COSTE (checkboxes)
+    if (costesActivos.length) {
+      if (costesActivos.includes("EXP") && tieneEXP) return true;
+      if (costesActivos.includes("YEN") && tieneYEN) return true;
+      return false;
+    }
 
-      return true;
-    });
-  }
-
+    return true;
+  });
+}
   /* ==========================
       RENDER TIENDA
      ========================== */
