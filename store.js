@@ -9,7 +9,11 @@ const ICONOS = {
   "Rasgos": "fa-solid fa-person-burst",
   "Debilidades": "fa-solid fa-person-falling-burst",
   "Accesorios": "fa-solid fa-screwdriver-wrench",
-  "General": "fa-solid fa-gear"
+  "General": "fa-solid fa-gear",
+  "Quirk": "fa-solid fa-bolt",
+  "Medicina": "fa-solid fa-pills",
+  "Estimulantes": "fa-solid fa-flask",
+  "Experimentales": "fa-solid fa-flask-vial"
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -106,6 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         html += `
         <div class="product">
+        <span class="product-category"> <i class="${icono} fa-3x producto-icon"></i> ${p.Categoría}</span>
           <p-title>${p.Nombre}</p-title>
           <small>${p.Descripción}</small>
 
@@ -113,8 +118,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
             ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
           </p-price>
-
-          <i class="${icono} fa-3x producto-icon"></i>
+          
 
           ${niveles.length ? `
             <select class="select-nivel">
