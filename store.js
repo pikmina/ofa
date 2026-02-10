@@ -279,13 +279,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 /* ==========================
-    LOADER (FOROACTIVO SAFE)
+    LOADER (FETCH HOOK)
    ========================== */
 (function () {
   const loader = document.getElementById("loader-overlay");
-  const tienda = document.getElementById("tienda");
-
-  if (!loader || !tienda) return;
+  if (!loader) return;
 
   const ocultarLoader = () => {
     loader.style.opacity = "0";
@@ -293,17 +291,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     setTimeout(() => loader.remove(), 400);
   };
 
-  const interval = setInterval(() => {
-    // Si hay al menos un producto renderizado
-    if (tienda.querySelector(".product")) {
-      clearInterval(interval);
-      ocultarLoader();
-    }
-  }, 100);
+  // Guardamos el fetch original
+  const originalFetch = window.fetch;
 
-  // Failsafe: nunca más de 10s
-  setTimeout(() => {
-    clearInterval(interval);
-    ocultarLoader();
-  }, 10000);
+  let primeraCarga = true;
+
+  window.fetch = function (...args) {
+    return originalFetch.apply(this, args).then(res => {
+      if (primeraCarga) {
+        primeraCarga = false;
+        // dejamos que renderTienda se ejecute primero
+        setTimeout(ocultarLoader, 0);
+      }
+      return res;
+    });
+  };
+
+  // Failsafe absoluto (por si el API muere)
+  setTimeout(ocultarLoader, 15000);
 })();
