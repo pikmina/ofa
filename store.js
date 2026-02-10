@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 /* ==========================
-    LOADER (FETCH HOOK)
+    LOADER (RENDER HOOK)
    ========================== */
 (function () {
   const loader = document.getElementById("loader-overlay");
@@ -291,22 +291,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     setTimeout(() => loader.remove(), 400);
   };
 
-  // Guardamos el fetch original
-  const originalFetch = window.fetch;
+  const interval = setInterval(() => {
+    if (typeof window.renderTienda === "function") {
+      clearInterval(interval);
 
-  let primeraCarga = true;
+      const renderOriginal = window.renderTienda;
+      let primeraVez = true;
 
-  window.fetch = function (...args) {
-    return originalFetch.apply(this, args).then(res => {
-      if (primeraCarga) {
-        primeraCarga = false;
-        // dejamos que renderTienda se ejecute primero
-        setTimeout(ocultarLoader, 0);
-      }
-      return res;
-    });
-  };
+      window.renderTienda = function (...args) {
+        const result = renderOriginal.apply(this, args);
 
-  // Failsafe absoluto (por si el API muere)
+        if (primeraVez) {
+          primeraVez = false;
+          ocultarLoader();
+        }
+
+        return result;
+      };
+    }
+  }, 50);
+
+  // Failsafe absoluto
   setTimeout(ocultarLoader, 15000);
 })();
