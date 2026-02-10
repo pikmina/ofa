@@ -38,6 +38,7 @@ div#filters {
     justify-content: flex-start;
     align-items: flex-start;
 }
+
 .product-header {
     text-align: center;
     border-bottom: 1px solid var(--pk-border-color);
