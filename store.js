@@ -13,7 +13,7 @@ const ICONOS = {
   "Quirk": "fa-solid fa-bolt",
   "Medicina": "fa-solid fa-pills",
   "Estimulantes": "fa-solid fa-flask",
-  "Experimentales": "fa-solid fa-flask-vial", 
+  "Experimentales": "fa-solid fa-flask-vial",
   "Certificaciones": "fa-solid fa-certificate",
   "Materiales": "fa-solid fa-toolbox",
   "Ingredientes": "fa-brands fa-pagelines"
@@ -242,4 +242,39 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   renderTienda(productos);
+
+  /* ==========================
+  Finalizar Compra 
+  ========================== */
+
+  const btnFinalizar = document.getElementById("btn-finalizar");
+
+  btnFinalizar.addEventListener("click", () => {
+    if (!carrito.length) {
+      alert("El carrito está vacío.");
+      return;
+    }
+
+    let texto = "[b]Compra realizada[/b]\n\n";
+
+    carrito.forEach(p => {
+      texto += `• ${p.nombre}`;
+      if (p.nivel) texto += ` (${p.nivel})`;
+      texto += ` x${p.cantidad}\n`;
+
+      if (p.exp) texto += `  EXP: ${p.exp * p.cantidad}\n`;
+      if (p.yen) texto += `  ¥: ${p.yen * p.cantidad}\n`;
+      texto += "\n";
+    });
+
+    const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
+    const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
+
+    texto += `[b]Total EXP:[/b] ${totalEXP}\n`;
+    texto += `[b]Total ¥:[/b] ${totalYEN}`;
+
+    document.getElementById("mensaje-post").value = texto;
+
+    document.getElementById("form-post").submit();
+  });
 });

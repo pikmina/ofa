@@ -5,6 +5,7 @@
     --pk-remove-color: #ad1010;
     --pk-color-text: #333;
     --pk-color-text-light: #dadada; /* Color claro para texto en botones de acento */
+    --pk-border-radius: 5px;
 }
 
 /* General styles for the store page */
@@ -26,7 +27,7 @@ div#filters {
     background: var(--pk-background);
     padding: 10px;
     border: 1px solid var(--pk-border-color);
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     display: flex;
     flex: 0 0 300px;
     margin-right: 20px;
@@ -51,7 +52,7 @@ display: inline-flex;
 .product-category {
     width: fit-content;
     padding: 2px 5px;
-    border-radius: 3px;
+    border-radius: var(--pk-border-radius);
     text-align: center;
     margin: 0 auto 5px;
     border: 1px solid;
@@ -86,7 +87,7 @@ display: inline-flex;
     border: 1px solid var(--pk-border-color);
     padding: 10px;
     background: var(--pk-background);
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     margin: 5px 10px 20px;
 }
 
@@ -99,7 +100,7 @@ p-title {
 }
 
 p-price {
-    border-radius: 3px;
+    border-radius: var(--pk-border-radius);
     display: block;
     font-weight: bold;
     text-align: right;
@@ -111,6 +112,8 @@ select.select-nivel {
     background: var(--pk-background);
     padding: 7px;
     margin: 10px 0;
+    border: 1px solid var(--pk-border-color);
+    border-radius: var(--pk-border-radius);
 }
 
 desc {
@@ -122,7 +125,7 @@ desc {
 button.btn-add {
     background: var(--pk-accent-color);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     font-weight: bold;
     margin: auto;
     width: 100%;
@@ -139,7 +142,7 @@ input#filtro-texto {
     background: var(--pk-background);
     border: 1px solid var(--pk-border-color);
     width: 100%;
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     padding: 14px;
     font-style: italic;
     margin-bottom: 20px;
@@ -153,7 +156,7 @@ div#filtro-categorias {
 
 div#filtro-categorias label {
     margin: 2px 0;
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
 }
 
 div#filtro-categorias label:focus {
@@ -174,7 +177,7 @@ div#carrito-container {
     margin-right: 20px;
     padding: 10px;
     border: 1px solid var(--pk-border-color);
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     position: fixed;
     left: 0;
     bottom: 0;
@@ -187,13 +190,13 @@ button#btn-finalizar {
     padding: 10px;
     display: block;
     width: 100%;
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     font-weight: bold;
     margin-top: 5px;
 }
 
 button.btn-remove {
-    border-radius: 100%;
+    border-radius: var(--pk-border-radius);
     float: right;
     color: var(--pk-remove-color);
     font-weight: bold;
@@ -217,7 +220,7 @@ table#tabla-registros {
     background: var(--pk-background);
     padding: 20px;
     width: 100%;
-    border-radius: 5px;
+    border-radius: var(--pk-border-radius);
     border: 1px solid var(--pk-border-color);
 }
 
