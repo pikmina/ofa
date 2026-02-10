@@ -18,18 +18,18 @@ const ICONOS = {
 
 // Colores por categoría
 const COLORES = {
-  "Armaduras": "#4A90E2",
-  "Armas": "#D0021B",
-  "Habilidades": "#7ED321",
-  "Técnicas": "#BD10E0",
-  "Rasgos": "#F5A623",
-  "Debilidades": "#9013FE",
-  "Accesorios": "#50E3C2",
-  "General": "#9B9B9B",
-  "Quirk": "#F8E71C",
-  "Medicina": "#417505",
-  "Estimulantes": "#B8E986",
-  "Experimentales": "#73318f"
+  "Armaduras": "#2C6FB8",
+  "Armas": "#A1121F",
+  "Habilidades": "#3F7F1E",
+  "Técnicas": "#7A1494",
+  "Rasgos": "#B87414",
+  "Debilidades": "#5E0FB8",
+  "Accesorios": "#1F8F7A",
+  "General": "#4A4A4A",
+  "Quirk": "#B59B00",
+  "Medicina": "#2F5F14",
+  "Estimulantes": "#5C8F3A",
+  "Experimentales": "#4B1F63"
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="product">
         <span class="product-category" style="color:${color}"> <i class="${icono} producto-icon"></i> ${p.Categoría}</span>
           <p-title>${p.Nombre}</p-title>
-          <small>${p.Descripción}</small>
+          <desc>${p.Descripción}</desc>
 
           <p-price>
             ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
