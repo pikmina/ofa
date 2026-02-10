@@ -71,9 +71,6 @@ desc {
 div#tienda-container {
     display: flex;
     flex-wrap: nowrap;
-    width: 1200px;
-    margin: 0 auto;
-    flex-direction: row;
     align-items: flex-start;
 }
 
@@ -92,10 +89,7 @@ div#carrito-container {
 
 div#tienda {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
 }
 
 button#btn-finalizar {
@@ -153,10 +147,9 @@ div#filters {
     border: 1px solid lightgray;
     border-radius: 5px;
     display: flex;
-    align-items: flex-start;
-    flex-direction: column;
     width: 300px;
     margin-right: 20px;
+    align-items: flex-start;
 }
 
 div#filtro-categorias {
