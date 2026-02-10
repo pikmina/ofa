@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 /* ==========================
-    LOADER
+    LOADER (FIX)
    ========================== */
 (function () {
   const loader = document.getElementById("loader-overlay");
@@ -287,12 +287,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!loader || !tienda) return;
 
+  const ocultarLoader = () => {
+    loader.style.opacity = "0";
+    loader.style.pointerEvents = "none";
+    setTimeout(() => loader.remove(), 400);
+  };
+
+  // ✅ CASO 1: la tienda YA está renderizada
+  if (tienda.children.length > 0) {
+    ocultarLoader();
+    return;
+  }
+
+  // ✅ CASO 2: la tienda se renderizará después
   const observer = new MutationObserver(() => {
     if (tienda.children.length > 0) {
-      loader.style.opacity = "0";
-      loader.style.pointerEvents = "none";
-
-      setTimeout(() => loader.remove(), 400);
+      ocultarLoader();
       observer.disconnect();
     }
   });
