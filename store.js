@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 /* ==========================
-    LOADER (FIX)
+    LOADER (FOROACTIVO SAFE)
    ========================== */
 (function () {
   const loader = document.getElementById("loader-overlay");
@@ -293,19 +293,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     setTimeout(() => loader.remove(), 400);
   };
 
-  // ✅ CASO 1: la tienda YA está renderizada
-  if (tienda.children.length > 0) {
-    ocultarLoader();
-    return;
-  }
-
-  // ✅ CASO 2: la tienda se renderizará después
-  const observer = new MutationObserver(() => {
-    if (tienda.children.length > 0) {
+  const interval = setInterval(() => {
+    // Si hay al menos un producto renderizado
+    if (tienda.querySelector(".product")) {
+      clearInterval(interval);
       ocultarLoader();
-      observer.disconnect();
     }
-  });
+  }, 100);
 
-  observer.observe(tienda, { childList: true });
+  // Failsafe: nunca más de 10s
+  setTimeout(() => {
+    clearInterval(interval);
+    ocultarLoader();
+  }, 10000);
 })();
