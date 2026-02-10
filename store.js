@@ -278,39 +278,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("form-post").submit();
   });
 });
-/* ==========================
-    LOADER (RENDER HOOK)
-   ========================== */
-(function () {
-  const loader = document.getElementById("loader-overlay");
-  if (!loader) return;
-
-  const ocultarLoader = () => {
-    loader.style.opacity = "0";
-    loader.style.pointerEvents = "none";
-    setTimeout(() => loader.remove(), 400);
-  };
-
-  const interval = setInterval(() => {
-    if (typeof window.renderTienda === "function") {
-      clearInterval(interval);
-
-      const renderOriginal = window.renderTienda;
-      let primeraVez = true;
-
-      window.renderTienda = function (...args) {
-        const result = renderOriginal.apply(this, args);
-
-        if (primeraVez) {
-          primeraVez = false;
-          ocultarLoader();
-        }
-
-        return result;
-      };
-    }
-  }, 50);
-
-  // Failsafe absoluto
-  setTimeout(ocultarLoader, 15000);
-})();
