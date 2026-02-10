@@ -69,9 +69,8 @@ desc {
 }
 
 div#tienda-container {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+ display: flex;
+    width: 100%;
 }
 
 div#carrito-container {
@@ -90,6 +89,8 @@ div#carrito-container {
 div#tienda {
     display: flex;
     flex-wrap: wrap;
+        flex: 1 1 auto;
+    min-width: 0;
 }
 
 button#btn-finalizar {
@@ -147,7 +148,7 @@ div#filters {
     border: 1px solid lightgray;
     border-radius: 5px;
     display: flex;
-    width: 300px;
+    flex: 0 0 300px;
     margin-right: 20px;
     align-items: flex-start;
 }
