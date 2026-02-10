@@ -69,7 +69,7 @@ desc {
 }
 
 div#tienda-container {
- display: flex;
+    display: flex;
     width: 100%;
 }
 
@@ -89,7 +89,7 @@ div#carrito-container {
 div#tienda {
     display: flex;
     flex-wrap: wrap;
-        flex: 1 1 auto;
+    flex: 1 1 auto;
     min-width: 0;
 }
 
@@ -157,6 +157,16 @@ div#filtro-categorias {
     display: flex;
     flex-direction: column;
     line-height: 2.4em;
+}
+
+div#filtro-categorias label {
+    margin: 2px 0;
+    border-radius: 5px;
+}
+
+div#filtro-categorias label:focus {
+    background: #e5e5e5;
+    font-weight: bold;
 }
 
 select#select-categoria {
