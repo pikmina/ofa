@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cats = [...new Set(lista.map(p => p.Categoría))];
 
     cats.forEach(cat => {
-      html += `<h2>${cat}</h2><div class="product-list">`;
+      html += `<h2><i class="${icono}"></i> ${cat}</h2><div class="product-list">`;
 
       lista.filter(p => p.Categoría === cat).forEach(p => {
 
