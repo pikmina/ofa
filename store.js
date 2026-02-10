@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         html += `
         <div class="product">
-        <span class="product-category ${color}"> <i class="${icono} producto-icon"></i> ${p.Categoría}</span>
+        <span class="product-category" style="color:${color}"> <i class="${icono} producto-icon"></i> ${p.Categoría}</span>
           <p-title>${p.Nombre}</p-title>
           <small>${p.Descripción}</small>
 
