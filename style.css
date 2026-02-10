@@ -1,8 +1,10 @@
 :root {
     --pk-background: #f8f8f8;
     --pk-border-color: lightgray;
-    --pk-accent-color: #057e2d;
+    --pk-accent-color: #057e2d; /* Color de acento para botones y elementos destacados */
     --pk-remove-color: #ad1010;
+    --pk-color-text: #333;
+    --pk-color-text-light: #dadada; /* Color claro para texto en botones de acento */
 }
 
 /* General styles for the store page */
@@ -10,6 +12,7 @@
 div#tienda-container {
     display: flex;
     width: 100%;
+    color: var(--pk-color-text);
 }
 
 div#tienda {
@@ -123,6 +126,7 @@ button.btn-add {
     font-weight: bold;
     margin: auto;
     width: 100%;
+    color:var(--pk-color-text-light); 
 }
 
 /* Styles for the filters section */
@@ -140,8 +144,6 @@ input#filtro-texto {
     font-style: italic;
     margin-bottom: 20px;
 }
-
-
 
 div#filtro-categorias {
     display: flex;
