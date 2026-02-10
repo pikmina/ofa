@@ -41,19 +41,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       FILTROS (estado)
      ========================== */
   let filtroTexto = "";
-  let filtroCategoria = "Todas";
-  let filtroCoste = "Todos";
+  let categoriasActivas = [];
+  let costesActivos = [];
 
   /* ==========================
       INICIALIZAR FILTROS
      ========================== */
-  const selectCategoria = document.getElementById("filtro-categoria");
-  const categorias = ["Todas", ...new Set(productos.map(p => p.Categoría))];
+  const contCategorias = document.getElementById("filtro-categorias");
 
-  categorias.forEach(c => {
-    const opt = document.createElement("option");
-    opt.textContent = c;
-    selectCategoria.appendChild(opt);
+  const categorias = [...new Set(productos.map(p => p.Categoría))];
+
+  categorias.forEach(cat => {
+    const label = document.createElement("label");
+    label.innerHTML = `
+    <input type="checkbox" value="${cat}">
+    ${cat}
+  `;
+    contCategorias.appendChild(label);
   });
 
   document.getElementById("filtro-texto").addEventListener("input", e => {
@@ -61,52 +65,57 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderTienda(aplicarFiltros());
   });
 
-  selectCategoria.addEventListener("change", e => {
-    filtroCategoria = e.target.value;
-    renderTienda(aplicarFiltros());
-  });
+  document.addEventListener("change", e => {
+    if (e.target.matches("#filtro-categorias input, #filtro-costes input")) {
 
-  document.getElementById("filtro-coste").addEventListener("change", e => {
-    filtroCoste = e.target.value;
-    renderTienda(aplicarFiltros());
+      categoriasActivas = [...document.querySelectorAll(
+        "#filtro-categorias input:checked"
+      )].map(i => i.value);
+
+      costesActivos = [...document.querySelectorAll(
+        "#filtro-costes input:checked"
+      )].map(i => i.value);
+
+      renderTienda(aplicarFiltros());
+    }
   });
 
   /* ==========================
       APLICAR FILTROS
      ========================== */
-function aplicarFiltros() {
-  return productos.filter(p => {
+  function aplicarFiltros() {
+    return productos.filter(p => {
 
-    // TEXTO
-    if (filtroTexto && !p.Nombre.toLowerCase().includes(filtroTexto)) {
-      return false;
-    }
+      // TEXTO
+      if (filtroTexto && !p.Nombre.toLowerCase().includes(filtroTexto)) {
+        return false;
+      }
 
-    // CATEGORÍAS (checkboxes)
-    if (categoriasActivas.length &&
+      // CATEGORÍAS (checkboxes)
+      if (categoriasActivas.length &&
         !categoriasActivas.includes(p.Categoría)) {
-      return false;
-    }
+        return false;
+      }
 
-    // DETECTAR TIPOS DE COSTE
-    const tieneEXP = Number(p.PrecioEXP) > 0 ||
-      [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
-        .some(v => Number(v) > 0);
+      // DETECTAR TIPOS DE COSTE
+      const tieneEXP = Number(p.PrecioEXP) > 0 ||
+        [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
+          .some(v => Number(v) > 0);
 
-    const tieneYEN = Number(p.PrecioYenes) > 0 ||
-      [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
-        .some(v => Number(v) > 0);
+      const tieneYEN = Number(p.PrecioYenes) > 0 ||
+        [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
+          .some(v => Number(v) > 0);
 
-    // COSTE (checkboxes)
-    if (costesActivos.length) {
-      if (costesActivos.includes("EXP") && tieneEXP) return true;
-      if (costesActivos.includes("YEN") && tieneYEN) return true;
-      return false;
-    }
+      // COSTE (checkboxes)
+      if (costesActivos.length) {
+        if (costesActivos.includes("EXP") && tieneEXP) return true;
+        if (costesActivos.includes("YEN") && tieneYEN) return true;
+        return false;
+      }
 
-    return true;
-  });
-}
+      return true;
+    });
+  }
   /* ==========================
       RENDER TIENDA
      ========================== */
