@@ -233,35 +233,3 @@ table#tabla-registros thead tr th {
 table#tabla-registros tbody tr td {
     padding: 10px 0;
 }
-
-/* Loader styles */
-
-#loader-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 10, 0.85);
-  z-index: 9999;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  color: #fff;
-  font-size: 18px;
-  font-family: inherit;
-}
-
-.loader-spinner {
-  width: 64px;
-  height: 64px;
-  border: 6px solid #555;
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 15px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
