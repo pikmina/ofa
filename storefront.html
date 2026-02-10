@@ -1,0 +1,31 @@
+<!-- Store by Pikmina -->
+<script type="text/javascript" src="https://pikmina.github.io/ofa/store.js"></script>
+<link rel="stylesheet" type="text/css" href="https://pikmina.github.io/ofa/style.css" />
+<div id="carrito-container">
+  <h2>Carrito</h2>
+  <div id="carrito"></div>
+
+  <button id="btn-finalizar">Finalizar compra</button>
+
+  <!-- Este formulario permite postear el resultado -->
+  <form id="form-post" action="/post?t=1&mode=reply" method="post" style="display:none;">
+    <textarea id="mensaje-post" name="message"></textarea>
+  </form>
+</div>
+
+<div id="tienda-container">
+  <div id="filters">
+    <input type="text" id="filtro-texto" placeholder="Buscar..." />
+    <div id="filtro-categorias"></div>
+    <div id="filtro-costes">
+      <label>
+        <input type="checkbox" value="EXP" /> EXP
+      </label>
+      <label>
+        <input type="checkbox" value="YEN" /> ¥
+      </label>
+    </div>
+  </div>
+  <div id="tienda"></div>
+
+</div>
