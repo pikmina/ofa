@@ -13,7 +13,8 @@ const ICONOS = {
   "Quirk": "fa-solid fa-bolt",
   "Medicina": "fa-solid fa-pills",
   "Estimulantes": "fa-solid fa-flask",
-  "Experimentales": "fa-solid fa-flask-vial"
+  "Experimentales": "fa-solid fa-flask-vial", 
+  "Certificaciones": "fa-solid fa-certificate"
 };
 
 // Colores por categoría
@@ -29,7 +30,8 @@ const COLORES = {
   "Quirk": "#B59B00",
   "Medicina": "#2F5F14",
   "Estimulantes": "#5C8F3A",
-  "Experimentales": "#4B1F63"
+  "Experimentales": "#4B1F63",
+  "Certificaciones": "#8F4A1F"
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -145,8 +147,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="product">
         <span class="product-category" style="color:${color}"> <i class="${icono} producto-icon"></i> ${p.Categoría}</span>
           <p-title>${p.Nombre}</p-title>
+          <div class="product-description">
           <desc>${p.Descripción}</desc>
-
+          ${p.Notas ? `<notes><b>Notas:</b> ${p.Notas}</notes>` : ""}
+          </div>
           <p-price>
             ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
             ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
