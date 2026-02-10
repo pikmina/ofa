@@ -278,3 +278,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("form-post").submit();
   });
 });
+/* ==========================
+    LOADER
+   ========================== */
+(function () {
+  const loader = document.getElementById("loader-overlay");
+  const tienda = document.getElementById("tienda");
+
+  if (!loader || !tienda) return;
+
+  const observer = new MutationObserver(() => {
+    if (tienda.children.length > 0) {
+      loader.style.opacity = "0";
+      loader.style.pointerEvents = "none";
+
+      setTimeout(() => loader.remove(), 400);
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(tienda, { childList: true });
+})();
