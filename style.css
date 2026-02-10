@@ -1,97 +1,15 @@
 :root {
     --pk-background: #f8f8f8;
     --pk-border-color: lightgray;
-    --pk-accent-color: #3793ff;
-    --pk-remove-color: red;
+    --pk-accent-color: #057e2d;
+    --pk-remove-color: #ad1010;
 }
 
-
-.product-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-#tienda>h2 {
-    display: block;
-    margin: 10px;
-    padding: 10px;
-    width: 100%;
-    border-bottom: 2px solid var(--pk-border-color);
-    font-weight: bold;
-}
-
-.product {
-    width: 31.33%;
-    min-width: 300px;
-    border: 1px solid var(--pk-border-color);
-    padding: 10px;
-    background: var(--pk-background);
-    border-radius: 5px;
-    margin: 5px 10px 20px;
-}
-
-button.btn-add {
-    background: #3793ff;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    margin: auto;
-    width: 100%;
-}
-
-p-title {
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-    display: block;
-    margin-top: 10px;
-}
-
-p-price {
-    border-radius: 3px;
-    display: block;
-    font-weight: bold;
-    text-align: right;
-    margin: 15px 0 5px;
-}
-
-select.select-nivel {
-    width: 100%;
-    background: var(--pk-background);
-    padding: 7px;
-    margin: 10px 0;
-}
-
-desc {
-    border-bottom: 1px solid var(--pk-border-color);
-    display: block;
-    padding: 3px 0;
-    height: 100px;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: visible;
-}
+/* General styles for the store page */
 
 div#tienda-container {
     display: flex;
     width: 100%;
-}
-
-div#carrito-container {
-    width: 350px;
-    background: var(--pk-background);
-    margin-right: 20px;
-    padding: 10px;
-    border: 1px solid var(--pk-border-color);
-    border-radius: 5px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    min-height: 300px;
 }
 
 div#tienda {
@@ -101,21 +19,24 @@ div#tienda {
     min-width: 0;
 }
 
-button#btn-finalizar {
-    background: var(-pk-accent-color);
+div#filters {
+    background: var(--pk-background);
     padding: 10px;
-    display: block;
-    width: 100%;
+    border: 1px solid var(--pk-border-color);
     border-radius: 5px;
-    font-weight: bold;
-    margin-top: 5px;
+    display: flex;
+    flex: 0 0 300px;
+    margin-right: 20px;
+    align-items: flex-start;
 }
 
-button.btn-remove {
-    border-radius: 100%;
-    float: right;
-    color: var(--pk-remove-color);
-    font-weight: bold;
+.product-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .product-header {
@@ -145,28 +66,82 @@ button.btn-remove {
     overflow-x: hidden;
 }
 
-.carrito-totales {
-    margin-top: 20px;
-    text-align: right;
-    padding: 7px 10px;
-}
-
-span.carrito-line {
-    padding: 5px;
+#tienda>h2 {
     display: block;
-    border-bottom: 1px dotted var(--pk-border-color);
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 2px solid var(--pk-border-color);
+    font-weight: bold;
 }
 
-div#filters {
-    background: var(--pk-background);
-    padding: 10px;
+/* Styles for the product cards */
+
+.product {
+    width: 31.33%;
+    min-width: 300px;
     border: 1px solid var(--pk-border-color);
+    padding: 10px;
+    background: var(--pk-background);
     border-radius: 5px;
-    display: flex;
-    flex: 0 0 300px;
-    margin-right: 20px;
-    align-items: flex-start;
+    margin: 5px 10px 20px;
 }
+
+p-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    display: block;
+    margin-top: 10px;
+}
+
+p-price {
+    border-radius: 3px;
+    display: block;
+    font-weight: bold;
+    text-align: right;
+    margin: 15px 0 5px;
+}
+
+select.select-nivel {
+    width: 100%;
+    background: var(--pk-background);
+    padding: 7px;
+    margin: 10px 0;
+}
+
+desc {
+    border-bottom: 1px solid var(--pk-border-color);
+    display: block;
+    padding: 3px 0;
+}
+
+button.btn-add {
+    background: var(--pk-accent-color);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: auto;
+    width: 100%;
+}
+
+/* Styles for the filters section */
+
+.filter-content {
+    width: 100%;
+}
+
+input#filtro-texto {
+    background: var(--pk-background);
+    border: 1px solid var(--pk-border-color);
+    width: 100%;
+    border-radius: 5px;
+    padding: 14px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+
 
 div#filtro-categorias {
     display: flex;
@@ -187,6 +162,54 @@ div#filtro-categorias label:focus {
 select#select-categoria {
     min-width: 300px;
 }
+
+
+/* Styles for the shopping cart */
+
+div#carrito-container {
+    width: 350px;
+    background: var(--pk-background);
+    margin-right: 20px;
+    padding: 10px;
+    border: 1px solid var(--pk-border-color);
+    border-radius: 5px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    min-height: 300px;
+}
+
+
+button#btn-finalizar {
+    background: var(--pk-accent-color);
+    padding: 10px;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+button.btn-remove {
+    border-radius: 100%;
+    float: right;
+    color: var(--pk-remove-color);
+    font-weight: bold;
+}
+
+.carrito-totales {
+    margin-top: 20px;
+    text-align: right;
+    padding: 7px 10px;
+}
+
+span.carrito-line {
+    padding: 5px;
+    display: block;
+    border-bottom: 1px dotted var(--pk-border-color);
+}
+
+/* Styles for the records table */
 
 table#tabla-registros {
     background: var(--pk-background);
