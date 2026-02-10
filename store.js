@@ -16,6 +16,22 @@ const ICONOS = {
   "Experimentales": "fa-solid fa-flask-vial"
 };
 
+// Colores por categoría
+const COLORES = {
+  "Armaduras": "#4A90E2",
+  "Armas": "#D0021B",
+  "Habilidades": "#7ED321",
+  "Técnicas": "#BD10E0",
+  "Rasgos": "#F5A623",
+  "Debilidades": "#9013FE",
+  "Accesorios": "#50E3C2",
+  "General": "#9B9B9B",
+  "Quirk": "#F8E71C",
+  "Medicina": "#417505",
+  "Estimulantes": "#B8E986",
+  "Experimentales": "#73318f"
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
   if (!document.getElementById("tienda")) return;
 
@@ -99,6 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const precioExp = Number(p.PrecioEXP) || 0;
         const precioYen = Number(p.PrecioYenes) || 0;
         const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
+        const color = COLORES[p.Categoría] || "#666";
 
         const niveles = [
           { nombre: "Nivel 1", exp: p.Nivel1_EXP, yen: p.Nivel1_Yen },
@@ -110,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         html += `
         <div class="product">
-        <span class="product-category"> <i class="${icono} fa-3x producto-icon"></i> ${p.Categoría}</span>
+        <span class="product-category ${color}"> <i class="${icono} producto-icon"></i> ${p.Categoría}</span>
           <p-title>${p.Nombre}</p-title>
           <small>${p.Descripción}</small>
 
