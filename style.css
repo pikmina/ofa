@@ -214,22 +214,3 @@ span.carrito-line {
     border-bottom: 1px dotted var(--pk-border-color);
 }
 
-/* Styles for the records table */
-
-table#tabla-registros {
-    background: var(--pk-background);
-    padding: 20px;
-    width: 100%;
-    border-radius: var(--pk-border-radius);
-    border: 1px solid var(--pk-border-color);
-}
-
-table#tabla-registros thead tr th {
-    border-bottom: 2px solid var(--pk-border-color);
-    text-align: left;
-    font-size: 110%;
-}
-
-table#tabla-registros tbody tr td {
-    padding: 10px 0;
-}

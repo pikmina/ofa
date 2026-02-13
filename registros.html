@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros</title>
+    <script src="registros.js"></script>
+    <link rel="stylesheet" href="registros.css">
+</head>
+<body>
+    <div id="filtros" style="margin-bottom:15px;">
+  <h3>Filtros</h3>
+
+  <label><strong>Grupo:</strong></label><br>
+  <div id="filtro-grupo"></div>
+
+  <br>
+  <label><strong>Tipo de Don:</strong></label><br>
+  <div id="filtro-don"></div>
+
+  <br>
+  <label><strong>Sexo:</strong></label><br>
+  <div id="filtro-sexo"></div>
+</div>
+
+<table id="tabla-registros" border="1" cellspacing="0" cellpadding="5">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th onclick="ordenar('Apellido')">Apellido ⬍</th>
+      <th>Grupo</th>
+      <th>Tipo de Don</th>
+      <th>Alineación</th>
+      <th onclick="ordenar('Tipo de Sangre')">Tipo de Sangre ⬍</th>
+      <th>Apodo</th>
+      <th>Sexo</th>
+      <th onclick="ordenar('PB')">PB ⬍</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</body>
+</html>
