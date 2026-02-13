@@ -1,4 +1,4 @@
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQm9H974C5O1TPyBm4CFM7Iu2_OVDyE4b2ndHeduqxWwFldHVuPpuZ1lii09WCgRs0QpIKF82mRp8sd/pub?gid=1538740590&single=true&output=csv";
+const CSV_URL = "https://script.google.com/macros/s/AKfycbzStJAchfIslE1hhASqz96OAz9e0DfXee7NGhYnIEpYxIJ4ncIlA1YeiSeJp0QxedhU/exec";
 
 let registros = [];
 let sortColumn = "";
