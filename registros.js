@@ -1,8 +1,19 @@
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQm9H974C5O1TPyBm4CFM7Iu2_OVDyE4b2ndHeduqxWwFldHVuPpuZ1lii09WCgRs0QpIKF82mRp8sd/pub?gid=1538740590&single=true&output=csv";
+const API_URL = "https://script.google.com/macros/s/AKfycbzY6sWauov11c6RQ6H-OTJMd8d7iXh5XDvUbwNpHqfexPzmkCmLNZSxne5ZPUq6gXVz/exec";
 
 let registros = [];
 let sortColumn = "";
 let sortAsc = true;
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      registros = data;
+      generarFiltros();
+      mostrarTabla();
+    })
+    .catch(err => console.error("Error:", err));
+});
 
 document.addEventListener("DOMContentLoaded", cargarCSV);
 
