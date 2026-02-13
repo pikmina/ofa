@@ -18,7 +18,6 @@ function loadDocs(docs, categories) {
     renderDocs(docs);
 }
 
-
 // ===============================
 // LOAD CATEGORIES (SIDEBAR)
 // ===============================
@@ -103,6 +102,7 @@ function loadCategories(categories) {
         }
     });
 }
+
 
 
 // ===============================
