@@ -1,187 +1,169 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbzY6sWauov11c6RQ6H-OTJMd8d7iXh5XDvUbwNpHqfexPzmkCmLNZSxne5ZPUq6gXVz/exec";
+const RegistrosApp = (() => {
 
-let registros = [];
-let sortColumn = "";
-let sortAsc = true;
+  /* =====================================
+     CONFIGURACIÓN
+  ===================================== */
+  const API_URL = "https://script.google.com/macros/s/AKfycbzY6sWauov11c6RQ6H-OTJMd8d7iXh5XDvUbwNpHqfexPzmkCmLNZSxne5ZPUq6gXVz/exec";
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      registros = data;
-      generarFiltros();
-      mostrarTabla();
-    })
-    .catch(err => console.error("Error:", err));
-});
+  /* =====================================
+     ESTADO PRIVADO
+  ===================================== */
+  let registros = [];
+  let filtrosActivos = {};
+  let sortColumn = "";
+  let sortAsc = true;
 
-document.addEventListener("DOMContentLoaded", cargarCSV);
+  /* =====================================
+     INICIALIZACIÓN
+  ===================================== */
+  function init() {
 
-// ----------------------
-// Cargar CSV
-// ----------------------
-function cargarCSV() {
-  fetch(CSV_URL)
-    .then(r => r.text())
-    .then(text => {
-      registros = parseCSV(text);
-      generarFiltros();
-      mostrarTabla();
-    })
-    .catch(err => {
-      console.error("Error cargando CSV:", err);
-    });
-}
+    // Seguridad: solo ejecutar si existe la tabla
+    if (!document.getElementById("tabla-registros")) return;
 
-// ----------------------
-// Parser CSV robusto (sin librerías)
-// ----------------------
-function parseCSV(text) {
-  const rows = [];
-  let current = '';
-  let inQuotes = false;
-  const lines = [];
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        registros = data;
+        generarFiltros();
+        renderTabla(registros);
+      })
+      .catch(err => console.error("Error:", err));
 
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-
-    if (char === '"' && text[i + 1] === '"') {
-      current += '"';
-      i++;
-    } else if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === '\n' && !inQuotes) {
-      lines.push(current);
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  lines.push(current);
-
-  const headers = lines[0].split(",").map(h => h.trim());
-
-  for (let i = 1; i < lines.length; i++) {
-    const cols = [];
-    let field = '';
-    let quoted = false;
-
-    for (let j = 0; j < lines[i].length; j++) {
-      const c = lines[i][j];
-
-      if (c === '"' && lines[i][j + 1] === '"') {
-        field += '"';
-        j++;
-      } else if (c === '"') {
-        quoted = !quoted;
-      } else if (c === ',' && !quoted) {
-        cols.push(field.trim());
-        field = '';
-      } else {
-        field += c;
-      }
-    }
-    cols.push(field.trim());
-
-    if (cols.length >= headers.length) {
-      let obj = {};
-      headers.forEach((h, idx) => {
-        obj[h] = cols[idx] || "";
-      });
-      rows.push(obj);
-    }
+    activarEventos();
   }
 
-  return rows;
-}
+  /* =====================================
+     GENERAR FILTROS
+  ===================================== */
+  function generarFiltros() {
+    crearGrupoCheckbox("Grupo", "filtro-grupo");
+    crearGrupoCheckbox("Tipo de Don", "filtro-don");
+    crearGrupoCheckbox("Sexo", "filtro-sexo");
+  }
 
-// ----------------------
-// Generar filtros
-// ----------------------
-function generarFiltros() {
-  generarCheckbox("Grupo", "filtro-grupo");
-  generarCheckbox("Tipo de Don", "filtro-don");
-  generarCheckbox("Sexo", "filtro-sexo");
-}
+  function crearGrupoCheckbox(campo, contenedorId) {
+    const cont = document.getElementById(contenedorId);
+    if (!cont) return;
 
-function generarCheckbox(campo, contenedorId) {
-  const valores = [...new Set(registros.map(r => r[campo]).filter(v => v))];
-  const cont = document.getElementById(contenedorId);
-  cont.innerHTML = "";
+    const valores = [...new Set(
+      registros.map(r => r[campo]).filter(v => v)
+    )].sort();
 
-  valores.sort().forEach(val => {
-    cont.innerHTML += `
-      <label>
-        <input type="checkbox" class="chk" data-campo="${campo}" value="${val}">
+    cont.innerHTML = "";
+
+    valores.forEach(val => {
+      const label = document.createElement("label");
+      label.innerHTML = `
+        <input type="checkbox" data-campo="${campo}" value="${val}">
         ${val}
-      </label><br>
-    `;
-  });
-
-  cont.querySelectorAll(".chk").forEach(chk =>
-    chk.addEventListener("change", mostrarTabla)
-  );
-}
-
-// ----------------------
-// Mostrar tabla
-// ----------------------
-function mostrarTabla() {
-
-  let filtrados = registros.filter(r => {
-
-    const filtrosPorCampo = {};
-
-    document.querySelectorAll(".chk:checked").forEach(chk => {
-      const campo = chk.dataset.campo;
-      if (!filtrosPorCampo[campo]) filtrosPorCampo[campo] = [];
-      filtrosPorCampo[campo].push(chk.value);
-    });
-
-    return Object.keys(filtrosPorCampo).every(campo =>
-      filtrosPorCampo[campo].includes(r[campo])
-    );
-  });
-
-  if (sortColumn) {
-    filtrados.sort((a, b) => {
-      let A = (a[sortColumn] || "").toLowerCase();
-      let B = (b[sortColumn] || "").toLowerCase();
-      return (A < B ? -1 : A > B ? 1 : 0) * (sortAsc ? 1 : -1);
+      `;
+      cont.appendChild(label);
+      cont.appendChild(document.createElement("br"));
     });
   }
 
-  const tbody = document.querySelector("#tabla-registros tbody");
-  let html = "";
+  /* =====================================
+     EVENTOS
+  ===================================== */
+  function activarEventos() {
 
-  filtrados.forEach(r => {
-    html += `
-      <tr>
-        <td>${r["Nombre"] || ""}</td>
-        <td>${r["Apellido"] || ""}</td>
-        <td>${r["Grupo"] || ""}</td>
-        <td>${r["Tipo de Don"] || ""}</td>
-        <td>${r["Alineación"] || ""}</td>
-        <td>${r["Tipo de Sangre"] || ""}</td>
-        <td>${r["Apodo"] || ""}</td>
-        <td>${r["Sexo"] || ""}</td>
-        <td>${r["PB"] || ""}</td>
-      </tr>
-    `;
-  });
+    document.addEventListener("change", e => {
+      if (!e.target.matches("#filtro-grupo input, #filtro-don input, #filtro-sexo input")) return;
 
-  tbody.innerHTML = html;
-}
+      filtrosActivos = {};
 
-// ----------------------
-// Ordenar
-// ----------------------
-function ordenar(col) {
-  if (sortColumn === col) {
-    sortAsc = !sortAsc;
-  } else {
-    sortColumn = col;
-    sortAsc = true;
+      document.querySelectorAll(
+        "#filtro-grupo input:checked, #filtro-don input:checked, #filtro-sexo input:checked"
+      ).forEach(chk => {
+        const campo = chk.dataset.campo;
+        if (!filtrosActivos[campo]) filtrosActivos[campo] = [];
+        filtrosActivos[campo].push(chk.value);
+      });
+
+      renderTabla(aplicarFiltros());
+    });
+
   }
-  mostrarTabla();
-}
+
+  /* =====================================
+     APLICAR FILTROS
+  ===================================== */
+  function aplicarFiltros() {
+    return registros.filter(r => {
+      return Object.keys(filtrosActivos).every(campo =>
+        filtrosActivos[campo].includes(r[campo])
+      );
+    });
+  }
+
+  /* =====================================
+     RENDER TABLA
+  ===================================== */
+  function renderTabla(lista) {
+
+    let datos = [...lista];
+
+    if (sortColumn) {
+      datos.sort((a, b) => {
+        let A = (a[sortColumn] || "").toLowerCase();
+        let B = (b[sortColumn] || "").toLowerCase();
+        return (A < B ? -1 : A > B ? 1 : 0) * (sortAsc ? 1 : -1);
+      });
+    }
+
+    const tbody = document.querySelector("#tabla-registros tbody");
+    if (!tbody) return;
+
+    let html = "";
+
+    datos.forEach(r => {
+      html += `
+        <tr>
+          <td>${r["Nombre"] || ""}</td>
+          <td>${r["Apellido"] || ""}</td>
+          <td>${r["Grupo"] || ""}</td>
+          <td>${r["Tipo de Don"] || ""}</td>
+          <td>${r["Alineación"] || ""}</td>
+          <td>${r["Tipo de Sangre"] || ""}</td>
+          <td>${r["Apodo"] || ""}</td>
+          <td>${r["Sexo"] || ""}</td>
+          <td>${r["PB"] || ""}</td>
+          <td>${r["Ocupación"] || ""}</td>
+          <td>${r["Rango"] || ""}</td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = html;
+  }
+
+  /* =====================================
+     ORDENAR (expuesto solo si se necesita)
+  ===================================== */
+  function ordenar(col) {
+    if (sortColumn === col) {
+      sortAsc = !sortAsc;
+    } else {
+      sortColumn = col;
+      sortAsc = true;
+    }
+    renderTabla(aplicarFiltros());
+  }
+
+  /* =====================================
+     API PÚBLICA
+  ===================================== */
+  return {
+    init,
+    ordenar
+  };
+
+})();
+
+/* =====================================
+   INICIAR AUTOMÁTICAMENTE
+===================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  RegistrosApp.init();
+});

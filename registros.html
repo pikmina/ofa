@@ -4,40 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registros</title>
-    <script src="registros.js"></script>
+    <script src="registros.js" defer></script>
     <link rel="stylesheet" href="registros.css">
 </head>
 <body>
     <div id="filtros" style="margin-bottom:15px;">
   <h3>Filtros</h3>
 
-  <label><strong>Grupo:</strong></label><br>
-  <div id="filtro-grupo"></div>
-
-  <br>
-  <label><strong>Tipo de Don:</strong></label><br>
-  <div id="filtro-don"></div>
-
-  <br>
-  <label><strong>Sexo:</strong></label><br>
-  <div id="filtro-sexo"></div>
+ <div id="filtro-grupo"></div>
+<div id="filtro-don"></div>
+<div id="filtro-sexo"></div>
 </div>
 
-<table id="tabla-registros" border="1" cellspacing="0" cellpadding="5">
+<table id="tabla-registros">
   <thead>
     <tr>
-      <th>Nombre</th>
-      <th onclick="ordenar('Apellido')">Apellido ⬍</th>
-      <th>Grupo</th>
-      <th>Tipo de Don</th>
-      <th>Alineación</th>
-      <th onclick="ordenar('Tipo de Sangre')">Tipo de Sangre ⬍</th>
-      <th>Apodo</th>
-      <th>Sexo</th>
-      <th onclick="ordenar('PB')">PB ⬍</th>
+      <th onclick="ordenar('Nombre')">Nombre</th>
+      <th onclick="ordenar('Apellido')">Apellido</th>
+      <th onclick="ordenar('Grupo')">Grupo</th>
+      <th onclick="ordenar('Tipo de Don')">Tipo de Don</th>
+      <th onclick="ordenar('Alineación')">Alineación</th>
+      <th onclick="ordenar('Tipo de Sangre')">Tipo de Sangre</th>
+      <th onclick="ordenar('Apodo')">Apodo</th>
+      <th onclick="ordenar('Sexo')">Sexo</th>
+      <th onclick="ordenar('PB')">PB</th>
+      <th onclick="ordenar('Ocupación')">Ocupación</th>
+      <th onclick="ordenar('Rango')">Rango</th>
     </tr>
   </thead>
   <tbody></tbody>
+</table>
 </table>
 </body>
 </html>
