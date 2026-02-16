@@ -6,6 +6,17 @@ const appTienda = (function () {
 
   const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec";
 
+// Utilidad global segura
+function escapeHTML(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+  
   const ICONOS = {
     "Armaduras": "fa-solid fa-shield",
     "Armas": "fa-solid fa-gun",
@@ -43,6 +54,8 @@ const appTienda = (function () {
   };
 
   const num = v => Number(v) || 0;
+
+  
 
   /* ==========================
      ESTADO
