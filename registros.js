@@ -6,7 +6,8 @@ const RegistrosApp = (() => {
   let filtrosActivos = {};
   let columnaOrden = null;
   let ascendente = true;
-  let pestañaActiva = "pb";
+  let pestañaActiva = "personaje";
+  let busquedaTexto = "";
 
   /* ================================
      INIT
@@ -125,16 +126,55 @@ const RegistrosApp = (() => {
         renderTabla(registros);
       });
     }
+
+    /* ===== BUSCADOR TEXTO ===== */
+const inputBusqueda = document.getElementById("busqueda-texto");
+
+if (inputBusqueda) {
+  inputBusqueda.addEventListener("input", e => {
+    busquedaTexto = e.target.value.toLowerCase().trim();
+    renderTabla();
+  });
+}
   }
 
-  function aplicarFiltros() {
+function aplicarFiltros() {
 
-    return registros.filter(r => {
-      return Object.keys(filtrosActivos).every(campo =>
-        filtrosActivos[campo].includes(r[campo])
-      );
-    });
-  }
+  return registros.filter(r => {
+
+    /* ===== CHECKBOX ===== */
+    const pasaCheckbox = Object.keys(filtrosActivos).every(campo =>
+      filtrosActivos[campo].includes(r[campo])
+    );
+
+    if (!pasaCheckbox) return false;
+
+    /* ===== BUSCADOR TEXTO ===== */
+    if (busquedaTexto) {
+
+      const textoRegistro = [
+        r["Nombre"],
+        r["Apellido"],
+        r["Apodo"],
+        r["Grupo"],
+        r["Tipo de Don"],
+        r["Tipo de Sangre"],
+        r["Ocupación"],
+        r["Rango"],
+        r["Don"],
+        r["Alineación"]
+      ]
+      .join(" ")
+      .toLowerCase();
+
+      if (!textoRegistro.includes(busquedaTexto)) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}
 
   /* ================================
      RENDER TABLA

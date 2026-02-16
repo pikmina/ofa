@@ -1,93 +1,147 @@
-/* Styles for the records table */
-body {
-    font-family: Tahoma;
-    font-size: 16px;
-    line-height: 1.5em;
-    background: lightgray;
+/* =========================================
+   VARIABLES
+========================================= */
+:root {
+
+  /* Tipografía */
+  --font-base: Tahoma, sans-serif;
+  --font-alt: Arial, sans-serif;
+  --font-size-base: 16px;
+  --line-height-base: 1.5em;
+
+  /* Colores */
+  --color-bg-body: #d3d3d3;
+  --color-bg-container: #f9f9f9;
+  --color-bg-table-alt: #f4f4f4;
+  --color-primary: #673AB7;
+  --color-white: #ffffff;
+  --color-border: #e8e8e8;
+
+  /* Espaciado */
+  --spacing-xs: 6px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 30px;
+
+  /* Bordes */
+  --radius-sm: 5px;
+
+  /* Layout */
+  --container-width: 1200px;
 }
 
-div#filtros {
-    border: 1px solid #e8e8e8;
-    padding: 10px;
-    border-radius: 5px;
+/* =========================================
+   BASE
+========================================= */
+body {
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  background: var(--color-bg-body);
+}
+
+/* =========================================
+   CONTAINER
+========================================= */
+.container-rec {
+  width: var(--container-width);
+  margin: auto;
+  background: var(--color-bg-container);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-sm);
+}
+
+/* =========================================
+   FILTROS
+========================================= */
+#filtros {
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
 }
 
 #filtros h3 {
-    display: block;
-    width: 100%;
-    margin: 10px 15px;
-}
-
-div#filtros div {
-    vertical-align: top;
-    display: inline-block;
-    margin: 10px;
-}
-
-.container {
-    width: 1200px;
-    margin: auto;
-    background: #f9f9f9;
-    padding: 30px;
-    border-radius: 5px;
-}
-
-#sistema-registros {
-  font-family: Arial, sans-serif;
-}
-
-#tabla-registros {
+  display: block;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+  margin: var(--spacing-sm) var(--spacing-md);
 }
 
-#tabla-registros th {
-  background: #673AB7;
-  color: white;
+#filtros > div {
+  display: inline-block;
+  vertical-align: top;
+  margin: var(--spacing-sm);
+}
+
+#filtro-limpiar {
+  display: block !important;
+}
+
+#btn-limpiar-filtros {
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-sm) calc(var(--spacing-md) + 5px);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
   cursor: pointer;
 }
 
-#tabla-registros th, 
+/* Buscador */
+#busqueda-texto {
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-sm) var(--spacing-md);
+  width: 100%;
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+}
+
+/* =========================================
+   TABS
+========================================= */
+.tabs {
+  padding: var(--spacing-sm) 0;
+}
+
+.tab-btn {
+  padding: var(--spacing-md);
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-weight: bold;
+  border-radius: var(--radius-sm);
+  min-width: 80px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.tab-btn:hover {
+  opacity: 0.9;
+}
+
+.tab-btn.active {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.15) inset;
+}
+
+/* =========================================
+   TABLA
+========================================= */
+#tabla-registros {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-md);
+  font-family: var(--font-alt);
+}
+
+#tabla-registros th {
+  background: var(--color-primary);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+#tabla-registros th,
 #tabla-registros td {
-  padding: 6px;
+  padding: var(--spacing-xs);
   text-align: left;
 }
 
 #tabla-registros tr:nth-child(even) {
-  background: #f4f4f4;
-}
-
-.filtros {
-  margin-bottom: 15px;
-}
-
-.filtros strong {
-  display: block;
-  margin-top: 10px;
-}
-
-.tabs {
-    padding: 10px 0;
-}
-
-button.tab-btn {
-    padding: 15px;
-    border: none;
-    background: #673AB7;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 5px;
-    min-width: 80px;
-}
-
-div#filtro-limpiar {
-    display: block !important;
-}
-
-button#btn-limpiar-filtros {
-    border: 1px solid #e8e8e8;
-    padding: 10px 20px;
-    border-radius: 5px;
-    background: #fff;
+  background: var(--color-bg-table-alt);
 }
