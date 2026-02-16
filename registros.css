@@ -1,4 +1,36 @@
 /* Styles for the records table */
+body {
+    font-family: Tahoma;
+    font-size: 16px;
+    line-height: 1.5em;
+    background: lightgray;
+}
+
+div#filtros {
+    border: 1px solid #e8e8e8;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#filtros h3 {
+    display: block;
+    width: 100%;
+    margin: 10px 15px;
+}
+
+div#filtros div {
+    vertical-align: top;
+    display: inline-block;
+    margin: 10px;
+}
+
+.container {
+    width: 1200px;
+    margin: auto;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 5px;
+}
 
 #sistema-registros {
   font-family: Arial, sans-serif;
@@ -11,7 +43,7 @@
 }
 
 #tabla-registros th {
-  background: #333;
+  background: #673AB7;
   color: white;
   cursor: pointer;
 }
@@ -33,4 +65,29 @@
 .filtros strong {
   display: block;
   margin-top: 10px;
+}
+
+.tabs {
+    padding: 10px 0;
+}
+
+button.tab-btn {
+    padding: 15px;
+    border: none;
+    background: #673AB7;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    min-width: 80px;
+}
+
+div#filtro-limpiar {
+    display: block !important;
+}
+
+button#btn-limpiar-filtros {
+    border: 1px solid #e8e8e8;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: #fff;
 }
