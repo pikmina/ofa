@@ -1,8 +1,8 @@
-const TiendaApp = (() => {
+const appTienda = (function () {
 
-  /* ============================
+  /* ==========================
      CONFIG
-  ============================ */
+  ========================== */
 
   const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec";
 
@@ -42,236 +42,297 @@ const TiendaApp = (() => {
     "Ingredientes": "#1F4A1F"
   };
 
-  /* ============================
+  const num = v => Number(v) || 0;
+
+  /* ==========================
      ESTADO
-  ============================ */
+  ========================== */
 
   let productos = [];
   let carrito = [];
-  let categoriaActiva = null;
-  let monedaActiva = [];
-  let textoBusqueda = "";
 
-  /* ============================
+  let filtroTexto = "";
+  let categoriasActivas = [];
+  let costesActivos = [];
+
+  /* ==========================
      INIT
-  ============================ */
+  ========================== */
 
-  function init() {
+  async function init() {
 
     if (!document.getElementById("tienda")) return;
 
-    activarEventos();
+    productos = await fetch(API_URL).then(r => r.json());
 
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(data => {
-        productos = data;
-        generarCategorias();
-        renderProductos();
-      })
-      .catch(err => console.error("Error tienda:", err));
+    inicializarFiltros();
+    renderTienda(productos);
+    activarFinalizar();
   }
 
-  /* ============================
-     EVENTOS
-  ============================ */
+  /* ==========================
+     FILTROS
+  ========================== */
 
-  function activarEventos() {
+  function inicializarFiltros() {
 
-    // Buscador
-    const buscador = document.getElementById("filtro-texto");
-    if (buscador) {
-      buscador.addEventListener("input", e => {
-        textoBusqueda = e.target.value.toLowerCase();
-        renderProductos();
-      });
-    }
+    const contCategorias = document.getElementById("filtro-categorias");
+    if (!contCategorias) return;
 
-    // Filtro moneda
-    document.querySelectorAll("#filtro-costes input").forEach(chk => {
-      chk.addEventListener("change", () => {
-        monedaActiva = [...document.querySelectorAll("#filtro-costes input:checked")]
-          .map(c => c.value);
-        renderProductos();
-      });
-    });
+    contCategorias.innerHTML = ""; // 🔹 limpiar antes de generar
 
-    // Finalizar compra
-    const btnFinalizar = document.getElementById("btn-finalizar");
-
-    if (btnFinalizar) {
-      btnFinalizar.addEventListener("click", finalizarCompra);
-    }
-  }
-
-  /* ============================
-     GENERAR CATEGORÍAS
-  ============================ */
-
-  function generarCategorias() {
-
-    const cont = document.getElementById("filtro-categorias");
-    if (!cont) return;
-
-    const categorias = [...new Set(productos.map(p => p.Categoría))].filter(Boolean);
-
-    cont.innerHTML = "";
+    const categorias = [...new Set(productos.map(p => p.Categoría))];
 
     categorias.forEach(cat => {
-
       const label = document.createElement("label");
+      label.innerHTML = `<input type="checkbox" value="${cat}"> ${cat}`;
+      contCategorias.appendChild(label);
+    });
 
-      label.innerHTML = `
-        <input type="radio" name="categoria" value="${cat}">
-        ${cat}
-      `;
-
-      label.querySelector("input").addEventListener("change", () => {
-        categoriaActiva = cat;
-        renderProductos();
+    const inputBusqueda = document.getElementById("filtro-texto");
+    if (inputBusqueda) {
+      inputBusqueda.addEventListener("input", e => {
+        filtroTexto = e.target.value.toLowerCase();
+        renderTienda(aplicarFiltros());
       });
+    }
 
-      cont.appendChild(label);
-      cont.appendChild(document.createElement("br"));
+    document.addEventListener("change", e => {
+      if (e.target.matches("#filtro-categorias input, #filtro-costes input")) {
+
+        categoriasActivas = [...document.querySelectorAll("#filtro-categorias input:checked")]
+          .map(i => i.value);
+
+        costesActivos = [...document.querySelectorAll("#filtro-costes input:checked")]
+          .map(i => i.value);
+
+        renderTienda(aplicarFiltros());
+      }
     });
   }
 
-  /* ============================
-     FILTRADO + RENDER
-  ============================ */
+  function aplicarFiltros() {
 
-function renderProductos() {
+    return productos.filter(p => {
 
-  const cont = document.getElementById("tienda");
-  if (!cont) return;
+      const nombreSeguro = (p.Nombre || "").toLowerCase(); // 🔹 blindaje
 
-  cont.innerHTML = "";
+      if (filtroTexto && !nombreSeguro.includes(filtroTexto))
+        return false;
 
-  const filtrados = productos.filter(p => {
+      if (categoriasActivas.length && !categoriasActivas.includes(p.Categoría))
+        return false;
 
-    const coincideCategoria =
-      !categoriaActiva || p.Categoría === categoriaActiva;
+      const tieneEXP =
+        num(p.PrecioEXP) > 0 ||
+        [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
+          .some(v => num(v) > 0);
 
-    const coincideMoneda =
-      monedaActiva.length === 0 || monedaActiva.includes(p.Moneda);
+      const tieneYEN =
+        num(p.PrecioYenes) > 0 ||
+        [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
+          .some(v => num(v) > 0);
 
-    const coincideTexto =
-      !textoBusqueda ||
-      (p.Nombre || "").toLowerCase().includes(textoBusqueda) ||
-      (p.Descripción || "").toLowerCase().includes(textoBusqueda);
+      if (costesActivos.length) {
+        if (costesActivos.includes("EXP") && tieneEXP) return true;
+        if (costesActivos.includes("YEN") && tieneYEN) return true;
+        return false;
+      }
 
-    return coincideCategoria && coincideMoneda && coincideTexto;
-  });
+      return true;
+    });
+  }
 
-  filtrados.forEach(prod => {
+  /* ==========================
+     RENDER TIENDA
+  ========================== */
 
-    const categoria = prod.Categoría || "General";
-    const color = COLORES[categoria] || "#666";
+  function renderTienda(lista) {
 
-    const card = document.createElement("div");
-    card.classList.add("product");
+    let html = "";
+    const cats = [...new Set(lista.map(p => p.Categoría))];
 
-    card.innerHTML = `
-      <div class="product-header">
-        <div class="product-category" style="border-color:${color}; color:${color};">
-          ${categoria}
-        </div>
-      </div>
+    cats.forEach(cat => {
 
-      <p-title>${prod.Nombre || ""}</p-title>
+      html += `<h2>${cat}</h2><div class="product-list">`;
 
-      <div class="product-description">
-        ${prod.Descripción || ""}
-      </div>
+      lista.filter(p => p.Categoría === cat).forEach(p => {
 
-      <p-price>${prod.Costo} ${prod.Moneda}</p-price>
+        const precioExp = num(p.PrecioEXP);
+        const precioYen = num(p.PrecioYenes);
 
-      <button class="btn-add">Agregar</button>
-    `;
+        const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
+        const color = COLORES[p.Categoría] || "#666";
 
-    card.querySelector(".btn-add")
-      .addEventListener("click", () => {
-        carrito.push(prod);
-        renderCarrito();
+        const niveles = [
+          { nombre: "Nivel 1", exp: num(p.Nivel1_EXP), yen: num(p.Nivel1_Yen) },
+          { nombre: "Nivel 2", exp: num(p.Nivel2_EXP), yen: num(p.Nivel2_Yen) },
+          { nombre: "Nivel 3", exp: num(p.Nivel3_EXP), yen: num(p.Nivel3_Yen) },
+          { nombre: "Nivel 4", exp: num(p.Nivel4_EXP), yen: num(p.Nivel4_Yen) },
+          { nombre: "Nivel 5", exp: num(p.Nivel5_EXP), yen: num(p.Nivel5_Yen) }
+        ].filter(n => n.exp > 0 || n.yen > 0);
+
+        html += `
+        <div class="product">
+          <span class="product-category" style="color:${color}">
+            <i class="${icono}"></i> ${p.Categoría}
+          </span>
+
+          <p-title>${p.Nombre}</p-title>
+
+          <div class="product-description">
+            <desc>${p.Descripción || ""}</desc>
+            ${p.Notas ? `<notes><b>Notas:</b> ${p.Notas}</notes>` : ""}
+          </div>
+
+          <p-price>
+            ${precioExp ? `EXP: ${precioExp}<br>` : ""}
+            ${precioYen ? `¥: ${precioYen}<br>` : ""}
+          </p-price>
+
+          ${niveles.length ? `
+            <select class="select-nivel">
+              ${niveles.map(n => `
+                <option data-exp="${n.exp}" data-yen="${n.yen}">
+                  ${n.nombre} – 
+                  ${n.exp ? n.exp + " EXP " : ""}
+                  ${n.yen ? n.yen + " ¥" : ""}
+                </option>
+              `).join("")}
+            </select>` : ""}
+
+          <button class="btn-add"
+                  data-nombre="${p.Nombre}"
+                  data-exp="${precioExp}"
+                  data-yen="${precioYen}">
+            Agregar al carrito
+          </button>
+        </div>`;
       });
 
-    cont.appendChild(card);
-  });
-}
+      html += "</div>";
+    });
 
-  /* ============================
+    document.getElementById("tienda").innerHTML = html;
+    activarBotones();
+  }
+
+  /* ==========================
      CARRITO
-  ============================ */
+  ========================== */
 
-function renderCarrito() {
+  function activarBotones() {
 
-  const cont = document.getElementById("carrito");
-  if (!cont) return;
+    document.querySelectorAll(".btn-add").forEach(btn => {
 
-  cont.innerHTML = "";
+      btn.onclick = () => {
 
-  let total = 0;
+        const nombre = btn.dataset.nombre;
+        let exp = num(btn.dataset.exp);
+        let yen = num(btn.dataset.yen);
+        let nivel = "";
 
-  carrito.forEach((item, i) => {
+        const selector = btn.parentElement.querySelector(".select-nivel");
 
-    total += Number(item.Costo) || 0;
+        if (selector) {
+          const op = selector.selectedOptions[0];
+          exp = num(op.dataset.exp);
+          yen = num(op.dataset.yen);
+          nivel = op.textContent.trim();
+        }
 
-    const linea = document.createElement("span");
-    linea.classList.add("carrito-line");
+        const item = carrito.find(i => i.nombre === nombre && i.nivel === nivel);
 
-    linea.innerHTML = `
-      ${item.Nombre} — ${item.Costo} ${item.Moneda}
-      <button class="btn-remove" data-index="${i}">✕</button>
-    `;
+        if (item) item.cantidad++;
+        else carrito.push({ nombre, nivel, exp, yen, cantidad: 1 });
 
-    linea.querySelector(".btn-remove")
-      .addEventListener("click", () => {
-        carrito.splice(i, 1);
         renderCarrito();
-      });
-
-    cont.appendChild(linea);
-  });
-
-  const totalDiv = document.createElement("div");
-  totalDiv.classList.add("carrito-totales");
-  totalDiv.innerHTML = `<strong>Total: ${total}</strong>`;
-
-  cont.appendChild(totalDiv);
-}
-
-  /* ============================
-     FINALIZAR COMPRA
-  ============================ */
-
-  function finalizarCompra() {
-
-    if (carrito.length === 0) return;
-
-    const textarea = document.getElementById("mensaje-post");
-    const form = document.getElementById("form-post");
-
-    if (!textarea || !form) return;
-
-    let mensaje = "[b]Compra realizada:[/b]\n\n";
-
-    carrito.forEach(item => {
-      mensaje += `• ${item.Nombre} — ${item.Costo} ${item.Moneda}\n`;
+      };
     });
-
-    textarea.value = mensaje;
-
-    form.submit();
   }
 
-  /* ============================
-     API PÚBLICA
-  ============================ */
+  function renderCarrito() {
+
+    const cont = document.getElementById("carrito");
+    if (!cont) return;
+
+    if (!carrito.length) {
+      cont.innerHTML = "<i>Carrito vacío</i>";
+      return;
+    }
+
+    const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
+    const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
+
+    cont.innerHTML =
+      carrito.map((p, i) =>
+        `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – 
+         ${p.exp ? p.exp * p.cantidad + " EXP " : ""}
+         ${p.yen ? p.yen * p.cantidad + " ¥" : ""}
+         <button class="btn-remove" data-index="${i}">✖</button>`
+      ).join("<br>") +
+      `<br><br><b>Total EXP:</b> ${totalEXP}<br><b>Total ¥:</b> ${totalYEN}`;
+
+    document.querySelectorAll(".btn-remove").forEach(b => {
+      b.onclick = () => {
+        carrito.splice(Number(b.dataset.index), 1);
+        renderCarrito();
+      };
+    });
+  }
+
+  /* ==========================
+     FINALIZAR COMPRA
+  ========================== */
+
+  function activarFinalizar() {
+
+    const btn = document.getElementById("btn-finalizar");
+    if (!btn) return; // 🔹 defensiva
+
+    btn.addEventListener("click", () => {
+
+      if (!carrito.length) {
+        alert("El carrito está vacío.");
+        return;
+      }
+
+      let texto = "[b]Compra realizada[/b]\n\n";
+
+      carrito.forEach(p => {
+        texto += `• ${p.nombre}`;
+        if (p.nivel) texto += ` (${p.nivel})`;
+        texto += ` x${p.cantidad}\n`;
+
+        if (p.exp) texto += `  EXP: ${p.exp * p.cantidad}\n`;
+        if (p.yen) texto += `  ¥: ${p.yen * p.cantidad}\n`;
+        texto += "\n";
+      });
+
+      const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
+      const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
+
+      texto += `[b]Total EXP:[/b] ${totalEXP}\n`;
+      texto += `[b]Total ¥:[/b] ${totalYEN}`;
+
+      const textarea = document.getElementById("mensaje-post");
+      const form = document.getElementById("form-post");
+
+      if (textarea && form) {
+        textarea.value = texto;
+        form.submit();
+      }
+    });
+  }
+
+  /* ==========================
+     PUBLIC API
+  ========================== */
 
   return { init };
 
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-  TiendaApp.init();
+  appTienda.init();
 });
