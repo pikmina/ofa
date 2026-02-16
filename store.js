@@ -1,280 +1,277 @@
-/* CONFIGURACIÓN */
-const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec";
+const TiendaApp = (() => {
 
-const ICONOS = {
-  "Armaduras": "fa-solid fa-shield",
-  "Armas": "fa-solid fa-gun",
-  "Habilidades": "fa-solid fa-hand-fist",
-  "Técnicas": "fa-solid fa-burst",
-  "Rasgos": "fa-solid fa-person-burst",
-  "Debilidades": "fa-solid fa-person-falling-burst",
-  "Accesorios": "fa-solid fa-screwdriver-wrench",
-  "General": "fa-solid fa-gear",
-  "Quirk": "fa-solid fa-bolt",
-  "Medicina": "fa-solid fa-pills",
-  "Estimulantes": "fa-solid fa-flask",
-  "Experimentales": "fa-solid fa-flask-vial",
-  "Certificaciones": "fa-solid fa-certificate",
-  "Materiales": "fa-solid fa-toolbox",
-  "Ingredientes": "fa-brands fa-pagelines"
-};
+  /* ============================
+     CONFIG
+  ============================ */
 
-// Colores por categoría
-const COLORES = {
-  "Armaduras": "#2C6FB8",
-  "Armas": "#A1121F",
-  "Habilidades": "#3F7F1E",
-  "Técnicas": "#7A1494",
-  "Rasgos": "#B87414",
-  "Debilidades": "#5E0FB8",
-  "Accesorios": "#1F8F7A",
-  "General": "#4A4A4A",
-  "Quirk": "#B59B00",
-  "Medicina": "#2F5F14",
-  "Estimulantes": "#5C8F3A",
-  "Experimentales": "#4B1F63",
-  "Certificaciones": "#8F4A1F",
-  "Materiales": "#3A3A3A",
-  "Ingredientes": "#1F4A1F"
-};
+  const API_URL = "https://script.google.com/macros/s/AKfycbw1luBLVRy54DPKa2dZHkRGpodiJPfmK-_Ci5QvAKI3kZA1WoXbEYCC0_8_PTY3oKELBw/exec";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  if (!document.getElementById("tienda")) return;
+  const ICONOS = {
+    "Armaduras": "fa-solid fa-shield",
+    "Armas": "fa-solid fa-gun",
+    "Habilidades": "fa-solid fa-hand-fist",
+    "Técnicas": "fa-solid fa-burst",
+    "Rasgos": "fa-solid fa-person-burst",
+    "Debilidades": "fa-solid fa-person-falling-burst",
+    "Accesorios": "fa-solid fa-screwdriver-wrench",
+    "General": "fa-solid fa-gear",
+    "Quirk": "fa-solid fa-bolt",
+    "Medicina": "fa-solid fa-pills",
+    "Estimulantes": "fa-solid fa-flask",
+    "Experimentales": "fa-solid fa-flask-vial",
+    "Certificaciones": "fa-solid fa-certificate",
+    "Materiales": "fa-solid fa-toolbox",
+    "Ingredientes": "fa-brands fa-pagelines"
+  };
 
-  const productos = await fetch(API_URL).then(r => r.json());
+  const COLORES = {
+    "Armaduras": "#2C6FB8",
+    "Armas": "#A1121F",
+    "Habilidades": "#3F7F1E",
+    "Técnicas": "#7A1494",
+    "Rasgos": "#B87414",
+    "Debilidades": "#5E0FB8",
+    "Accesorios": "#1F8F7A",
+    "General": "#4A4A4A",
+    "Quirk": "#B59B00",
+    "Medicina": "#2F5F14",
+    "Estimulantes": "#5C8F3A",
+    "Experimentales": "#4B1F63",
+    "Certificaciones": "#8F4A1F",
+    "Materiales": "#3A3A3A",
+    "Ingredientes": "#1F4A1F"
+  };
 
-  /* ==========================
-      FILTROS (estado)
-     ========================== */
-  let filtroTexto = "";
-  let categoriasActivas = [];
-  let costesActivos = [];
+  /* ============================
+     ESTADO
+  ============================ */
 
-  /* ==========================
-      INICIALIZAR FILTROS
-     ========================== */
-  const contCategorias = document.getElementById("filtro-categorias");
+  let productos = [];
+  let carrito = [];
+  let categoriaActiva = null;
+  let monedaActiva = [];
+  let textoBusqueda = "";
 
-  const categorias = [...new Set(productos.map(p => p.Categoría))];
+  /* ============================
+     INIT
+  ============================ */
 
-  categorias.forEach(cat => {
-    const label = document.createElement("label");
-    label.innerHTML = `
-    <input type="checkbox" value="${cat}">
-    ${cat}
-  `;
-    contCategorias.appendChild(label);
-  });
+  function init() {
 
-  document.getElementById("filtro-texto").addEventListener("input", e => {
-    filtroTexto = e.target.value.toLowerCase();
-    renderTienda(aplicarFiltros());
-  });
+    if (!document.getElementById("tienda")) return;
 
-  document.addEventListener("change", e => {
-    if (e.target.matches("#filtro-categorias input, #filtro-costes input")) {
+    activarEventos();
 
-      categoriasActivas = [...document.querySelectorAll(
-        "#filtro-categorias input:checked"
-      )].map(i => i.value);
-
-      costesActivos = [...document.querySelectorAll(
-        "#filtro-costes input:checked"
-      )].map(i => i.value);
-
-      renderTienda(aplicarFiltros());
-    }
-  });
-
-  /* ==========================
-      APLICAR FILTROS
-     ========================== */
-  function aplicarFiltros() {
-    return productos.filter(p => {
-
-      // TEXTO
-      if (filtroTexto && !p.Nombre.toLowerCase().includes(filtroTexto)) {
-        return false;
-      }
-
-      // CATEGORÍAS (checkboxes)
-      if (categoriasActivas.length &&
-        !categoriasActivas.includes(p.Categoría)) {
-        return false;
-      }
-
-      // DETECTAR TIPOS DE COSTE
-      const tieneEXP = Number(p.PrecioEXP) > 0 ||
-        [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP]
-          .some(v => Number(v) > 0);
-
-      const tieneYEN = Number(p.PrecioYenes) > 0 ||
-        [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen]
-          .some(v => Number(v) > 0);
-
-      // COSTE (checkboxes)
-      if (costesActivos.length) {
-        if (costesActivos.includes("EXP") && tieneEXP) return true;
-        if (costesActivos.includes("YEN") && tieneYEN) return true;
-        return false;
-      }
-
-      return true;
-    });
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        productos = data;
+        generarCategorias();
+        renderProductos();
+      })
+      .catch(err => console.error("Error tienda:", err));
   }
-  /* ==========================
-      RENDER TIENDA
-     ========================== */
-  function renderTienda(lista) {
-    let html = "";
-    const cats = [...new Set(lista.map(p => p.Categoría))];
 
-    cats.forEach(cat => {
-      html += `<h2> ${cat}</h2><div class="product-list">`;
+  /* ============================
+     EVENTOS
+  ============================ */
 
-      lista.filter(p => p.Categoría === cat).forEach(p => {
+  function activarEventos() {
 
-        const precioExp = Number(p.PrecioEXP) || 0;
-        const precioYen = Number(p.PrecioYenes) || 0;
-        const icono = ICONOS[p.Categoría] || "fa-solid fa-box-open";
-        const color = COLORES[p.Categoría] || "#666";
+    // Buscador
+    const buscador = document.getElementById("filtro-texto");
+    if (buscador) {
+      buscador.addEventListener("input", e => {
+        textoBusqueda = e.target.value.toLowerCase();
+        renderProductos();
+      });
+    }
 
-        const niveles = [
-          { nombre: "Nivel 1", exp: p.Nivel1_EXP, yen: p.Nivel1_Yen },
-          { nombre: "Nivel 2", exp: p.Nivel2_EXP, yen: p.Nivel2_Yen },
-          { nombre: "Nivel 3", exp: p.Nivel3_EXP, yen: p.Nivel3_Yen },
-          { nombre: "Nivel 4", exp: p.Nivel4_EXP, yen: p.Nivel4_Yen },
-          { nombre: "Nivel 5", exp: p.Nivel5_EXP, yen: p.Nivel5_Yen }
-        ].filter(n => Number(n.exp) > 0 || Number(n.yen) > 0);
+    // Filtro moneda
+    document.querySelectorAll("#filtro-costes input").forEach(chk => {
+      chk.addEventListener("change", () => {
+        monedaActiva = [...document.querySelectorAll("#filtro-costes input:checked")]
+          .map(c => c.value);
+        renderProductos();
+      });
+    });
 
-        html += `
-        <div class="product">
-        <span class="product-category" style="color:${color}"> <i class="${icono} producto-icon"></i> ${p.Categoría} ${p.Tipo}</span>
-          <p-title>${p.Nombre}</p-title>
-          <div class="product-description">
-          <desc>${p.Descripción}</desc>
-          ${p.Notas ? `<notes><b>Notas:</b> ${p.Notas}</notes>` : ""}
-          </div>
-          <p-price>
-            ${precioExp > 0 ? `EXP: ${precioExp}<br>` : ""}
-            ${precioYen > 0 ? `¥: ${precioYen}<br>` : ""}
-          </p-price>
-          
+    // Finalizar compra
+    const btnFinalizar = document.getElementById("btn-finalizar");
 
-          ${niveles.length ? `
-            <select class="select-nivel">
-              ${niveles.map(n => `
-                <option data-exp="${n.exp || 0}" data-yen="${n.yen || 0}">
-                  ${n.nombre} – ${n.exp ? n.exp + " EXP " : ""}${n.yen ? n.yen + " ¥" : ""}
-                </option>
-              `).join("")}
-            </select>` : ""}
+    if (btnFinalizar) {
+      btnFinalizar.addEventListener("click", finalizarCompra);
+    }
+  }
 
-          <button class="btn-add"
-                  data-nombre="${p.Nombre}"
-                  data-exp="${precioExp}"
-                  data-yen="${precioYen}">
-            Agregar al carrito
-          </button>
-        </div>`;
+  /* ============================
+     GENERAR CATEGORÍAS
+  ============================ */
+
+  function generarCategorias() {
+
+    const cont = document.getElementById("filtro-categorias");
+    if (!cont) return;
+
+    const categorias = [...new Set(productos.map(p => p.Categoría))].filter(Boolean);
+
+    cont.innerHTML = "";
+
+    categorias.forEach(cat => {
+
+      const label = document.createElement("label");
+
+      label.innerHTML = `
+        <input type="radio" name="categoria" value="${cat}">
+        ${cat}
+      `;
+
+      label.querySelector("input").addEventListener("change", () => {
+        categoriaActiva = cat;
+        renderProductos();
       });
 
-      html += "</div>";
-    });
-
-    document.getElementById("tienda").innerHTML = html;
-    activarBotones();
-  }
-
-  /* ==========================
-      CARRITO
-     ========================== */
-  let carrito = [];
-
-  function activarBotones() {
-    document.querySelectorAll(".btn-add").forEach(btn => {
-      btn.onclick = () => {
-        const nombre = btn.dataset.nombre;
-        let exp = Number(btn.dataset.exp);
-        let yen = Number(btn.dataset.yen);
-        let nivel = "";
-
-        const selector = btn.parentElement.querySelector(".select-nivel");
-        if (selector) {
-          const op = selector.selectedOptions[0];
-          exp = Number(op.dataset.exp);
-          yen = Number(op.dataset.yen);
-          nivel = op.textContent.trim();
-        }
-
-        let item = carrito.find(i => i.nombre === nombre && i.nivel === nivel);
-        if (item) item.cantidad++;
-        else carrito.push({ nombre, nivel, exp, yen, cantidad: 1 });
-
-        renderCarrito();
-      };
+      cont.appendChild(label);
+      cont.appendChild(document.createElement("br"));
     });
   }
 
-  function renderCarrito() {
-    if (!carrito.length) {
-      document.getElementById("carrito").innerHTML = "<i>Carrito vacío</i>";
-      return;
-    }
+  /* ============================
+     FILTRADO + RENDER
+  ============================ */
 
-    const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
-    const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
+function renderProductos() {
 
-    document.getElementById("carrito").innerHTML =
-      carrito.map((p, i) =>
-        `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – 
-        ${(p.exp * p.cantidad) || ""} ${(p.yen * p.cantidad) || ""} 
-        <button class="btn-remove" data-index="${i}">✖</button>`
-      ).join("<br>") +
-      `<br><br><b>Total EXP:</b> ${totalEXP}<br><b>Total ¥:</b> ${totalYEN}`;
+  const cont = document.getElementById("tienda");
+  if (!cont) return;
 
-    document.querySelectorAll(".btn-remove").forEach(b => {
-      b.onclick = () => {
-        carrito.splice(Number(b.dataset.index), 1);
-        renderCarrito();
-      };
-    });
-  }
+  cont.innerHTML = "";
 
-  renderTienda(productos);
+  const filtrados = productos.filter(p => {
 
-  /* ==========================
-  Finalizar Compra 
-  ========================== */
+    const coincideCategoria =
+      !categoriaActiva || p.Categoría === categoriaActiva;
 
-  const btnFinalizar = document.getElementById("btn-finalizar");
+    const coincideMoneda =
+      monedaActiva.length === 0 || monedaActiva.includes(p.Moneda);
 
-  btnFinalizar.addEventListener("click", () => {
-    if (!carrito.length) {
-      alert("El carrito está vacío.");
-      return;
-    }
+    const coincideTexto =
+      !textoBusqueda ||
+      (p.Nombre || "").toLowerCase().includes(textoBusqueda) ||
+      (p.Descripción || "").toLowerCase().includes(textoBusqueda);
 
-    let texto = "[b]Compra realizada[/b]\n\n";
-
-    carrito.forEach(p => {
-      texto += `• ${p.nombre}`;
-      if (p.nivel) texto += ` (${p.nivel})`;
-      texto += ` x${p.cantidad}\n`;
-
-      if (p.exp) texto += `  EXP: ${p.exp * p.cantidad}\n`;
-      if (p.yen) texto += `  ¥: ${p.yen * p.cantidad}\n`;
-      texto += "\n";
-    });
-
-    const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
-    const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
-
-    texto += `[b]Total EXP:[/b] ${totalEXP}\n`;
-    texto += `[b]Total ¥:[/b] ${totalYEN}`;
-
-    document.getElementById("mensaje-post").value = texto;
-
-    document.getElementById("form-post").submit();
+    return coincideCategoria && coincideMoneda && coincideTexto;
   });
+
+  filtrados.forEach(prod => {
+
+    const categoria = prod.Categoría || "General";
+    const color = COLORES[categoria] || "#666";
+
+    const card = document.createElement("div");
+    card.classList.add("product");
+
+    card.innerHTML = `
+      <div class="product-header">
+        <div class="product-category" style="border-color:${color}; color:${color};">
+          ${categoria}
+        </div>
+      </div>
+
+      <p-title>${prod.Nombre || ""}</p-title>
+
+      <div class="product-description">
+        ${prod.Descripción || ""}
+      </div>
+
+      <p-price>${prod.Costo} ${prod.Moneda}</p-price>
+
+      <button class="btn-add">Agregar</button>
+    `;
+
+    card.querySelector(".btn-add")
+      .addEventListener("click", () => {
+        carrito.push(prod);
+        renderCarrito();
+      });
+
+    cont.appendChild(card);
+  });
+}
+
+  /* ============================
+     CARRITO
+  ============================ */
+
+function renderCarrito() {
+
+  const cont = document.getElementById("carrito");
+  if (!cont) return;
+
+  cont.innerHTML = "";
+
+  let total = 0;
+
+  carrito.forEach((item, i) => {
+
+    total += Number(item.Costo) || 0;
+
+    const linea = document.createElement("span");
+    linea.classList.add("carrito-line");
+
+    linea.innerHTML = `
+      ${item.Nombre} — ${item.Costo} ${item.Moneda}
+      <button class="btn-remove" data-index="${i}">✕</button>
+    `;
+
+    linea.querySelector(".btn-remove")
+      .addEventListener("click", () => {
+        carrito.splice(i, 1);
+        renderCarrito();
+      });
+
+    cont.appendChild(linea);
+  });
+
+  const totalDiv = document.createElement("div");
+  totalDiv.classList.add("carrito-totales");
+  totalDiv.innerHTML = `<strong>Total: ${total}</strong>`;
+
+  cont.appendChild(totalDiv);
+}
+
+  /* ============================
+     FINALIZAR COMPRA
+  ============================ */
+
+  function finalizarCompra() {
+
+    if (carrito.length === 0) return;
+
+    const textarea = document.getElementById("mensaje-post");
+    const form = document.getElementById("form-post");
+
+    if (!textarea || !form) return;
+
+    let mensaje = "[b]Compra realizada:[/b]\n\n";
+
+    carrito.forEach(item => {
+      mensaje += `• ${item.Nombre} — ${item.Costo} ${item.Moneda}\n`;
+    });
+
+    textarea.value = mensaje;
+
+    form.submit();
+  }
+
+  /* ============================
+     API PÚBLICA
+  ============================ */
+
+  return { init };
+
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+  TiendaApp.init();
 });

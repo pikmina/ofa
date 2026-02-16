@@ -1,7 +1,13 @@
-<!-- Store by Pikmina -->
-<script type="text/javascript" src="https://pikmina.github.io/ofa/store.js"></script>
-<link rel="stylesheet" type="text/css" href="https://pikmina.github.io/ofa/style.css" />
-<div id="carrito-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Front</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="store.js"></script>
+</head>
+<body>
   <h2>Carrito</h2>
   <div id="carrito"></div>
 
@@ -11,12 +17,15 @@
   <form id="form-post" action="/post?t=1&mode=reply" method="post" style="display:none;">
     <textarea id="mensaje-post" name="message"></textarea>
   </form>
-</div>
-
-<div id="tienda-container">
+</div><div id="tienda-container">
   <div id="filters">
+    <div class="filter-content">
     <input type="text" id="filtro-texto" placeholder="Buscar..." />
+    
+    <h2>Categorías</h2>
     <div id="filtro-categorias"></div>
+    
+    <h2>Tipo de Moneda</h2>
     <div id="filtro-costes">
       <label>
         <input type="checkbox" value="EXP" /> EXP
@@ -25,7 +34,10 @@
         <input type="checkbox" value="YEN" /> ¥
       </label>
     </div>
+    </div>
   </div>
   <div id="tienda"></div>
 
 </div>
+</body>
+</html>
