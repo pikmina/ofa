@@ -261,22 +261,48 @@ const appTienda = (function () {
       return;
     }
 
-    const totalEXP = carrito.reduce((s, p) => s + p.exp * p.cantidad, 0);
-    const totalYEN = carrito.reduce((s, p) => s + p.yen * p.cantidad, 0);
+    const totalEXP = carrito.reduce((s, p) => s + (p.exp || 0) * p.cantidad, 0);
+    const totalYEN = carrito.reduce((s, p) => s + (p.yen || 0) * p.cantidad, 0);
 
-    cont.innerHTML =
-      carrito.map((p, i) =>
-        `• ${p.nombre}${p.nivel ? " (" + p.nivel + ")" : ""} x${p.cantidad} – 
-         ${p.exp ? p.exp * p.cantidad + " EXP " : ""}
-         ${p.yen ? p.yen * p.cantidad + " ¥" : ""}
-         <button class="btn-remove" data-index="${i}">✖</button>`
-      ).join("<br>") +
-      `<br><br><b>Total EXP:</b> ${totalEXP}<br><b>Total ¥:</b> ${totalYEN}`;
+    cont.innerHTML = `
+  <div class="carrito-items">
+    ${carrito.map((p, i) => `
+      <div class="carrito-item" data-index="${i}">
+        
+        <div class="carrito-item-info">
+          <span class="carrito-nombre">
+            ${escapeHTML(p.nombre)}
+            ${p.nivel ? ` (${p.nivel})` : ""}
+          </span>
+          <span class="carrito-cantidad">x${p.cantidad}</span>
+        </div>
 
-    document.querySelectorAll(".btn-remove").forEach(b => {
+        <div class="carrito-item-precio">
+          ${p.exp ? `<span class="precio-exp">${(p.exp * p.cantidad)} EXP</span>` : ""}
+          ${p.yen ? `<span class="precio-yen">${(p.yen * p.cantidad)} ¥</span>` : ""}
+        </div>
+
+        <button class="btn-remove" data-index="${i}">
+          ✖
+        </button>
+
+      </div>
+    `).join("")}
+  </div>
+
+  <div class="carrito-totales">
+    <div><b>Total EXP:</b> ${totalEXP}</div>
+    <div><b>Total ¥:</b> ${totalYEN}</div>
+  </div>
+`;
+
+    cont.querySelectorAll(".btn-remove").forEach(b => {
       b.onclick = () => {
-        carrito.splice(Number(b.dataset.index), 1);
-        renderCarrito();
+        const index = Number(b.dataset.index);
+        if (!isNaN(index)) {
+          carrito.splice(index, 1);
+          renderCarrito();
+        }
       };
     });
   }
