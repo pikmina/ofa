@@ -46,7 +46,14 @@ function renderSidebar(categories) {
         return orderA - orderB;
     });
 
-    let html = "<h3>Wiki</h3><ul class='wiki-tree'>";
+    let html = `
+    <h3>
+        <a href="?" id="wiki-home" style="text-decoration:none; cursor:pointer;">
+            Wiki
+        </a>
+    </h3>
+    <ul class='wiki-tree'>
+`;
 
     categories.forEach(cat => {
 
@@ -104,6 +111,25 @@ function renderSidebar(categories) {
 
     side.innerHTML = html + "</ul>";
 
+    const homeBtn = document.getElementById("wiki-home");
+
+if (homeBtn) {
+    homeBtn.addEventListener("click", e => {
+        e.preventDefault();
+
+        // Reset vista
+        renderDocs(ALL_DOCS);
+
+        // Limpiar URL
+        history.pushState({}, "", "?");
+
+        // Quitar selección activa
+        document.querySelectorAll(".wiki-doc a").forEach(el => {
+            el.classList.remove("active");
+        });
+    });
+}
+
     // Eventos
     side.addEventListener("click", e => {
         const a = e.target.closest(".wiki-doc a");
@@ -143,25 +169,102 @@ function renderDocs(list) {
 
     let htmlContent = "";
 
-    // 🔥 Orden general (fallback por nombre)
-    list.sort((a, b) =>
-        (a.title?.rendered || '').localeCompare(b.title?.rendered || '')
-    );
+    const isHome = list.length === ALL_DOCS.length;
 
-    list.forEach(doc => {
-        const catId = doc.doc_category?.[0] ?? doc.docs_category?.[0];
-        const cat = ALL_CATEGORIES.find(c => c.id === catId);
+    // ===============================
+    // 🏠 HOME → SOLO CATEGORÍAS
+    // ===============================
+    if (isHome) {
 
-        htmlContent += `
-            <div class="wiki-card" data-id="${doc.id}" style="cursor:pointer; border:1px solid #ccc; margin:5px; padding:10px;">
-                <div class="wiki-card-title"><strong>${doc.title.rendered}</strong></div>
-                <div class="wiki-card-cat"><small>${cat?.name ?? "General"}</small></div>
-            </div>
-        `;
-    });
+        const sortedCategories = [...ALL_CATEGORIES].sort((a, b) => {
+            return Number(a.doc_category_order ?? 9999) - Number(b.doc_category_order ?? 9999);
+        });
+
+        htmlContent += `<div class="wiki-home-grid">`;
+
+        sortedCategories.forEach(cat => {
+
+            htmlContent += `
+                <div class="wiki-category-card" data-cat="${cat.id}" style="
+                    cursor:pointer;
+                    border:1px solid #ccc;
+                    border-radius:10px;
+                    padding:15px;
+                    margin:10px;
+                    display:flex;
+                    gap:15px;
+                    align-items:center;
+                ">
+                    <div class="wiki-category-img">
+                        <img src="${cat.thumbnail || ''}" 
+                             style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+                    </div>
+
+                    <div class="wiki-category-info">
+                        <div style="font-weight:bold; font-size:1.1em;">
+                            ${cat.name}
+                        </div>
+                        <div style="font-size:0.9em; opacity:0.8;">
+                            ${cat.description || "Sin descripción"}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        htmlContent += `</div>`;
+
+    } else {
+
+        // ===============================
+        // 🔹 MODO NORMAL (categoría / búsqueda)
+        // ===============================
+        list.sort((a, b) =>
+            (a.title?.rendered || '').localeCompare(b.title?.rendered || '')
+        );
+
+        list.forEach(doc => {
+            const catId = doc.doc_category?.[0] ?? doc.docs_category?.[0];
+            const cat = ALL_CATEGORIES.find(c => c.id === catId);
+
+            htmlContent += `
+                <div class="wiki-card" data-id="${doc.id}" style="
+                    cursor:pointer;
+                    border:1px solid #ccc;
+                    margin:5px;
+                    padding:10px;
+                ">
+                    <div><strong>${doc.title.rendered}</strong></div>
+                    <div><small>${cat?.name ?? "General"}</small></div>
+                </div>
+            `;
+        });
+    }
 
     listBox.innerHTML = htmlContent || "No se encontraron artículos.";
 
+    // ===============================
+    // EVENTOS
+    // ===============================
+
+    // Click en categorías (HOME)
+    listBox.querySelectorAll(".wiki-category-card").forEach(card => {
+        card.onclick = () => {
+            const catId = parseInt(card.dataset.cat);
+            filterByCategory(catId);
+
+            const cat = ALL_CATEGORIES.find(c => c.id === catId);
+            if (cat) {
+                history.pushState(
+                    { type: 'cat', slug: cat.slug },
+                    "",
+                    `?cat=${cat.slug}`
+                );
+            }
+        };
+    });
+
+    // Click en artículos
     listBox.querySelectorAll(".wiki-card").forEach(card => {
         card.onclick = () => loadArticle(parseInt(card.dataset.id), true);
     });
