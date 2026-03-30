@@ -9,8 +9,20 @@
     padding: 30px;
 }
 
+div#wiki-toc {
+    display: none;
+}
+
 div#wiki-content {
     width: 75%;
+}
+
+.wiki-home-grid {
+    display: grid;
+    align-content: start;
+    justify-items: stretch;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
 }
 
 /* Sidebar */
