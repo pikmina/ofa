@@ -204,9 +204,6 @@ function renderDocs(list) {
                         <div style="font-weight:bold; font-size:1.1em;">
                             ${cat.name}
                         </div>
-                        <div style="font-size:0.9em; opacity:0.8;">
-                            ${cat.description || "Sin descripción"}
-                        </div>
                     </div>
                 </div>
             `;

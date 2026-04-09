@@ -120,28 +120,30 @@ body {
   box-shadow: 0 0 0 2px rgba(0,0,0,0.15) inset;
 }
 
+/* Animación simple */
+.animacion-entrada {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* =========================================
-   TABLA
+   TABS CONTENIDO
 ========================================= */
-#tabla-registros {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: var(--spacing-md);
-  font-family: var(--font-alt);
+
+div#contenedor-registros {
+    text-align: center;
+}
+.record {
+    margin-bottom: 10px;
+}
+.character-name {
+    font-weight: bold;
 }
 
-#tabla-registros th {
-  background: var(--color-primary);
-  color: var(--color-white);
-  cursor: pointer;
-}
-
-#tabla-registros th,
-#tabla-registros td {
-  padding: var(--spacing-xs);
-  text-align: left;
-}
-
-#tabla-registros tr:nth-child(even) {
-  background: var(--color-bg-table-alt);
+.character-content {
+    font-style: italic;
 }

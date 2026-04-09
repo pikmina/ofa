@@ -1,54 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registros</title>
-    <script src="registros.js" defer></script>
-    <link rel="stylesheet" href="registros.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registros</title>
+  <script src="registros.js" defer></script>
+  <link rel="stylesheet" href="registros.css">
 </head>
+
 <body>
-<div class="container-rec">
+  <div class="container-rec">
     <h1>Registros</h1>
     <div id="registros-list"></div>
-<div id="filtros" style="margin-bottom:15px;">
-  <h3>Filtros</h3>
-<div id="filtro-grupo"></div>
-<div id="filtro-don"></div>
-<div id="filtro-sexo"></div>
+    <div id="filtros" style="margin-bottom:15px;">
+      <h3>Filtros</h3>
+      <div id="filtro-grupo"></div>
+      <div id="filtro-don"></div>
+      <div id="filtro-sexo"></div>
+      <div id="filtro-ocupacion"></div>
+      <div id="filtro-sangre"></div>
 
-<div id="filtro-limpiar"><button id="btn-limpiar-filtros">Limpiar filtros</button>
-</div>
+      <div id="filtro-limpiar"><button id="btn-limpiar-filtros">Limpiar filtros</button>
+      </div>
 
-</div>
-<div class="tabs">
+    </div>
+   <div class="tabs">
   <button class="tab-btn active" data-tab="pb">PB</button>
   <button class="tab-btn" data-tab="rango">Rango</button>
   <button class="tab-btn" data-tab="don">Don</button>
   <button class="tab-btn" data-tab="personaje">Personaje</button>
 </div>
-<div class="buscador">  <input type="text" id="busqueda-texto" placeholder="Buscar personaje..." /></div>
-<table id="tabla-registros">
-  <thead>
-    <tr>
-      <th onclick="RegistrosApp.ordenar('Nombre')">Nombre</th>
-      <th onclick="RegistrosApp.ordenar('Apellido')">Apellido</th>
-      <th onclick="RegistrosApp.ordenar('Grupo')">Grupo</th>
-      <th onclick="RegistrosApp.ordenar('Tipo de Don')">Tipo de Don</th>
-      <th onclick="RegistrosApp.ordenar('Alineación')">Alineación</th>
-      <th onclick="RegistrosApp.ordenar('Tipo de Sangre')">Tipo de Sangre</th>
-      <th onclick="RegistrosApp.ordenar('Apodo')">Apodo</th>
-      <th onclick="RegistrosApp.ordenar('Sexo')">Sexo</th>
-      <th onclick="RegistrosApp.ordenar('PB')">PB</th>
-      <th onclick="RegistrosApp.ordenar('Ocupación')">Ocupación</th>
-      <th onclick="RegistrosApp.ordenar('Rango')">Rango</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+    <div class="buscador"> <input type="text" id="busqueda-texto" placeholder="Buscar personaje..." /></div>
+    <div id="contenedor-registros"></div>
 
 
-    </div>
+  </div>
 
 </body>
+
 </html>
