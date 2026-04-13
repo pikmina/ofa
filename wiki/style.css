@@ -7,6 +7,8 @@
     margin: auto;
     border: 1px solid lightgray;
     padding: 30px;
+    color: var(--text1);
+    font-size: 14px;
 }
 
 div#wiki-toc {
