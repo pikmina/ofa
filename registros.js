@@ -1,16 +1,14 @@
 const RegistrosApp = (() => {
-  const API_URL = "https://script.google.com/macros/s/AKfycbzY6sWauov11c6RQ6H-OTJMd8d7iXh5XDvUbwNpHqfexPzmkCmLNZSxne5ZPUq6gXVz/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyXfrbIr4djZbcju3Pn3Oh3SqGys3e5lQQEGOrn2QWCNGnO4BeUpGv-t5sCe-QOTAtj/exec";
 
-const CONFIG_TABS = {
+  const CONFIG_TABS = {
     "pb": {
-      // Si no hay nombre ni apellido, queda vacío y se ocultará con el render nuevo
       id: r => `${r["Nombre"] || ""} ${r["Apellido"] || ""}`.trim(),
       content: r => r["PB"] || "", 
       clasificarPor: "Sexo"
     },
     "rango": {
       id: r => `${r["Nombre"] || ""} ${r["Apellido"] || ""}`.trim(),
-      // Lógica para que el guion "-" solo aparezca si ambos datos existen
       content: r => {
         const oc = r["Ocupación"];
         const rg = r["Rango"];
@@ -28,34 +26,56 @@ const CONFIG_TABS = {
       id: r => `${r["Nombre"] || ""} ${r["Apellido"] || ""}`.trim(),
       content: r => `${r["Grupo"] || ""} - ${r["Tipo de Sangre"] || ""} - ${r["Alineación"] || ""}`.trim(),
       clasificarPor: "Grupo"
+    },
+    "canons": {
+      id: r => `${r["CNombre"] || ""}`.trim(),
+      content: r => {
+        const d = r["CDon"] ? `<strong>Don:</strong> ${r["CDon"]}` : "";
+        const e = r["CEdad"] ? ` &bull; ${r["CEdad"]} años` : "";
+        const o = r["COcupacion"] ? `<br>${r["COcupacion"]}` : "";
+        const st = r["CEstado"] ? ` &bull; <em>${r["CEstado"]}</em>` : "";
+        return `${d}${e}${o}${st}`;
+      },
+      clasificarPor: "CGrupo"
     }
   };
 
-  let registros = [];
   let filtrosActivos = {};
   let pestañaActiva = "pb";
   let busquedaTexto = "";
 
   /* --- INICIALIZACIÓN --- */
-  function init() {
-    activarTabs();
-    activarFiltros();
+let datosOriginales = { registros: [], canons: [] }; 
 
-    const contenedor = document.getElementById("contenedor-registros");
-    if (contenedor) contenedor.innerHTML = "<p>Cargando datos...</p>";
+function init() {
+  activarTabs();
+  activarFiltros();
 
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(data => {
-        registros = data;
-        generarFiltros();
-        renderContenido();
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        if (contenedor) contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
-      });
-  }
+  const contenedor = document.getElementById("contenedor-registros");
+  if (contenedor) contenedor.innerHTML = "<p>Cargando datos...</p>";
+
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      // Validamos que data tenga las propiedades necesarias
+      if (data && data.registros && data.canons) {
+        datosOriginales = data;
+      } else {
+        // Si el script devolvió una lista plana en vez de un objeto
+        console.error("Formato de datos inesperado:", data);
+        datosOriginales = { 
+          registros: Array.isArray(data) ? data : [], 
+          canons: [] 
+        };
+      }
+      generarFiltros();
+      renderContenido();
+    })
+    .catch(err => {
+      console.error("Error en Fetch:", err);
+      if (contenedor) contenedor.innerHTML = "<p>Error al conectar con la API.</p>";
+    });
+}
 
   /* --- EVENTOS Y TABS --- */
   function activarTabs() {
@@ -68,33 +88,41 @@ const CONFIG_TABS = {
         renderContenido();
       });
     });
-    // Activa visualmente la pestaña por defecto al inicio
     document.querySelector(`.tab-btn[data-tab="${pestañaActiva}"]`)?.classList.add("active");
   }
 
   /* --- FILTROS --- */
-  function generarFiltros() {
-    const filtrosConfig = [
-      { campo: "Grupo", id: "filtro-grupo" },
-      { campo: "Tipo de Don", id: "filtro-don" },
-      { campo: "Sexo", id: "filtro-sexo" },
-      { campo: "Ocupación", id: "filtro-ocupacion" },
-      { campo: "Tipo de Sangre", id: "filtro-sangre" }
-    ];
+ function generarFiltros() {
+  // Usamos || [] para asegurar que si algo falla, intente unir listas vacías y no rompa
+  const listaR = Array.isArray(datosOriginales.registros) ? datosOriginales.registros : [];
+  const listaC = Array.isArray(datosOriginales.canons) ? datosOriginales.canons : [];
+  
+  const todosLosDatos = [...listaR, ...listaC];
+  
+  if (todosLosDatos.length === 0) return; // No hay datos para filtrar aún
 
-    filtrosConfig.forEach(({ campo, id }) => {
-      const cont = document.getElementById(id);
-      if (!cont) return;
+  const filtrosConfig = [
+    { campo: "Grupo", id: "filtro-grupo" },
+    { campo: "Tipo de Don", id: "filtro-don" },
+    { campo: "Sexo", id: "filtro-sexo" },
+    { campo: "Grupo", id: "filtro-grupo" },
+    { campo: "Tipo de Sangre", id: "filtro-sangre" },
+    { campo: "Estado", id: "filtro-estado" }
+  ];
 
-      const valores = [...new Set(registros.map(r => r[campo]).filter(Boolean))].sort();
-      
-      cont.innerHTML = `<h4>${campo}</h4>` + valores.map(val => `
-        <label style="display: block;">
-          <input type="checkbox" data-campo="${campo}" value="${val}"> ${val}
-        </label>
-      `).join("");
-    });
-  }
+  filtrosConfig.forEach(({ campo, id }) => {
+    const cont = document.getElementById(id);
+    if (!cont) return;
+
+    const valores = [...new Set(todosLosDatos.map(r => r[campo]).filter(Boolean))].sort();
+    
+    cont.innerHTML = `<h4>${campo}</h4>` + valores.map(val => `
+      <label style="display: block;">
+        <input type="checkbox" data-campo="${campo}" value="${val}"> ${val}
+      </label>
+    `).join("");
+  });
+}
 
   function activarFiltros() {
     document.addEventListener("change", e => {
@@ -124,7 +152,14 @@ const CONFIG_TABS = {
   }
 
   function aplicarFiltros() {
-    return registros.filter(r => {
+    // Seleccionamos la fuente de datos según la pestaña activa
+    const listaAEvaluar = (pestañaActiva === "canons") 
+      ? datosOriginales.canons 
+      : datosOriginales.registros;
+
+    if (!listaAEvaluar) return [];
+
+    return listaAEvaluar.filter(r => {
       const pasaCheck = Object.keys(filtrosActivos).every(campo => 
         filtrosActivos[campo].includes(r[campo])
       );
@@ -138,7 +173,7 @@ const CONFIG_TABS = {
     return `
       <div class="record">
           <div class="character-name">${config.id(r)}</div>
-         <div class="character-content">${config.content(r)}</div>
+          <div class="character-content">${config.content(r)}</div>
       </div>
     `;
   }
@@ -172,7 +207,7 @@ const CONFIG_TABS = {
         </div>
       `).join("");
     } else {
-      contenedor.innerHTML = `<div class="grid-cards"> ${datos.map(r => generarHtmlCard(r, config)).join("")}</div>`;
+      contenedor.innerHTML = `<div class="grid-cards">${datos.map(r => generarHtmlCard(r, config)).join("")}</div>`;
     }
   }
 

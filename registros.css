@@ -146,4 +146,15 @@ div#contenedor-registros {
 
 .character-content {
     font-style: italic;
+    font-size: 90%;
+}
+
+div#contenedor-registros {
+    display: flex;
+        justify-content: space-around;
+}
+
+.grupo-categoria {
+    padding: 10px;
+    margin: 10px;
 }
