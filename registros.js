@@ -41,7 +41,7 @@ const RegistrosApp = (() => {
   };
 
   let filtrosActivos = {};
-  let pestañaActiva = "pb";
+  let pestañaActiva = "canons";
   let busquedaTexto = "";
 
   /* --- INICIALIZACIÓN --- */
@@ -105,7 +105,6 @@ function init() {
     { campo: "Grupo", id: "filtro-grupo" },
     { campo: "Tipo de Don", id: "filtro-don" },
     { campo: "Sexo", id: "filtro-sexo" },
-    { campo: "Grupo", id: "filtro-grupo" },
     { campo: "Tipo de Sangre", id: "filtro-sangre" },
     { campo: "Estado", id: "filtro-estado" }
   ];
