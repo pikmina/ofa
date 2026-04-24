@@ -5,7 +5,7 @@
     width: 100%;
     font-family: Verdana;
     margin: auto;
-    border: 1px solid lightgray;
+
     padding: 30px;
     color: var(--text1);
     font-size: 14px;
@@ -30,7 +30,7 @@ div#wiki-content {
 /* Sidebar */
 #wiki-sidebar {
     width: 25%;
-    border-right: 2px solid #ccc;
+
     padding-right: 10px;
 }
 .wiki-tree li {
@@ -51,9 +51,7 @@ li.wiki-doc, li.wiki-doc-empty {
 .wiki-card {
     padding: 12px;
     margin-bottom: 12px;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    background: #fafafa;
     cursor: pointer;
 }
 .wiki-card:hover {
@@ -64,7 +62,6 @@ li.wiki-doc, li.wiki-doc-empty {
     font-weight: bold;
 }
 .wiki-card-cat {
-    color: #666;
     font-size: 12px;
 }
 
@@ -78,7 +75,7 @@ li.wiki-doc, li.wiki-doc-empty {
 
 /* ToC */
 .toc {
-    background: #f2f2f2;
+    
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 15px;
