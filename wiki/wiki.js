@@ -48,7 +48,7 @@ function renderSidebar(categories) {
 
     let html = `
     <h3>
-        <a href="?" id="wiki-home" style="text-decoration:none; cursor:pointer;">
+        <a href="?" id="wiki-home" style="cursor:pointer;">
             Wiki
         </a>
     </h3>
@@ -87,7 +87,7 @@ function renderSidebar(categories) {
 
         html += `
         <li class="wiki-cat" data-cat="${cat.id}">
-            <div class="wiki-cat-title" style="cursor:pointer; font-weight:bold;">
+            <div class="wiki-cat-title" style="cursor:pointer;">
                 ${cat.name}
             </div>
             <ul class="wiki-sublist">
@@ -185,25 +185,15 @@ function renderDocs(list) {
         sortedCategories.forEach(cat => {
 
             htmlContent += `
-                <div class="wiki-category-card" data-cat="${cat.id}" style="
-                    cursor:pointer;
-                    border:1px solid #ccc;
-                    border-radius:10px;
-                    padding:15px;
-                    margin:10px;
-                    display:flex;
-                    gap:15px;
-                    align-items:center;
-                ">
+                <div class="wiki-category-card" data-cat="${cat.id}">
                     <div class="wiki-category-img">
-                        <img src="${cat.thumbnail || ''}" 
-                             style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+                        <img src="${cat.thumbnail || ''}" alt="${cat.name}">
                     </div>
 
                     <div class="wiki-category-info">
-                        <div style="font-weight:bold; font-size:1.1em;">
+                        
                             ${cat.name}
-                        </div>
+                        
                     </div>
                 </div>
             `;
@@ -225,12 +215,7 @@ function renderDocs(list) {
             const cat = ALL_CATEGORIES.find(c => c.id === catId);
 
             htmlContent += `
-                <div class="wiki-card" data-id="${doc.id}" style="
-                    cursor:pointer;
-                    border:1px solid #ccc;
-                    margin:5px;
-                    padding:10px;
-                ">
+                <div class="wiki-card" data-id="${doc.id}">
                     <div><strong>${doc.title.rendered}</strong></div>
                     <div><small>${cat?.name ?? "General"}</small></div>
                 </div>
@@ -288,7 +273,7 @@ async function loadArticle(id, updateHistory = false) {
         }
 
         box.innerHTML = `
-            <button onclick="renderDocs(ALL_DOCS)" style="margin-bottom:20px;">← Volver</button>
+            <button onclick="renderDocs(ALL_DOCS)">← Volver</button>
             <h2>${data.title.rendered}</h2>
             <div id="wiki-toc"></div>
             <div id="wiki-article-body">${data.content.rendered}</div>
@@ -319,7 +304,7 @@ function generateTOC() {
         return;
     }
 
-    let html = "<div class='toc' style='background:#f9f9f9; padding:10px;'><b>Contenido</b><ul>";
+    let html = "<div class='toc'><b>Contenido</b><ul>";
 
     headers.forEach((h, i) => {
         const id = "section-" + i;
