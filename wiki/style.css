@@ -90,7 +90,17 @@ li.wiki-doc, li.wiki-doc-empty {
     float: right;
 }
 
+.is-layout-flex {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
 
+.wp-block-font-awesome-icon {
+    width: 50px;
+}
 
 /* Search */
 
