@@ -86,6 +86,7 @@ const appTienda = (function () {
         <div class="product" style="border-top: 3px solid ${COLORES[p.Categoría] || '#666'}">
           <p-title>${escapeHTML(p.Nombre)}</p-title>
           <div class="product-description">
+            ${p.Tipo ? `<div class="p-tipo"><b>Tipo:</b> ${escapeHTML(p.Tipo)}</div>` : ""}
             <desc>${p.Descripción || ""}</desc>
             ${p.Notas ? `<notes><b>Notas:</b> ${p.Notas}</notes>` : ""}
           </div>
@@ -163,7 +164,7 @@ const appTienda = (function () {
   function activarFinalizar() {
     document.getElementById("btn-finalizar")?.addEventListener("click", () => {
       if (!carrito.length) return alert("El carrito está vacío.");
-      let texto = "COMPRA REALIZADA EN TOKYO 2026\n\n";
+      let texto = "COMPRA REALIZADA\n\n";
       carrito.forEach(p => {
         texto += `• ${p.nombre} ${p.nivel ? `(${p.nivel})` : ""} x${p.cantidad}\n`;
         if (p.exp) texto += `  COSTO: ${fmt(p.exp * p.cantidad)} EXP\n`;
@@ -184,7 +185,11 @@ const appTienda = (function () {
   return {
     init: async function() {
       if (!document.getElementById("tienda")) return;
-      productos = await fetch(API_URL).then(r => r.json());
+      const rawData = await fetch(API_URL).then(r => r.json());
+      
+      // 🔹 FILTRO DE DISPONIBILIDAD: Solo guarda los que tienen el checkbox marcado
+      productos = rawData.filter(p => p.Disponible === true || String(p.Disponible).toLowerCase() === "true");
+
       const categorias = [...new Set(productos.map(p => p.Categoría))];
       renderPestañas(categorias);
       renderTienda();
