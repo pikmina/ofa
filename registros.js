@@ -18,8 +18,8 @@ const RegistrosApp = (() => {
       clasificarPor: "Rango"
     },
     "don": {
-      id: r => `${r["Nombre"] || ""} ${r["Apellido"] || ""} &bull; <em>${r["Apodo"] || ""}</em>`.trim(),
-      content: r => r["Don"] || "",
+      id: r => `${r["Nombre"] || ""} ${r["Apellido"] || ""} <em>${r["Don"] || ""}</em>`.trim(),
+      content: r => r["Apodo"] || "",
       clasificarPor: "Tipo de Don"
     },
     "personaje": {
