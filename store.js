@@ -28,6 +28,11 @@ const appTienda = (function () {
   let productos = [];
   let carrito = [];
   let categoriaActual = "";
+  
+  // 🔹 ESTADO DE FILTROS
+  let filtroTexto = "";
+  let costesActivos = [];
+  let tiposActivos = [];
 
   const num = v => Number(v) || 0;
   const fmt = v => new Intl.NumberFormat('de-DE').format(num(v));
@@ -35,6 +40,78 @@ const appTienda = (function () {
   function escapeHTML(str) {
     if (!str) return "";
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  /* ==========================
+      SISTEMA DE FILTROS
+  ========================== */
+
+  function inicializarFiltros() {
+    // 1. Filtro de Búsqueda
+    const inputBusqueda = document.getElementById("filtro-texto");
+    if (inputBusqueda) {
+      inputBusqueda.addEventListener("input", e => {
+        filtroTexto = e.target.value.toLowerCase();
+        renderTienda();
+      });
+    }
+
+    // 2. Escuchar cambios en los Checkboxes (Moneda y Tipo)
+    document.addEventListener("change", e => {
+      if (e.target.matches("#filtro-costes input") || e.target.matches("#filtro-tipos input")) {
+        costesActivos = [...document.querySelectorAll("#filtro-costes input:checked")].map(i => i.value);
+        tiposActivos = [...document.querySelectorAll("#filtro-tipos input:checked")].map(i => i.value);
+        renderTienda();
+      }
+    });
+  }
+
+  // 🔹 NUEVA FUNCIÓN: Solo renderiza los Tipos de la Categoría Activa
+  function renderFiltroTipos() {
+    const contTipos = document.getElementById("filtro-tipos");
+    if (!contTipos) return;
+
+    // Filtramos los productos para quedarnos solo con los de la pestaña actual
+    const productosDeCategoria = productos.filter(p => p.Categoría === categoriaActual);
+    const tiposUnicos = [...new Set(productosDeCategoria.map(p => p.Tipo).filter(Boolean))];
+
+    if (tiposUnicos.length === 0) {
+      contTipos.innerHTML = `<i>No hay subtipos</i>`;
+      return;
+    }
+
+    contTipos.innerHTML = tiposUnicos.map(tipo => `
+      <label>
+        <input type="checkbox" value="${escapeHTML(tipo)}"> ${escapeHTML(tipo)}
+      </label>
+    `).join("");
+  }
+
+  function aplicarFiltros() {
+    return productos.filter(p => {
+      // A. Categoría (Pestaña actual)
+      if (p.Categoría !== categoriaActual) return false;
+
+      // B. Búsqueda de texto
+      const nombreSeguro = (p.Nombre || "").toLowerCase();
+      if (filtroTexto && !nombreSeguro.includes(filtroTexto)) return false;
+
+      // C. Filtro de Tipo
+      if (tiposActivos.length && !tiposActivos.includes(p.Tipo)) return false;
+
+      // D. Filtro de Moneda (EXP / YEN)
+      if (costesActivos.length) {
+        const tieneEXP = num(p.PrecioEXP) > 0 || [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP].some(v => num(v) > 0);
+        const tieneYEN = num(p.PrecioYenes) > 0 || [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen].some(v => num(v) > 0);
+
+        if (costesActivos.includes("EXP") && tieneEXP) return true;
+        if (costesActivos.includes("YEN") && tieneYEN) return true;
+        
+        return false;
+      }
+
+      return true;
+    });
   }
 
   /* ==========================
@@ -56,7 +133,9 @@ const appTienda = (function () {
     contenedor.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         categoriaActual = btn.dataset.cat;
+        tiposActivos = []; // 🔹 IMPORTANTE: Limpia los tipos seleccionados al cambiar de pestaña
         renderPestañas(categorias);
+        renderFiltroTipos(); // 🔹 Vuelve a crear los checkboxes para la nueva pestaña
         renderTienda();
       };
     });
@@ -70,10 +149,14 @@ const appTienda = (function () {
     const contenedor = document.getElementById("tienda");
     if (!contenedor) return;
 
-    const lista = productos.filter(p => p.Categoría === categoriaActual);
+    const listaFiltrada = aplicarFiltros();
     let html = `<div class="product-list">`;
 
-    lista.forEach(p => {
+    if (listaFiltrada.length === 0) {
+      html += `<p style="width: 100%; text-align: center; padding: 20px;">No se encontraron resultados con estos filtros.</p>`;
+    }
+
+    listaFiltrada.forEach(p => {
       const niveles = [
         { n: "Nivel 1", e: num(p.Nivel1_EXP), y: num(p.Nivel1_Yen) },
         { n: "Nivel 2", e: num(p.Nivel2_EXP), y: num(p.Nivel2_Yen) },
@@ -187,11 +270,14 @@ const appTienda = (function () {
       if (!document.getElementById("tienda")) return;
       const rawData = await fetch(API_URL).then(r => r.json());
       
-      // 🔹 FILTRO DE DISPONIBILIDAD: Solo guarda los que tienen el checkbox marcado
+      // Filtro de Disponibilidad principal
       productos = rawData.filter(p => p.Disponible === true || String(p.Disponible).toLowerCase() === "true");
 
       const categorias = [...new Set(productos.map(p => p.Categoría))];
+      
+      inicializarFiltros(); 
       renderPestañas(categorias);
+      renderFiltroTipos(); // 🔹 Generamos los checkboxes de Tipo para la pestaña inicial
       renderTienda();
       inicializarEventosCarrito();
       activarFinalizar();
