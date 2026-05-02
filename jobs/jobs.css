@@ -1,0 +1,105 @@
+.empleos-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.tab-btn.activo, .tab-btn:hover {
+  background: #A1121F; /* Color base estilo MHA */
+}
+
+.empleos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.empleo-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-left: 4px solid #2C6FB8;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.empleo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.empleo-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.badge-abierto { background: #3F7F1E; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; }
+.badge-cerrado { background: #A1121F; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; }
+
+.empleo-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.empleo-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.empleo-requisitos {
+  background: #eee;
+  padding: 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.empleo-economia {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.sueldos span {
+  margin-right: 15px;
+  color: #B59B00; /* Color estilo oro/EXP */
+}
+
+.cobro-info {
+  font-size: 12px;
+  color: #666;
+}
+
+.empleo-ocupante {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #ccc;
+  font-size: 13px;
+  color: #222;
+}

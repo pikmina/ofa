@@ -7,13 +7,17 @@ const appTienda = (function () {
   const API_URL = "https://script.google.com/macros/s/AKfycbxGzKTNqDy3s4AfHX_gzkQg3CGfAJ39EIefWev_i1a4x6-AfhpMVjJ6QJDfp5f11qtgMw/exec";
 
   const ICONOS = {
-    "Armaduras": "fa-solid fa-shield", "Armas": "fa-solid fa-gun",
-    "Habilidades": "fa-solid fa-hand-fist", "Técnicas": "fa-solid fa-burst",
-    "Rasgos": "fa-solid fa-person-burst", "Debilidades": "fa-solid fa-person-falling-burst",
-    "Accesorios": "fa-solid fa-screwdriver-wrench", "General": "fa-solid fa-gear",
-    "Quirk": "fa-solid fa-bolt", "Medicina": "fa-solid fa-pills",
-    "Estimulantes": "fa-solid fa-flask", "Experimentales": "fa-solid fa-flask-vial",
-    "Certificaciones": "fa-solid fa-certificate", "Materiales": "fa-solid fa-toolbox",
+    "Equipo": "fa-regular fa-uniform-martial-arts", 
+    "Armas": "fa-solid fa-gun",
+    "Habilidades": "fa-solid fa-hand-fist", 
+    "Técnicas": "fa-solid fa-burst",
+    "Rasgos": "fa-solid fa-person-burst", 
+    "Debilidades": "fa-solid fa-person-falling-burst",
+    "Sustancias": "fa-solid fa-flask", 
+    "General": "fa-solid fa-gear",
+    "Quirk": "fa-solid fa-bolt",
+    "Certificaciones": "fa-solid fa-certificate", 
+    "Materiales": "fa-solid fa-toolbox",
     "Ingredientes": "fa-brands fa-pagelines"
   };
 
