@@ -102,4 +102,26 @@
   border-top: 1px dashed #ccc;
   font-size: 13px;
   color: #222;
+}.busqueda-container {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+#busqueda-empleos {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-left: 4px solid #A1121F; /* Color que hace match con tu paleta MHA */
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  transition: 0.3s ease-in-out;
+}
+
+#busqueda-empleos:focus {
+  outline: none;
+  background-color: #fff;
+  border-color: #A1121F;
+  box-shadow: 0 0 5px rgba(161, 18, 31, 0.2);
 }

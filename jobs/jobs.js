@@ -1,12 +1,13 @@
-const appEmpleos = (function () {
+
+  const appEmpleos = (function () {
   /* ==========================
      CONFIGURACIÓN Y ESTADO
   ========================== */
-  // ⚠️ REEMPLAZA ESTA URL CON LA DE TU NUEVA APP SCRIPT DE EMPLEOS
-  const API_URL = "https://script.google.com/macros/s/AKfycbxqp7eDb4zoJ4cCNWqsVQ6ZGVdaU2mL2rSCH0-scYs15P08k0HGlWuVMTlfFMvbGyAzYw/exec"; 
+  const API_URL = "https://script.google.com/macros/s/AKfycbxqp7eDb4zoJ4cCNWqsVQ6ZGVdaU2mL2rSCH0-scYs15P08k0HGlWuVMTlfFMvbGyAzYw/exec";  
   
   let empleos = [];
   let institucionActual = "";
+  let filtroBusqueda = ""; // 🔹 Nueva variable para el texto de búsqueda
   
   const num = v => Number(v) || 0;
   const fmt = v => new Intl.NumberFormat('de-DE').format(num(v));
@@ -39,10 +40,28 @@ const appEmpleos = (function () {
     contenedor.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         institucionActual = btn.dataset.inst;
+        // Limpiamos el buscador al cambiar de pestaña para evitar confusiones
+        filtroBusqueda = ""; 
+        const inputBuscador = document.getElementById("busqueda-empleos");
+        if (inputBuscador) inputBuscador.value = "";
+        
         renderPestañas(instituciones);
         renderEmpleos();
       };
     });
+  }
+
+  /* ==========================
+     BUSCADOR ARROBA
+  ========================== */
+  function inicializarBuscador() {
+    const input = document.getElementById("busqueda-empleos");
+    if (input) {
+      input.addEventListener("input", (e) => {
+        filtroBusqueda = e.target.value.toLowerCase().trim();
+        renderEmpleos();
+      });
+    }
   }
 
   /* ==========================
@@ -52,81 +71,101 @@ const appEmpleos = (function () {
     const contenedor = document.getElementById("lista-empleos");
     if (!contenedor) return;
 
-    const lista = empleos.filter(e => e.Institución === institucionActual);
+    // 1. Filtramos por la pestaña actual
+    let lista = empleos.filter(e => e.Institución === institucionActual);
+
+    // 2. 🔹 Aplicamos la lógica de búsqueda
+    if (filtroBusqueda) {
+      lista = lista.filter(e => {
+        const nombreSeguro = (e.Nombre || "").toLowerCase();
+        const areaSegura = (e.Área || "").toLowerCase();
+        const ocupanteSeguro = (e.Ocupante || "").toLowerCase();
+
+        // Si la búsqueda inicia con "@", buscamos SÓLO en Ocupantes
+        if (filtroBusqueda.startsWith("@")) {
+          const arrobaBusqueda = filtroBusqueda.substring(1); // Quitamos el @
+          return ocupanteSeguro.includes(arrobaBusqueda);
+        }
+
+        // Si es texto normal, buscamos en Nombre de Puesto, Área u Ocupante
+        return nombreSeguro.includes(filtroBusqueda) || 
+               areaSegura.includes(filtroBusqueda) || 
+               ocupanteSeguro.includes(filtroBusqueda);
+      });
+    }
+
     let html = "";
 
-    lista.forEach(e => {
-      const sueldoYen = num(e.YENS);
-      const sueldoExp = num(e.EXP);
-      const vacantesTotales = num(e.Vacantes);
-      const vacantesOcupadas = num(e['Vacantes Ocupadas']);
-      const vacantesDisponibles = vacantesTotales - vacantesOcupadas;
-      
-      const estadoVacantes = vacantesDisponibles > 0 
-        ? `<span class="badge-abierto">${vacantesDisponibles} Disponible(s)</span>` 
-        : `<span class="badge-cerrado">Cupo Lleno</span>`;
+    if (lista.length === 0) {
+      html = `<p style="text-align:center; padding: 20px; color:#666;">No se encontraron empleos que coincidan con la búsqueda.</p>`;
+    } else {
+      lista.forEach(e => {
+        const sueldoYen = num(e.YENS);
+        const sueldoExp = num(e.EXP);
+        const vacantesTotales = num(e.Vacantes);
+        const vacantesOcupadas = num(e['Vacantes Ocupadas']);
+        const vacantesDisponibles = vacantesTotales - vacantesOcupadas;
+        
+        const estadoVacantes = vacantesDisponibles > 0 
+          ? `<span class="badge-abierto">${vacantesDisponibles} Disponible(s)</span>` 
+          : `<span class="badge-cerrado">Cupo Lleno</span>`;
 
-      html += `
-        <div class="empleo-card">
-          <div class="empleo-header">
-            <h3>${escapeHTML(e.Nombre)}</h3>
-            ${estadoVacantes}
-          </div>
-          
-          <div class="empleo-meta">
-            <span><strong>Área:</strong> ${escapeHTML(e.Área)}</span>
-            <span><strong>Riesgo:</strong> ${escapeHTML(e.Riesgo)}</span>
-          </div>
-
-          <p class="empleo-desc">${escapeHTML(e.Descripción)}</p>
-
-          <div class="empleo-requisitos">
-            <strong>Requisitos:</strong> ${escapeHTML(e.Certificaciones)} <br>
-            <strong>Edad Mínima:</strong> ${escapeHTML(e['Edad Mínima'])} años
-          </div>
-
-          <div class="empleo-economia">
-            <div class="sueldos">
-              ${sueldoYen ? `<span><strong>Sueldo:</strong> ¥${fmt(sueldoYen)}</span>` : ""}
-              ${sueldoExp ? `<span><strong>EXP:</strong> ${fmt(sueldoExp)}</span>` : ""}
+        html += `
+          <div class="empleo-card">
+            <div class="empleo-header">
+              <h3>${escapeHTML(e.Nombre)}</h3>
+              ${estadoVacantes}
             </div>
-            <div class="cobro-info">
-              <em>Mínimo de posts para cobro: ${num(e.Cobro)}</em>
+            
+            <div class="empleo-meta">
+              <span><strong>Área:</strong> ${escapeHTML(e.Área)}</span>
+              <span><strong>Riesgo:</strong> ${escapeHTML(e.Riesgo)}</span>
             </div>
-          </div>
 
-          ${e.Ocupante ? `<div class="empleo-ocupante"><strong>Ocupante actual:</strong> ${escapeHTML(e.Ocupante)}</div>` : ""}
-        </div>
-      `;
-    });
+            <p class="empleo-desc">${escapeHTML(e.Descripción)}</p>
+
+            <div class="empleo-requisitos">
+              <strong>Requisitos:</strong> ${escapeHTML(e.Certificaciones)} <br>
+              <strong>Edad Mínima:</strong> ${escapeHTML(e['Edad Mínima'])} años
+            </div>
+
+            <div class="empleo-economia">
+              <div class="sueldos">
+                ${sueldoYen ? `<span><strong>Sueldo:</strong> ¥${fmt(sueldoYen)}</span>` : ""}
+                ${sueldoExp ? `<span><strong>EXP:</strong> ${fmt(sueldoExp)}</span>` : ""}
+              </div>
+              <div class="cobro-info">
+                <em>Mínimo de posts para cobro: ${num(e.Cobro)}</em>
+              </div>
+            </div>
+
+            ${e.Ocupante ? `<div class="empleo-ocupante"><strong>Ocupante actual:</strong> ${escapeHTML(e.Ocupante)}</div>` : ""}
+          </div>
+        `;
+      });
+    }
 
     contenedor.innerHTML = html;
   }
 
- /* ==========================
-     INICIALIZACIÓN Y DEBUG
+  /* ==========================
+     INICIALIZACIÓN
   ========================== */
   return {
     init: async function() {
       if (!document.getElementById("lista-empleos")) return;
       
       try {
-        const rawData = await fetch(API_URL).then(r => r.json());
-        console.log("🕵️ DATOS CRUDOS DE LA API:", rawData); // <- Esto nos dirá la verdad
+        empleos = await fetch(API_URL).then(r => r.json());
+        empleos = empleos.filter(e => e.Institución && e.Nombre);
         
-        empleos = rawData.filter(e => e.Institución && e.Nombre);
-        console.log("✅ DATOS DESPUÉS DEL FILTRO:", empleos);
-        
-        if (empleos.length === 0) {
-          document.getElementById("lista-empleos").innerHTML = "<p>No hay empleos válidos. Revisa la consola (F12).</p>";
-          return;
-        }
-
         const instituciones = [...new Set(empleos.map(e => e.Institución))];
         renderPestañas(instituciones);
+        inicializarBuscador(); // 🔹 Arrancamos el event listener del buscador
         renderEmpleos();
       } catch (error) {
         console.error("Error cargando los empleos:", error);
+        document.getElementById("lista-empleos").innerHTML = "<p>Error al cargar el tablón de empleos.</p>";
       }
     }
   };
