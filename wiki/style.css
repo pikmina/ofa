@@ -33,6 +33,7 @@ div#wiki-content {
 
     padding-right: 10px;
 }
+
 .wiki-tree li {
     cursor: pointer;
     margin: 5px 0;
@@ -43,7 +44,8 @@ div#wiki-content {
     font-size: 110%;
 }
 
-li.wiki-doc, li.wiki-doc-empty {
+li.wiki-doc,
+li.wiki-doc-empty {
     margin-left: 10px;
 }
 
@@ -54,13 +56,16 @@ li.wiki-doc, li.wiki-doc-empty {
     border-radius: 8px;
     cursor: pointer;
 }
+
 .wiki-card:hover {
     background: #f0f0f0;
 }
+
 .wiki-card-title {
     font-size: 18px;
     font-weight: bold;
 }
+
 .wiki-card-cat {
     font-size: 12px;
 }
@@ -69,17 +74,19 @@ li.wiki-doc, li.wiki-doc-empty {
 #wiki-article {
     padding: 10px;
 }
+
 #wiki-article h2 {
     margin-top: 0;
 }
 
 /* ToC */
 .toc {
-    
+
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 15px;
 }
+
 .toc ul {
     margin: 0;
     padding-left: 20px;
@@ -114,6 +121,7 @@ input#wiki-search {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -126,17 +134,278 @@ input#wiki-search {
 }
 
 /* Suavizar la transición de altura del contenedor principal */
-#wiki-article, #wiki-list {
+#wiki-article,
+#wiki-list {
     transition: opacity 0.3s ease;
     will-change: opacity, transform;
 }
 
 /* Efecto hover suave para las tarjetas y enlaces */
-.wiki-card, .wiki-doc a {
+.wiki-card,
+.wiki-doc a {
     transition: all 0.2s ease-in-out;
 }
 
 .wiki-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Para canons */
+
+h1.page-title {
+    font-family: var(--font3);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 0;
+    min-height: 90px;
+    border-radius: 0;
+    align-items: stretch;
+    justify-content: flex-start;
+    display: flex;
+    padding: 10px;
+    background: linear-gradient(188deg, var(--bg1), var(--bg4));
+}
+
+h1.page-title.solo i {
+    clip-path: polygon(0% 0%, 100% 0%, 127% 46%, 51% 120%, 0% 100%);
+    background: var(--grad2);
+    height: 88px;
+    width: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--text1);
+    flex-shrink: 0;
+    margin-right: -30px;
+}
+
+h1.page-title.solo span {
+    background: var(--bg1);
+    width: 100%;
+    text-align: left;
+    padding-left: 65px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 81%;
+    padding-top: 6px;
+    color: var(--text1);
+}
+
+h1.page-title.solo span b {
+    display: block;
+    font-size: 14px;
+    font-family: var(--font1);
+    text-transform: initial;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: var(--text2);
+}
+
+.container-rec {
+    margin: 0;
+    width: 100%;
+    border-radius: 0;
+    background: var(--bg8);
+}
+
+#filtros h3 {
+    background: var(--grad3);
+    width: 100%;
+    color: var(--text1);
+    border: 0;
+    padding: 4px;
+    font-family: var(--font3);
+    text-transform: uppercase;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+#filtros h3:before {
+    font-family: "Phosphor-Fill" !important;
+    content: "\e266";
+    background: var(--bg1);
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+div#filtro-sangre,
+div#filtro-grupo,
+div#filtro-sexo,
+div#filtro-grupo,
+div#filtro-don {
+    background: var(--bg1);
+    padding: 20px;
+    border-radius: 4px;
+    padding-top: 16px;
+    min-height: 165px;
+    margin-top: 20px;
+}
+
+div#filtros h4 {
+    background: var(--bg2);
+    padding: 0 6px;
+    text-align: center;
+    color: var(--accent2);
+    font-family: var(--font1);
+    text-transform: uppercase;
+    font-weight: 500;
+    min-width: 144px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+
+#filtros {
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    background: var(--bg3);
+    display: flex;
+    border: 0;
+    flex-wrap: wrap;
+}
+
+.allmyfilters {
+    display: flex !important;
+    gap: 10px;
+}
+
+.allmyfilters div {
+    width: 224px;
+}
+
+div#filtro-limpiar {
+    width: 100% !important;
+    display: flex !important;
+}
+
+div#filtro-limpiar button {
+    transition: all linear .3s;
+    width: 100% !important;
+    display: flex;
+    margin-top: -2px;
+    border-radius: 3px;
+    font-family: var(--font1);
+    text-align: center;
+    justify-content: center;
+    color: var(--text1);
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    border: 1px solid rgb(var(--accent1a) / 0.2);
+    background: rgb(var(--accent1a) / 0.2);
+}
+
+div#filtro-limpiar button:hover {
+    border: 1px solid rgb(var(--accent1a) / 0.8);
+    background: rgb(var(--accent1a) / 0.5);
+}
+
+.container-rec .tabs {
+    background: var(--bg1);
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.container-rec .tabs button {
+    flex-grow: 1;
+    background: var(--grad3);
+    border-radius: 3px;
+    font-family: var(--font3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text1);
+}
+
+.buscador {
+    background: var(--bg3);
+    border: 13px solid var(--bg1);
+    border-radius: 0 !important;
+    border-top-width: 0px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+}
+
+.buscador input {
+    color: var(--text1);
+    border: 0 !important;
+    font-size: 16px;
+    font-family: var(--font1);
+}
+
+.buscador i {
+    font-size: 32px;
+}
+
+div#contenedor-registros {
+    background: var(--bg3);
+    padding: 20px;
+}
+
+h2.titulo-categoria {
+    background: var(--grad1);
+    color: var(--text1);
+    font-family: var(--font3);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 13px;
+}
+
+.record {
+    background: var(--bg4);
+    border-radius: 3px;
+    color: var(--text2);
+    font-family: var(--font1);
+    font-size: 15px;
+    padding: 10px;
+}
+
+.character-name {
+    font-weight: 500;
+    font-family: var(--font3);
+    font-size: 19px;
+    color: var(--accent1);
+}
+
+.record em {
+    color: var(--text1);
+    display: block;
+    width: 100%;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: var(--bg2);
+    border-radius: 3px;
+}
+
+.record strong {
+    color: var(--accent2);
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.grupo-categoria {
+    padding: 10px;
+    margin: 10px;
+    background: var(--bg6);
+    flex-grow: 1 !important;
 }
