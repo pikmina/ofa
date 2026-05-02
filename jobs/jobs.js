@@ -3,7 +3,7 @@
   /* ==========================
      CONFIGURACIÓN Y ESTADO
   ========================== */
-  const API_URL = "https://script.google.com/macros/s/AKfycbxqp7eDb4zoJ4cCNWqsVQ6ZGVdaU2mL2rSCH0-scYs15P08k0HGlWuVMTlfFMvbGyAzYw/exec";  
+  const API_URL = "https://script.google.com/macros/s/AKfycbyXfrbIr4djZbcju3Pn3Oh3SqGys3e5lQQEGOrn2QWCNGnO4BeUpGv-t5sCe-QOTAtj/exec";  
   
   let empleos = [];
   let institucionActual = "";
@@ -148,20 +148,26 @@
     contenedor.innerHTML = html;
   }
 
-  /* ==========================
+/* ==========================
      INICIALIZACIÓN
   ========================== */
   return {
     init: async function() {
-      if (!document.getElementById("lista-empleos")) return;
+      // Si la página actual no tiene el contenedor de empleos, el script se detiene aquí y no hace nada.
+      if (!document.getElementById("lista-empleos")) return; 
       
       try {
-        empleos = await fetch(API_URL).then(r => r.json());
-        empleos = empleos.filter(e => e.Institución && e.Nombre);
+        const rawData = await fetch(API_URL).then(r => r.json());
+        
+        // 🔹 LA CLAVE: Extraemos únicamente la lista de empleos del paquete de datos
+        let datosEmpleos = rawData.empleos || [];
+        
+        // Aplicamos nuestro filtro de seguridad a esos datos
+        empleos = datosEmpleos.filter(e => e.Institución && e.Nombre);
         
         const instituciones = [...new Set(empleos.map(e => e.Institución))];
         renderPestañas(instituciones);
-        inicializarBuscador(); // 🔹 Arrancamos el event listener del buscador
+        inicializarBuscador(); 
         renderEmpleos();
       } catch (error) {
         console.error("Error cargando los empleos:", error);
@@ -170,5 +176,7 @@
     }
   };
 })();
+
+document.addEventListener("DOMContentLoaded", () => appEmpleos.init());
 
 document.addEventListener("DOMContentLoaded", () => appEmpleos.init());
