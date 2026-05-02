@@ -409,3 +409,8 @@ h2.titulo-categoria {
     background: var(--bg6);
     flex-grow: 1 !important;
 }
+
+div#contenedor-canons-wp {
+    display: flex;
+    text-align: center;
+}
