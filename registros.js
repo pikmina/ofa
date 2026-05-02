@@ -46,7 +46,6 @@ const RegistrosApp = (() => {
 
   /* --- INICIALIZACIÓN --- */
 let datosOriginales = { registros: [], canons: [] }; 
-
 function init() {
   activarTabs();
   activarFiltros();
@@ -57,11 +56,9 @@ function init() {
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
-      // Validamos que data tenga las propiedades necesarias
       if (data && data.registros && data.canons) {
         datosOriginales = data;
       } else {
-        // Si el script devolvió una lista plana en vez de un objeto
         console.error("Formato de datos inesperado:", data);
         datosOriginales = { 
           registros: Array.isArray(data) ? data : [], 
@@ -70,6 +67,46 @@ function init() {
       }
       generarFiltros();
       renderContenido();
+      /* --- RENDERIZADO EXTRA (WIKI/WORDPRESS) --- */
+  function renderCanonsExtra() {
+    // Buscamos el div que inyecta WordPress
+    const contenedorWP = document.getElementById("contenedor-canons-wp");
+    
+    // Si no estamos en una página que tenga ese div, el script se detiene y no hace nada
+    if (!contenedorWP) return; 
+
+    // Extraemos la lista de canons
+    const canons = datosOriginales.canons || [];
+
+    if (!canons.length) {
+      contenedorWP.innerHTML = "<p>No se encontraron personajes canon registrados.</p>";
+      return;
+    }
+
+    // Usamos tu misma configuración de visualización
+    const config = CONFIG_TABS["canons"];
+
+    // Agrupamos alfabéticamente por la columna que designaste ("CGrupo")
+    const grupos = canons.reduce((acc, r) => {
+      const cat = r[config.clasificarPor] || "Otros";
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push(r);
+      return acc;
+    }, {});
+
+    // Dibujamos las tarjetas manteniendo tu estructura y clases exactas
+    contenedorWP.innerHTML = Object.keys(grupos).sort().map(cat => `
+      <div class="grupo-categoria">
+        <h2 class="titulo-categoria">${cat}</h2>
+        <div class="grid-cards">
+          ${grupos[cat].map(r => generarHtmlCard(r, config)).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+      
+      // 🔹 NUEVO: Llamamos a la función que dibuja en el contenedor de WordPress
+      renderCanonsExtra(); 
     })
     .catch(err => {
       console.error("Error en Fetch:", err);
