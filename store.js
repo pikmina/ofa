@@ -1,7 +1,7 @@
 const appTienda = (function () {
 
   /* ==========================
-      CONFIG Y ESTADO
+     CONFIG Y ESTADO
   ========================== */
 
   const API_URL = "https://script.google.com/macros/s/AKfycbxGzKTNqDy3s4AfHX_gzkQg3CGfAJ39EIefWev_i1a4x6-AfhpMVjJ6QJDfp5f11qtgMw/exec";
@@ -33,7 +33,7 @@ const appTienda = (function () {
   let carrito = [];
   let categoriaActual = "";
   
-  // 🔹 ESTADO DE FILTROS
+  // ESTADO DE FILTROS
   let filtroTexto = "";
   let costesActivos = [];
   let tiposActivos = [];
@@ -47,11 +47,10 @@ const appTienda = (function () {
   }
 
   /* ==========================
-      SISTEMA DE FILTROS
+     SISTEMA DE FILTROS
   ========================== */
 
   function inicializarFiltros() {
-    // 1. Filtro de Búsqueda
     const inputBusqueda = document.getElementById("filtro-texto");
     if (inputBusqueda) {
       inputBusqueda.addEventListener("input", e => {
@@ -60,7 +59,6 @@ const appTienda = (function () {
       });
     }
 
-    // 2. Escuchar cambios en los Checkboxes (Moneda y Tipo)
     document.addEventListener("change", e => {
       if (e.target.matches("#filtro-costes input") || e.target.matches("#filtro-tipos input")) {
         costesActivos = [...document.querySelectorAll("#filtro-costes input:checked")].map(i => i.value);
@@ -70,12 +68,10 @@ const appTienda = (function () {
     });
   }
 
-  // 🔹 NUEVA FUNCIÓN: Solo renderiza los Tipos de la Categoría Activa
   function renderFiltroTipos() {
     const contTipos = document.getElementById("filtro-tipos");
     if (!contTipos) return;
 
-    // Filtramos los productos para quedarnos solo con los de la pestaña actual
     const productosDeCategoria = productos.filter(p => p.Categoría === categoriaActual);
     const tiposUnicos = [...new Set(productosDeCategoria.map(p => p.Tipo).filter(Boolean))];
 
@@ -93,17 +89,13 @@ const appTienda = (function () {
 
   function aplicarFiltros() {
     return productos.filter(p => {
-      // A. Categoría (Pestaña actual)
       if (p.Categoría !== categoriaActual) return false;
 
-      // B. Búsqueda de texto
       const nombreSeguro = (p.Nombre || "").toLowerCase();
       if (filtroTexto && !nombreSeguro.includes(filtroTexto)) return false;
 
-      // C. Filtro de Tipo
       if (tiposActivos.length && !tiposActivos.includes(p.Tipo)) return false;
 
-      // D. Filtro de Moneda (EXP / YEN)
       if (costesActivos.length) {
         const tieneEXP = num(p.PrecioEXP) > 0 || [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP].some(v => num(v) > 0);
         const tieneYEN = num(p.PrecioYenes) > 0 || [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen].some(v => num(v) > 0);
@@ -119,7 +111,7 @@ const appTienda = (function () {
   }
 
   /* ==========================
-      SISTEMA DE PESTAÑAS
+     SISTEMA DE PESTAÑAS
   ========================== */
 
   function renderPestañas(categorias) {
@@ -137,16 +129,16 @@ const appTienda = (function () {
     contenedor.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         categoriaActual = btn.dataset.cat;
-        tiposActivos = []; // 🔹 IMPORTANTE: Limpia los tipos seleccionados al cambiar de pestaña
+        tiposActivos = []; 
         renderPestañas(categorias);
-        renderFiltroTipos(); // 🔹 Vuelve a crear los checkboxes para la nueva pestaña
+        renderFiltroTipos(); 
         renderTienda();
       };
     });
   }
 
   /* ==========================
-      RENDER TIENDA
+     RENDER TIENDA
   ========================== */
 
   function renderTienda() {
@@ -185,7 +177,7 @@ const appTienda = (function () {
             <select class="select-nivel">
               ${niveles.map(n => `<option data-exp="${n.e}" data-yen="${n.y}">${n.n} – ${n.e ? fmt(n.e)+' EXP ' : ''}${n.y ? fmt(n.y)+' ¥' : ''}</option>`).join("")}
             </select>` : ""}
-          <button class="btn-add" data-nombre="${escapeHTML(p.Nombre)}" data-exp="${num(p.PrecioEXP)}" data-yen="${num(p.PrecioYenes)}">
+          <button class="btn-add" data-nombre="${escapeHTML(p.Nombre)}" data-exp="${num(p.PrecioEXP)}" data-yen="${num(p.PrecioYenes)}" data-categoria="${p.Categoría}">
             Agregar al carrito
           </button>
         </div>`;
@@ -196,14 +188,14 @@ const appTienda = (function () {
   }
 
   /* ==========================
-      CARRITO Y FINALIZAR
+     CARRITO Y FINALIZAR
   ========================== */
 
   function inicializarEventosCarrito() {
     document.addEventListener("click", e => {
       if (e.target.classList.contains("btn-add")) {
         const btn = e.target;
-        let exp = num(btn.dataset.exp), yen = num(btn.dataset.yen), nivel = "";
+        let exp = num(btn.dataset.exp), yen = num(btn.dataset.yen), nivel = "", categoria = btn.dataset.categoria;
         const selector = btn.parentElement.querySelector(".select-nivel");
         
         if (selector) {
@@ -214,7 +206,7 @@ const appTienda = (function () {
 
         const item = carrito.find(i => i.nombre === btn.dataset.nombre && i.nivel === nivel);
         if (item) item.cantidad++;
-        else carrito.push({ nombre: btn.dataset.nombre, nivel, exp, yen, cantidad: 1 });
+        else carrito.push({ nombre: btn.dataset.nombre, nivel, exp, yen, cantidad: 1, categoria });
 
         renderCarrito();
       }
@@ -230,7 +222,9 @@ const appTienda = (function () {
         return; 
     }
 
-    const tEXP = carrito.reduce((s, p) => s + (p.exp * p.cantidad), 0);
+    // Separamos Gastos de Ganancias
+    const tEXP = carrito.reduce((s, p) => p.categoria !== "Debilidades" ? s + (p.exp * p.cantidad) : s, 0);
+    const gEXP = carrito.reduce((s, p) => p.categoria === "Debilidades" ? s + (p.exp * p.cantidad) : s, 0);
     const tYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
 
     cont.innerHTML = `
@@ -241,7 +235,10 @@ const appTienda = (function () {
             <button class="btn-remove" data-index="${i}">✖</button>
           </div>`).join("")}
       </div>
-      <div class="carrito-totales">Total: ${fmt(tEXP)} EXP | ${fmt(tYEN)} ¥</div>`;
+      <div class="carrito-totales">
+        Total Gasto: ${fmt(tEXP)} EXP | ${fmt(tYEN)} ¥
+        ${gEXP > 0 ? `<br><strong style="color: #3F7F1E;">Total Ganancia: +${fmt(gEXP)} EXP</strong>` : ""}
+      </div>`;
 
     cont.querySelectorAll(".btn-remove").forEach(b => {
       b.onclick = () => { carrito.splice(Number(b.dataset.index), 1); renderCarrito(); };
@@ -251,15 +248,28 @@ const appTienda = (function () {
   function activarFinalizar() {
     document.getElementById("btn-finalizar")?.addEventListener("click", () => {
       if (!carrito.length) return alert("El carrito está vacío.");
+      
       let texto = "COMPRA REALIZADA\n\n";
+      
       carrito.forEach(p => {
         texto += `• ${p.nombre} ${p.nivel ? `(${p.nivel})` : ""} x${p.cantidad}\n`;
-        if (p.exp) texto += `  COSTO: ${fmt(p.exp * p.cantidad)} EXP\n`;
-        if (p.yen) texto += `  COSTO: ${fmt(p.yen * p.cantidad)} ¥\n\n`;
+        
+        // Formateo especial si es una debilidad
+        if (p.categoria === "Debilidades") {
+          if (p.exp) texto += `  GANANCIA: +${fmt(p.exp * p.cantidad)} EXP\n\n`;
+        } else {
+          if (p.exp) texto += `  COSTO: ${fmt(p.exp * p.cantidad)} EXP\n`;
+          if (p.yen) texto += `  COSTO: ${fmt(p.yen * p.cantidad)} ¥\n\n`;
+        }
       });
-      const tEXP = carrito.reduce((s, p) => s + (p.exp * p.cantidad), 0);
+
+      // Cálculos separados para posteo
+      const tEXP = carrito.reduce((s, p) => p.categoria !== "Debilidades" ? s + (p.exp * p.cantidad) : s, 0);
+      const gEXP = carrito.reduce((s, p) => p.categoria === "Debilidades" ? s + (p.exp * p.cantidad) : s, 0);
       const tYEN = carrito.reduce((s, p) => s + (p.yen * p.cantidad), 0);
-      texto += `TOTAL: ${fmt(tEXP)} EXP | ${fmt(tYEN)} YEN`;
+      
+      texto += `TOTAL GASTO: ${fmt(tEXP)} EXP | ${fmt(tYEN)} YEN`;
+      if (gEXP > 0) texto += `\nTOTAL GANANCIA: +${fmt(gEXP)} EXP`;
 
       const textarea = document.getElementById("mensaje-post");
       if (textarea) { 
@@ -281,7 +291,7 @@ const appTienda = (function () {
       
       inicializarFiltros(); 
       renderPestañas(categorias);
-      renderFiltroTipos(); // 🔹 Generamos los checkboxes de Tipo para la pestaña inicial
+      renderFiltroTipos(); 
       renderTienda();
       inicializarEventosCarrito();
       activarFinalizar();
