@@ -97,8 +97,12 @@ const appTienda = (function () {
       if (tiposActivos.length && !tiposActivos.includes(p.Tipo)) return false;
 
       if (costesActivos.length) {
-        const tieneEXP = num(p.PrecioEXP) > 0 || [p.Nivel1_EXP, p.Nivel2_EXP, p.Nivel3_EXP, p.Nivel4_EXP, p.Nivel5_EXP].some(v => num(v) > 0);
-        const tieneYEN = num(p.PrecioYenes) > 0 || [p.Nivel1_Yen, p.Nivel2_Yen, p.Nivel3_Yen, p.Nivel4_Yen, p.Nivel5_Yen].some(v => num(v) > 0);
+        // Generamos dinámicamente la búsqueda hasta el Nivel 14 para los filtros
+        const nivelesEXP = Array.from({length: 14}, (_, i) => p[`Nivel${i+1}_EXP`]);
+        const nivelesYEN = Array.from({length: 14}, (_, i) => p[`Nivel${i+1}_Yen`]);
+
+        const tieneEXP = num(p.PrecioEXP) > 0 || nivelesEXP.some(v => num(v) > 0);
+        const tieneYEN = num(p.PrecioYenes) > 0 || nivelesYEN.some(v => num(v) > 0);
 
         if (costesActivos.includes("EXP") && tieneEXP) return true;
         if (costesActivos.includes("YEN") && tieneYEN) return true;
@@ -153,13 +157,12 @@ const appTienda = (function () {
     }
 
     listaFiltrada.forEach(p => {
-      const niveles = [
-        { n: "Nivel 1", e: num(p.Nivel1_EXP), y: num(p.Nivel1_Yen) },
-        { n: "Nivel 2", e: num(p.Nivel2_EXP), y: num(p.Nivel2_Yen) },
-        { n: "Nivel 3", e: num(p.Nivel3_EXP), y: num(p.Nivel3_Yen) },
-        { n: "Nivel 4", e: num(p.Nivel4_EXP), y: num(p.Nivel4_Yen) },
-        { n: "Nivel 5", e: num(p.Nivel5_EXP), y: num(p.Nivel5_Yen) }
-      ].filter(n => n.e > 0 || n.y > 0);
+      // Generamos dinámicamente los 14 niveles leyendo las columnas NivelX_EXP y NivelX_Yen
+      const niveles = Array.from({length: 14}, (_, i) => ({
+        n: `Nivel ${i+1}`,
+        e: num(p[`Nivel${i+1}_EXP`]),
+        y: num(p[`Nivel${i+1}_Yen`])
+      })).filter(n => n.e > 0 || n.y > 0);
 
       html += `
         <div class="product" style="border-top: 3px solid ${COLORES[p.Categoría] || '#666'}">
