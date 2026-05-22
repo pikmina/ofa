@@ -1,0 +1,490 @@
+table.has-fixed-layout tr {
+    background: var(--bg7);
+}
+table.has-fixed-layout tr:nth-of-type(1) {
+    background: var(--grad3);
+}
+table.has-fixed-layout tr:nth-of-type(1) td strong {
+    color: var(--text1) !important;
+    font-weight: 500 !important;
+    font-family: var(--font2);
+    text-transform: lowercase;
+    padding: 6px !important;
+    height: 42px !important;
+    display: inline-flex !important;
+    align-items: center;
+}
+table.has-fixed-layout td {
+    padding: 4px 9px;
+}
+table.has-fixed-layout tr:nth-of-type(1) td:nth-of-type(1) {
+    background: var(--grad3);
+}
+table.has-fixed-layout tr td:nth-of-type(1) {
+    background: rgb(var(--accent1a) / 0.7);
+    font-family: var(--font1);
+    text-align: center;
+}
+table.has-fixed-layout {
+    width: 100%;
+    font-family: var(--font1);
+}
+recom {
+    display: flex;
+    width: 100%;
+    padding: 5px 10px;
+    flex-direction: column;
+}
+recom pensa {
+    background: var(--bg3);
+    padding: 5px 10px;
+    margin: 3px 0;
+}
+recom br {
+    display: none;
+}
+recom pensa b {
+    width: 70%;
+    display: inline-flex;
+}
+.expediente.stats {
+    dato {
+        font-family: var(--font1);
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        background: var(--bg4);
+        padding: 1px 8px;
+        color: var(--text2);
+        text-transform: uppercase;
+        font-size: 13px;
+        border-radius: 3px;
+        width: 160px;
+        justify-content: center;
+    }
+}
+.expediente.stats {
+    .exp-body {
+        background: var(--bg3);
+        padding: 40px 80px;
+        overflow: auto;
+    }
+}
+.instahero {
+    width: 600px;
+    margin: auto;
+}
+.expediente.instahero {
+    .base-template-section-title span {
+        background: var(--bg4);
+    }
+    dato {
+        width: 200px;
+    }
+    .base-template-section-title {
+        height: 100px;
+    }
+    .instahero-title i {
+        position: absolute;
+        font-size: 200px;
+        opacity: 0.1;
+    }
+    .instahero-contentbody {
+        background: var(--bg6);
+        padding: 60px 100px;
+    }
+    .instahero-content {
+        display: flex;
+        justify-items: end;
+        justify-content: space-around;
+        align-content: space-around;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .instahero-image {
+        background: var(--bg3);
+        padding: 10px;
+        border: 1px solid var(--bg2);
+        border-radius: 5px;
+    }
+    .exp-body {
+        background: var(--bg3);
+        padding: 60px 80px;
+        height: auto;
+    }
+
+}
+.expediente.instahero br {
+    display: none;
+}
+.instahero img.emojione {
+    height: 10px;
+    width: auto;
+    margin-left: 3px;
+}
+.expediente.crono {
+    width: 90%;
+    margin: auto;
+}
+.expediente.crono {
+    .base-template-section-title {
+        height: 140px;
+    }
+    dato {
+        width: 150px;
+    }
+}
+.crono .exp-body.accents {
+    padding: 30px 80px;
+}
+tma {
+    display: block;
+    background: var(--bg1);
+    padding: 3px 5px;
+    margin: 2px 0;
+}
+tma img.emojione {
+    margin-top: 2px;
+}
+tma br {
+    display: none;
+}
+.instahero-image img {
+    max-width: 120px;
+}
+table#table.base {
+    border: 0 !important;
+    width: 100%;
+    border-spacing: 0;
+}
+table#table.base td {
+    border: none !important;
+    padding: 0 5px;
+    border-bottom: 1px solid var(--bg1) !important;
+}
+table#table th {
+    background: var(--accent1);
+    padding: 5px;
+}
+.instahero-comment-box {
+    max-width: 460px;
+    background-color: var(--bg3);
+    margin: 15px auto;
+    padding: 18px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: var(--border1);
+    font-family: var(--font2);
+    color: var(--text1);
+}
+.instahero-comment-box header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px;
+    margin-bottom: 15px;
+    position: relative;
+}
+.instahero-comment-box .comment-avatar-container {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+}
+.instahero-comment-box .comment-avatar-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 2px solid #2d2d2d;
+    object-fit: cover;
+}
+.instahero-comment-box .comment-user-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    row-gap: 0px;
+}
+.instahero-comment-box .comment-author-name::before {
+    content: attr(data-username);
+    color: var(--accent1);
+    !important;
+    font-family: var(--font3), sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+.instahero-comment-box .comment-role-tag::before {
+    content: attr(data-badge);
+    background-color: var(--bg3);
+    color: var(--accent1);
+    !important;
+    font-family: var(--font3);
+    font-size: 8px;
+    font-weight: bold;
+    padding: 0px 6px;
+    border-radius: 3px;
+    border: var(--border1);
+    text-transform: uppercase;
+    display: inline-flex;
+    line-height: 18px;
+}
+.instahero-comment-box .comment-timestamp {
+    width: 100%;
+}
+
+.instahero-comment-box .comment-timestamp::before {
+    content: attr(data-time);
+    color: var(--text2);
+    font-size: 12px;
+    font-family: var(--font3);
+    display: block;
+}
+.instahero-comment-box .comment-like-icon {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    color: #555;
+    cursor: pointer;
+    font-size: 15px;
+    transition: color .2s;
+}
+.instahero-comment-box .comment-like-icon:hover {
+    color: #fd4d4d;
+}
+.instahero-comment-box main {
+    font-size: 12px;
+    line-height: 145%;
+    margin-bottom: 14px;
+    text-align: left !important;
+}
+.instahero-comment-box .comment-tag {
+    color: #8fa0a6 !important;
+    font-weight: 600;
+}
+.instahero-comment-box footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 10px;
+    align-items: center;
+}
+.instahero-comment-box footer::before {
+    content: "♥  " attr(data-likes-num) " " attr(data-likes-text);
+    color: var(--accent1);
+    font-weight: 500;
+    font-size: 11px;
+    font-family: var(--font3);
+    /* MODIFICA ESTA FUENTE A TU GUSTO */
+}
+.instahero-comment-box footer::after {
+    content: attr(data-reply-text);
+    font-family: var(--font3);
+    font-weight: normal;
+    font-size: 10px;
+    color: var(--text1);
+    cursor: pointer;
+    transition: color .2s;
+    letter-spacing: 0.5px;
+}
+.instahero-comment-box footer:hover::after {
+    color: #7fa988;
+}
+/* ==========================================================================
+   INSTAHERO: PUBLICACIÓN HORIZONTAL (FOTO + CONTENIDO)
+   ========================================================================== */
+.instahero-post-box {
+    max-width: 650px;
+    background-color: var(--bg3) !important;
+    /* Hereda el fondo secundario de tus tablillas */
+    margin: 15px auto;
+    padding: 18px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: var(--border1);
+    font-family: var(--font1), 'Segoe UI', sans-serif;
+    display: flex !important;
+    gap: 20px;
+}
+.instahero-post-box .post-photo-side {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: var(--border1);
+}
+.instahero-post-box .post-photo-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.instahero-post-box .post-content-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+/* ==========================================================================
+   ESTRUCTURA COMPARTIDA (CABECERA, TIPOGRAFÍAS Y ELEMENTOS DATA)
+   ========================================================================== */
+.instahero-post-box header,
+.instahero-comment-box header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px;
+    margin-bottom: 15px;
+    position: relative;
+}
+.instahero-post-box .comment-avatar-container,
+.instahero-comment-box .comment-avatar-container {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    color: var(--text1) !important;
+    border-radius: initial;
+    padding: 0px !important;
+}
+
+.instahero-post-box .comment-avatar-container img,
+.instahero-comment-box .comment-avatar-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 2px solid #2d2d2d;
+    object-fit: cover;
+}
+.instahero-post-box .comment-user-details,
+.instahero-comment-box .comment-user-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    row-gap: 0px;
+}
+.instahero-post-box .comment-author-name::before,
+.instahero-comment-box .comment-author-name::before {
+    content: attr(data-username);
+    color: var(--accent1) !important;
+    font-family: var(--font3), sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+.instahero-post-box .comment-role-tag::before,
+.instahero-comment-box .comment-role-tag::before {
+    content: attr(data-badge);
+    background-color: var(--bg3);
+    color: var(--accent1) !important;
+    font-family: var(--font3);
+    font-size: 8px;
+    font-weight: bold;
+    padding: 0px 6px;
+    border-radius: 3px;
+    border: var(--border1);
+    text-transform: uppercase;
+    display: inline-flex;
+    line-height: 18px;
+}
+.instahero-post-box .comment-timestamp,
+.instahero-comment-box .comment-timestamp {
+    width: 100%;
+}
+.instahero-post-box .comment-timestamp::before,
+.instahero-comment-box .comment-timestamp::before {
+    content: attr(data-time);
+    color: var(--text2);
+    font-size: 12px;
+    font-family: var(--font3);
+    display: block;
+}
+.instahero-post-box .comment-like-icon,
+.instahero-comment-box .comment-like-icon {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    color: #555;
+    cursor: pointer;
+    font-size: 15px;
+    transition: color .2s;
+}
+.instahero-post-box .comment-like-icon:hover,
+.instahero-comment-box .comment-like-icon:hover {
+    color: #fd4d4d;
+}
+/* ==========================================================================
+   CUERPO DE TEXTO Y PIE DE PÁGINA PERSONALIZABLE
+   ========================================================================== */
+.instahero-post-box main,
+.instahero-comment-box main {
+    font-size: 12px;
+    line-height: 145%;
+    margin-bottom: 14px;
+    text-align: left !important;
+}
+.instahero-post-box .comment-tag,
+.instahero-comment-box .comment-tag {
+    color: #8fa0a6 !important;
+    font-weight: 600;
+}
+.instahero-post-box footer,
+.instahero-comment-box footer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #1a1a1a;
+    padding-top: 10px;
+    align-items: center;
+}
+.instahero-post-box footer::before,
+.instahero-comment-box footer::before {
+    content: "♥  " attr(data-likes-num) " " attr(data-likes-text);
+    color: var(--accent1);
+    font-weight: 500;
+    font-size: 11px;
+    font-family: var(--font3);
+}
+.instahero-post-box footer::after,
+.instahero-comment-box footer::after {
+    content: attr(data-reply-text);
+    font-family: var(--font3);
+    font-weight: normal;
+    font-size: 10px;
+    color: var(--text1);
+    cursor: pointer;
+    transition: color .2s;
+    letter-spacing: 0.5px;
+}
+.instahero-post-box footer:hover::after,
+.instahero-comment-box footer:hover::after {
+    color: var(--accent1);
+}
+@media (max-width: 550px) {
+    .instahero-post-box {
+        flex-direction: column !important;
+        max-width: 100%;
+    }
+    .instahero-post-box .post-photo-side {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}
+.audio-player {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #f0f2f5;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #54656f;
+    wdith: 100%;
+}
+.audio-time {
+    font-size: 11px;
+    color: #667781;
+}
+.played {
+    color: #53bdeb;
+}
