@@ -487,4 +487,12 @@ table#table th {
 }
 .played {
     color: #53bdeb;
+}rol {
+    width: 70%;
+    display: block;
+    margin: auto;
+}
+
+rol strong, rol b {
+    color: var(--graccent1);
 }
