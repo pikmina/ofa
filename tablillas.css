@@ -1,9 +1,11 @@
 table.has-fixed-layout tr {
     background: var(--bg7);
 }
+
 table.has-fixed-layout tr:nth-of-type(1) {
     background: var(--grad3);
 }
+
 table.has-fixed-layout tr:nth-of-type(1) td strong {
     color: var(--text1) !important;
     font-weight: 500 !important;
@@ -14,39 +16,48 @@ table.has-fixed-layout tr:nth-of-type(1) td strong {
     display: inline-flex !important;
     align-items: center;
 }
+
 table.has-fixed-layout td {
     padding: 4px 9px;
 }
+
 table.has-fixed-layout tr:nth-of-type(1) td:nth-of-type(1) {
     background: var(--grad3);
 }
+
 table.has-fixed-layout tr td:nth-of-type(1) {
     background: rgb(var(--accent1a) / 0.7);
     font-family: var(--font1);
     text-align: center;
 }
+
 table.has-fixed-layout {
     width: 100%;
     font-family: var(--font1);
 }
+
 recom {
     display: flex;
     width: 100%;
     padding: 5px 10px;
     flex-direction: column;
 }
+
 recom pensa {
     background: var(--bg3);
     padding: 5px 10px;
     margin: 3px 0;
 }
+
 recom br {
     display: none;
 }
+
 recom pensa b {
     width: 70%;
     display: inline-flex;
 }
+
 .expediente.stats {
     dato {
         font-family: var(--font1);
@@ -63,6 +74,7 @@ recom pensa b {
         justify-content: center;
     }
 }
+
 .expediente.stats {
     .exp-body {
         background: var(--bg3);
@@ -70,29 +82,36 @@ recom pensa b {
         overflow: auto;
     }
 }
+
 .instahero {
     width: 600px;
     margin: auto;
 }
+
 .expediente.instahero {
     .base-template-section-title span {
         background: var(--bg4);
     }
+
     dato {
         width: 200px;
     }
+
     .base-template-section-title {
         height: 100px;
     }
+
     .instahero-title i {
         position: absolute;
         font-size: 200px;
         opacity: 0.1;
     }
+
     .instahero-contentbody {
         background: var(--bg6);
         padding: 60px 100px;
     }
+
     .instahero-content {
         display: flex;
         justify-items: end;
@@ -103,12 +122,14 @@ recom pensa b {
         align-items: flex-start;
         gap: 5px;
     }
+
     .instahero-image {
         background: var(--bg3);
         padding: 10px;
         border: 1px solid var(--bg2);
         border-radius: 5px;
     }
+
     .exp-body {
         background: var(--bg3);
         padding: 60px 80px;
@@ -116,58 +137,72 @@ recom pensa b {
     }
 
 }
+
 .expediente.instahero br {
     display: none;
 }
+
 .instahero img.emojione {
     height: 10px;
     width: auto;
     margin-left: 3px;
 }
+
 .expediente.crono {
     width: 90%;
     margin: auto;
 }
+
 .expediente.crono {
     .base-template-section-title {
         height: 140px;
     }
+
     dato {
         width: 150px;
     }
 }
+
 .crono .exp-body.accents {
     padding: 30px 80px;
 }
+
 tma {
     display: block;
     background: var(--bg1);
     padding: 3px 5px;
     margin: 2px 0;
 }
+
 tma img.emojione {
     margin-top: 2px;
 }
+
 tma br {
     display: none;
 }
+
 .instahero-image img {
     max-width: 120px;
 }
+
 table#table.base {
     border: 0 !important;
     width: 100%;
     border-spacing: 0;
 }
+
 table#table.base td {
     border: none !important;
     padding: 0 5px;
     border-bottom: 1px solid var(--bg1) !important;
 }
+
 table#table th {
     background: var(--accent1);
     padding: 5px;
 }
+
 .instahero-comment-box {
     max-width: 460px;
     background-color: var(--bg3);
@@ -179,6 +214,7 @@ table#table th {
     font-family: var(--font2);
     color: var(--text1);
 }
+
 .instahero-comment-box header {
     display: flex !important;
     align-items: center !important;
@@ -186,11 +222,13 @@ table#table th {
     margin-bottom: 15px;
     position: relative;
 }
+
 .instahero-comment-box .comment-avatar-container {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
 }
+
 .instahero-comment-box .comment-avatar-container img {
     width: 100%;
     height: 100%;
@@ -198,6 +236,7 @@ table#table th {
     border: 2px solid #2d2d2d;
     object-fit: cover;
 }
+
 .instahero-comment-box .comment-user-details {
     display: flex;
     flex-wrap: wrap;
@@ -205,6 +244,7 @@ table#table th {
     gap: 6px;
     row-gap: 0px;
 }
+
 .instahero-comment-box .comment-author-name::before {
     content: attr(data-username);
     color: var(--accent1);
@@ -214,6 +254,7 @@ table#table th {
     font-size: 14px;
     letter-spacing: 0.5px;
 }
+
 .instahero-comment-box .comment-role-tag::before {
     content: attr(data-badge);
     background-color: var(--bg3);
@@ -229,6 +270,7 @@ table#table th {
     display: inline-flex;
     line-height: 18px;
 }
+
 .instahero-comment-box .comment-timestamp {
     width: 100%;
 }
@@ -240,6 +282,7 @@ table#table th {
     font-family: var(--font3);
     display: block;
 }
+
 .instahero-comment-box .comment-like-icon {
     position: absolute;
     right: 2px;
@@ -249,19 +292,23 @@ table#table th {
     font-size: 15px;
     transition: color .2s;
 }
+
 .instahero-comment-box .comment-like-icon:hover {
     color: #fd4d4d;
 }
+
 .instahero-comment-box main {
     font-size: 12px;
     line-height: 145%;
     margin-bottom: 14px;
     text-align: left !important;
 }
+
 .instahero-comment-box .comment-tag {
     color: #8fa0a6 !important;
     font-weight: 600;
 }
+
 .instahero-comment-box footer {
     display: flex;
     justify-content: space-between;
@@ -269,6 +316,7 @@ table#table th {
     padding-top: 10px;
     align-items: center;
 }
+
 .instahero-comment-box footer::before {
     content: "♥  " attr(data-likes-num) " " attr(data-likes-text);
     color: var(--accent1);
@@ -277,6 +325,7 @@ table#table th {
     font-family: var(--font3);
     /* MODIFICA ESTA FUENTE A TU GUSTO */
 }
+
 .instahero-comment-box footer::after {
     content: attr(data-reply-text);
     font-family: var(--font3);
@@ -287,9 +336,11 @@ table#table th {
     transition: color .2s;
     letter-spacing: 0.5px;
 }
+
 .instahero-comment-box footer:hover::after {
     color: #7fa988;
 }
+
 /* ==========================================================================
    INSTAHERO: PUBLICACIÓN HORIZONTAL (FOTO + CONTENIDO)
    ========================================================================== */
@@ -306,6 +357,7 @@ table#table th {
     display: flex !important;
     gap: 20px;
 }
+
 .instahero-post-box .post-photo-side {
     width: 250px;
     height: 250px;
@@ -314,17 +366,20 @@ table#table th {
     overflow: hidden;
     border: var(--border1);
 }
+
 .instahero-post-box .post-photo-side img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .instahero-post-box .post-content-side {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
 }
+
 /* ==========================================================================
    ESTRUCTURA COMPARTIDA (CABECERA, TIPOGRAFÍAS Y ELEMENTOS DATA)
    ========================================================================== */
@@ -336,6 +391,7 @@ table#table th {
     margin-bottom: 15px;
     position: relative;
 }
+
 .instahero-post-box .comment-avatar-container,
 .instahero-comment-box .comment-avatar-container {
     width: 50px;
@@ -354,6 +410,7 @@ table#table th {
     border: 2px solid #2d2d2d;
     object-fit: cover;
 }
+
 .instahero-post-box .comment-user-details,
 .instahero-comment-box .comment-user-details {
     display: flex;
@@ -362,6 +419,7 @@ table#table th {
     gap: 6px;
     row-gap: 0px;
 }
+
 .instahero-post-box .comment-author-name::before,
 .instahero-comment-box .comment-author-name::before {
     content: attr(data-username);
@@ -371,6 +429,7 @@ table#table th {
     font-size: 14px;
     letter-spacing: 0.5px;
 }
+
 .instahero-post-box .comment-role-tag::before,
 .instahero-comment-box .comment-role-tag::before {
     content: attr(data-badge);
@@ -386,10 +445,12 @@ table#table th {
     display: inline-flex;
     line-height: 18px;
 }
+
 .instahero-post-box .comment-timestamp,
 .instahero-comment-box .comment-timestamp {
     width: 100%;
 }
+
 .instahero-post-box .comment-timestamp::before,
 .instahero-comment-box .comment-timestamp::before {
     content: attr(data-time);
@@ -398,6 +459,7 @@ table#table th {
     font-family: var(--font3);
     display: block;
 }
+
 .instahero-post-box .comment-like-icon,
 .instahero-comment-box .comment-like-icon {
     position: absolute;
@@ -408,10 +470,12 @@ table#table th {
     font-size: 15px;
     transition: color .2s;
 }
+
 .instahero-post-box .comment-like-icon:hover,
 .instahero-comment-box .comment-like-icon:hover {
     color: #fd4d4d;
 }
+
 /* ==========================================================================
    CUERPO DE TEXTO Y PIE DE PÁGINA PERSONALIZABLE
    ========================================================================== */
@@ -422,11 +486,13 @@ table#table th {
     margin-bottom: 14px;
     text-align: left !important;
 }
+
 .instahero-post-box .comment-tag,
 .instahero-comment-box .comment-tag {
     color: #8fa0a6 !important;
     font-weight: 600;
 }
+
 .instahero-post-box footer,
 .instahero-comment-box footer {
     display: flex;
@@ -435,6 +501,7 @@ table#table th {
     padding-top: 10px;
     align-items: center;
 }
+
 .instahero-post-box footer::before,
 .instahero-comment-box footer::before {
     content: "♥  " attr(data-likes-num) " " attr(data-likes-text);
@@ -443,6 +510,7 @@ table#table th {
     font-size: 11px;
     font-family: var(--font3);
 }
+
 .instahero-post-box footer::after,
 .instahero-comment-box footer::after {
     content: attr(data-reply-text);
@@ -454,21 +522,25 @@ table#table th {
     transition: color .2s;
     letter-spacing: 0.5px;
 }
+
 .instahero-post-box footer:hover::after,
 .instahero-comment-box footer:hover::after {
     color: var(--accent1);
 }
+
 @media (max-width: 550px) {
     .instahero-post-box {
         flex-direction: column !important;
         max-width: 100%;
     }
+
     .instahero-post-box .post-photo-side {
         width: 100%;
         height: auto;
         aspect-ratio: 1 / 1;
     }
 }
+
 .audio-player {
     display: inline-flex;
     align-items: center;
@@ -481,18 +553,47 @@ table#table th {
     color: #54656f;
     wdith: 100%;
 }
+
 .audio-time {
     font-size: 11px;
     color: #667781;
 }
+
 .played {
     color: #53bdeb;
-}rol {
+}
+
+rol {
     width: 70%;
     display: block;
     margin: auto;
 }
 
-rol strong, rol b {
+rol strong,
+rol b {
     color: var(--graccent1);
+    background: var(--bg6);
+    padding: 20px;
+}
+
+rol h2.post-content {
+    color: var(--text1);
+    font-size: 30px;
+    background: linear-gradient(45deg, var(--graccent1) -34%, var(--graccent2));
+    border-bottom-right-radius: 20px;
+    corner-shape: bevel;
+    padding: 0 20px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+rol h3.post-content {
+    font-size: 14px;
+    border: none;
+    text-align: right;
+    border-bottom-right-radius: 10px;
+    corner-shape: bevel;
+    text-transform: uppercase;
+    background: var(--bg3);
+    padding-right: 20px;
 }
