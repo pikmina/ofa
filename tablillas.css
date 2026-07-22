@@ -564,9 +564,11 @@ table#table th {
 }
 
 rol {
-    width: 70%;
+width: 75%;
     display: block;
     margin: auto;
+    background: var(--bg6);
+    padding: 10px 20px;
 }
 
 rol strong,
@@ -595,7 +597,7 @@ rol h3.post-content {
     corner-shape: bevel;
     text-transform: uppercase;
     background: var(--bg3);
-    padding-right: 20px;
+    padding: 10px 20px;
 }
 
 
