@@ -866,3 +866,135 @@ h3.post-content {
     background: var(--graccent2) !important;
     box-shadow: 0 0 5px rgba(250, 204, 34, 0.6) !important;
 }
+
+/* ==========================================================================
+   COMBATE
+   ========================================================================== */
+
+   body {
+    background-image: var(--bggrain);
+    background-color: var(--bg3);
+    background-attachment: fixed;
+    background-size: cover;
+    width: 50%;
+    margin: 20px;
+}
+
+combate {
+    display: flex;
+    gap: 8px;
+    background: var(--bg3);
+    padding: 15px 20px 20px;
+    margin: auto;
+    width: 80%;
+    max-width: 700px;
+    flex-flow: column wrap;
+    font-size: 16px;
+    font-family: var(--font3);
+    color: var(--text1);
+
+    & b {
+        color: var(--accent2);
+    }
+
+    & turno {
+        display: block;
+        background: var(--bg1);
+        padding: 10px;
+        font-family: var(--font3);
+        text-transform: uppercase;
+        text-align: center;
+        color: var(--text1);
+        font-weight: bold;
+    }
+
+    & bs.barras {
+        width: 100%;
+        text-align: left;
+        display: block;
+        background: var(--border1);
+        padding: 5px 0;
+
+        & bas {
+            width: 45%;
+            display: inline-block;
+            margin: 2px 10px;
+
+            & label {
+                font-size: 16px;
+                color: var(--text1);
+                padding: 5px 10px;
+                display: block;
+                text-align: center;
+
+                & valor {
+                    border: 1px solid var(--bg5);
+                    padding: 4px 5px;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    line-height: 16px;
+                    margin-top: -4px;
+                    position: absolute;
+                    margin-left: 5px;
+                }
+            }
+
+            & progress {
+                width: 100%;
+                height: 22px;
+                appearance: none;
+                -webkit-appearance: none;
+                border: none;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            & progress::-webkit-progress-bar {
+                background: var(--bg4);
+            }
+
+            & progress.hp::-webkit-progress-value {
+                background: var(--gr6a);
+            }
+
+            & progress.st::-webkit-progress-value {
+                background: var(--gr3a);
+            }
+
+
+
+        }
+    }
+
+    & bs.roll {
+        display: block;
+        padding: 5px 3px;
+        border-bottom: var(--border1);
+
+        resultado.hit i {
+            color: var(--gr6a);
+            padding: 2px 5px;
+        }
+
+        resultado.miss i {
+            color: var(--gr5a);
+            padding: 2px 5px;
+        }
+    }
+
+    & pj {
+        width: 100%;
+
+        & name {
+            background: var(--grad1);
+            display: block;
+            padding: 5px;
+            color: var(--text1);
+            font-family: var(--font3);
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px !important;
+        }
+    }
+}
