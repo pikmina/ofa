@@ -870,16 +870,6 @@ h3.post-content {
 /* ==========================================================================
    COMBATE
    ========================================================================== */
-
-   body {
-    background-image: var(--bggrain);
-    background-color: var(--bg3);
-    background-attachment: fixed;
-    background-size: cover;
-    width: 50%;
-    margin: 20px;
-}
-
 combate {
     display: flex;
     gap: 8px;
