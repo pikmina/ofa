@@ -578,13 +578,14 @@ rol b {
 
 rol h2.post-content {
     color: var(--text1);
-    font-size: 30px;
+    font-size: 28px;
     background: linear-gradient(45deg, var(--graccent1) -34%, var(--graccent2));
     border-bottom-right-radius: 20px;
     corner-shape: bevel;
     padding: 0 20px;
     text-transform: uppercase;
     margin-bottom: 10px;
+    letter-spacing: -2px;
 }
 
 rol h3.post-content {
