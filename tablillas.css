@@ -955,15 +955,21 @@ combate {
                 background: var(--gr3a);
             }
 
-
-
         }
     }
 
     & bs.roll {
         display: block;
-        padding: 5px 3px;
+        padding: 5px 15px;
         border-bottom: var(--border1);
+
+        & b {
+            padding-right: 5px;
+            & i {
+                padding-right: 5px;
+                color: var(--accent1);
+            }
+        }
 
         resultado.hit i {
             color: var(--gr6a);
