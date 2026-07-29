@@ -805,10 +805,15 @@ h2.mha-main-headline {
 }
 
 h3.post-content {
-    font-family: var(--font3);
+font-family: var(--font3);
     color: var(--graccent1);
-    background: var(--bg1);
+    background: var(--bg2);
+    border: none;
     padding: 10px;
+    border-bottom-right-radius: 20px;
+    corner-shape: bevel;
+    text-transform: uppercase;
+    letter-spacing: -1px;
 }.edited-message {
     display: none;
 }#forum_rules .logo {
