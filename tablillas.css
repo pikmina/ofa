@@ -248,7 +248,6 @@ table#table th {
 .instahero-comment-box .comment-author-name::before {
     content: attr(data-username);
     color: var(--accent1);
-    !important;
     font-family: var(--font3), sans-serif;
     font-weight: 600;
     font-size: 14px;
@@ -259,7 +258,6 @@ table#table th {
     content: attr(data-badge);
     background-color: var(--bg3);
     color: var(--accent1);
-    !important;
     font-family: var(--font3);
     font-size: 8px;
     font-weight: bold;
@@ -551,7 +549,7 @@ table#table th {
     font-family: sans-serif;
     font-size: 16px;
     color: #54656f;
-    wdith: 100%;
+    width: 100%;
 }
 
 .audio-time {
