@@ -801,7 +801,9 @@ h2.mha-main-headline {
         column-count: 1;
     }
 }
-
+.prfl-tecnicas-p h3 {
+    background: var(--bg1);
+}
 h3.post-content {
 font-family: var(--font3);
     color: var(--graccent1);
