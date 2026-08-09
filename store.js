@@ -18,7 +18,9 @@ const appTienda = (function () {
     "Quirk": "fa-solid fa-bolt",
     "Certificaciones": "fa-solid fa-certificate", 
     "Materiales": "fa-solid fa-toolbox",
-    "Ingredientes": "fa-brands fa-pagelines"
+    "Ingredientes": "fa-regular fa-salad",
+    "Atributos": "fa-solid fa-chart-simple",
+    "Objetos": "fa-solid fa-box",
   };
 
   const COLORES = {
