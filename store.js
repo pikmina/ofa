@@ -7,7 +7,7 @@ const appTienda = (function () {
   const API_URL = "https://script.google.com/macros/s/AKfycbxGzKTNqDy3s4AfHX_gzkQg3CGfAJ39EIefWev_i1a4x6-AfhpMVjJ6QJDfp5f11qtgMw/exec";
 
   const ICONOS = {
-    "Equipo": "fa-regular fa-uniform-martial-arts", 
+    "Equipo": "fa-solid fa-uniform-martial-arts", 
     "Armas": "fa-solid fa-gun",
     "Habilidades": "fa-solid fa-hand-fist", 
     "Técnicas": "fa-solid fa-burst",
