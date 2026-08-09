@@ -569,11 +569,6 @@ width: 75%;
     padding: 10px 20px;
 }
 
-rol strong,
-rol b {
-    color: var(--graccent1);
-}
-
 rol h2.post-content {
     color: var(--text1);
     font-size: 28px;
@@ -885,12 +880,6 @@ combate {
     flex-flow: column wrap;
     font-family: var(--font3);
     color: var(--text1);
-    
-    
-    
-    
-    
-    
 
     & b {
         color: var(--accent2);
