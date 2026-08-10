@@ -475,7 +475,7 @@ table#table th {
 }
 
 /* ==========================================================================
-   CUERPO DE TEXTO Y PIE DE PÁGINA PERSONALIZABLE
+   INSTAHERO
    ========================================================================== */
 .instahero-post-box main,
 .instahero-comment-box main {
@@ -561,12 +561,17 @@ table#table th {
     color: #53bdeb;
 }
 
+
+/* ==========================================================================
+   ROL BASE
+   ========================================================================== */
+
 rol {
-width: 75%;
+    width: 84%;
     display: block;
     margin: auto;
     background: var(--bg6);
-    padding: 10px 20px;
+    padding: 30px 50px;
 }
 
 rol h2.post-content {
@@ -597,7 +602,7 @@ rol h3.post-content {
    PERIODICO
    ========================================================================== */
 
-   /* Contenedor Principal */
+/* Contenedor Principal */
 .mha-news-wrapper {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f9f9f5;
@@ -607,7 +612,8 @@ rol h3.post-content {
     border: 5px solid #1a1a1a;
     padding: 25px;
     box-sizing: border-box;
-    box-shadow: 10px 10px 0px #004c97; /* Azul U.A. */
+    box-shadow: 10px 10px 0px #004c97;
+    /* Azul U.A. */
     position: relative;
     overflow: hidden;
 }
@@ -618,7 +624,8 @@ rol h3.post-content {
     top: -20px;
     left: -20px;
     font-size: 150px;
-    color: rgb(230 0 18 / 11%); /* Rojo suave */
+    color: rgb(230 0 18 / 11%);
+    /* Rojo suave */
     font-weight: bold;
     z-index: 0;
     pointer-events: none;
@@ -638,9 +645,10 @@ rol h3.post-content {
 .mha-news-title {
     font-family: 'Impact', 'Arial Black', sans-serif;
     font-size: 65px !important;
-    /* color: #e60012; */ /* Rojo U.A. */
+    /* color: #e60012; */
+    /* Rojo U.A. */
     margin: 0 !important;
-  margin-top: 10px !important;
+    margin-top: 10px !important;
     text-transform: uppercase;
     letter-spacing: 3px;
     text-shadow: 3px 3px 0px #facc22, -1px -1px 0 #1a1a1a, 1px -1px 0 #1a1a1a, -1px 1px 0 #1a1a1a, 1px 1px 0 #1a1a1a;
@@ -661,7 +669,7 @@ rol h3.post-content {
 /* Sistema Grid Principal */
 .mha-news-grid {
     display: grid;
-   grid-template-columns:200px 2fr;
+    grid-template-columns: 200px 2fr;
     gap: 20px;
     z-index: 1;
     position: relative;
@@ -743,7 +751,8 @@ h2.mha-main-headline {
     height: auto;
     border: 3px solid #1a1a1a;
     margin-bottom: 15px;
-    filter: grayscale(20%) contrast(120%); /* Efecto ligeramente cómic */
+    filter: grayscale(20%) contrast(120%);
+    /* Efecto ligeramente cómic */
 }
 
 .mha-article-text {
@@ -788,19 +797,24 @@ h2.mha-main-headline {
     .mha-news-grid {
         grid-template-columns: 1fr;
     }
-    .mha-col-left, .mha-col-right {
+
+    .mha-col-left,
+    .mha-col-right {
         border: none;
         padding: 0;
     }
+
     .mha-article-text {
         column-count: 1;
     }
 }
+
 .prfl-tecnicas-p h3 {
     background: var(--bg1);
 }
+
 h3.post-content {
-font-family: var(--font3);
+    font-family: var(--font3);
     color: var(--graccent1);
     background: var(--bg2);
     border: none;
@@ -809,17 +823,25 @@ font-family: var(--font3);
     corner-shape: bevel;
     text-transform: uppercase;
     letter-spacing: -1px;
-}.edited-message {
+}
+
+.edited-message {
     display: none;
-}#forum_rules .logo {
+}
+
+#forum_rules .logo {
     vertical-align: top;
     width: 160px;
     overflow: hidden;
-}#forum_rules .logo img {
+}
+
+#forum_rules .logo img {
     max-width: 100%;
 }
 
-/* Contenedor principal de la habilidad */
+/* ==========================================================================
+   HABILIDADES EN PERFIL
+   ========================================================================== */
 .mha-skill-box {
     display: flex;
     align-items: center;
@@ -831,12 +853,13 @@ font-family: var(--font3);
     padding: 6px 12px;
     border-radius: 4px;
     border: var(--border1);
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 }
 
 /* Título dinámico de la habilidad */
 .mha-skill-box strong {
-    color: var(--graccent1) !important; /* Usa el color verde de Izuku de tu foro */
+    color: var(--graccent1) !important;
+    /* Usa el color verde de Izuku de tu foro */
     font-weight: 600;
 }
 
@@ -914,7 +937,7 @@ combate {
                 padding: 5px 10px;
                 display: block;
                 text-align: center;
-                
+
 
                 & valor {
                     border: 1px solid var(--bg5);
@@ -960,6 +983,7 @@ combate {
 
         & b {
             padding-right: 5px;
+
             & i {
                 padding-right: 5px;
                 color: var(--accent1);
