@@ -890,6 +890,20 @@ h3.post-content {
     background: var(--graccent2) !important;
     box-shadow: 0 0 5px rgba(250, 204, 34, 0.6) !important;
 }
+progress.hp[value="-1"]::-webkit-progress-bar {
+        background: var(--bg1);
+        animation-name: dead;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+}
+
+@keyframes dead {
+  0%   {background: var(--bg1)}
+  100%  {background: color-mix(in srgb, var(--gr5a) 70%, black);}
+}
+
+
 
 /* ==========================================================================
    COMBATE
