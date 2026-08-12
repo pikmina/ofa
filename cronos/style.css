@@ -1,0 +1,222 @@
+body {
+    background-image: var(--bggrain);
+    background-color: var(--bg3);
+    background-attachment: fixed;
+    background-size: cover;
+    width: 50%;
+    margin: 20px;
+}
+
+crono {
+    --graccent1: #E0B715;
+    --graccent2: #075bd9;
+    display: flex;
+    gap: 0;
+    background: var(--bg6);
+    margin: 0 auto;
+    width: 740px;
+    max-width: 750px;
+    flex-flow: column wrap;
+    font-size: 16px;
+    font-family: var(--font3);
+    color: var(--text1);
+    
+    c-header {
+        display: flex;
+        flex-direction: row;
+        padding: 0 50px;
+        min-height: 180px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom-right-radius: 50px;
+        corner-shape: bevel;
+        background: var(--bg3);
+        margin: 0;
+        
+        c-left {
+            display: flex;
+            flex-direction: column;
+
+            i {
+                position: absolute;
+                font-size: 200px;
+                opacity: 0.2;
+                top: 40px;
+                color: var(--bg5);
+            }
+
+            span {
+                font-family: var(--font3);
+                font-size: 37px;
+                font-weight: 400;
+                padding-top: 10px;
+                line-height: 100%;
+                margin-bottom: -6px;
+                color: var(--graccent1);
+            }
+
+            b {
+                text-transform: uppercase;
+                font-family: var(--font2);
+                font-size: 13px;
+                letter-spacing: 2px;
+                margin-top: 6px;
+            }
+        }
+
+        c-right {
+
+            c-icon {
+                border-bottom-right-radius: 30px;
+                corner-shape: bevel;
+                background: var(--bg2);
+                padding: 20px;
+                margin-right: -6px;
+                display: block;
+                height: 80px;
+                box-sizing: content-box;
+            }
+
+            img {
+                border-bottom-right-radius: 20px;
+                corner-shape: bevel;
+                object-fit: cover;
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+    }
+
+    c-intro {
+        display: flex;
+        background: transparent;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+
+        c-icon {
+            border-bottom-right-radius: 30px;
+            corner-shape: bevel;
+            background: var(--bg2);
+            padding: 20px 10px;
+            width: 70px;
+            font-size: 30px;
+            text-align: center;
+            color: var(--bg5);
+        }
+
+        c-data {
+            display: flex;
+            flex-direction: row;
+            padding: 20px 10px;
+            gap: 5px;
+            justify-content: space-around;
+            align-items: center;
+            width: calc(100% - 70px);
+            
+            c-status {
+                background: var(--bg5);
+                text-align: center;
+                text-transform: uppercase;
+                padding-right: 15px;
+                
+                &::before {
+                    content: '\f304';
+                    font-size: 20px;
+                    margin-right: 5px;
+                    display: inline-block;
+                    background: var(--bg2);
+                    padding: 5px 13px;
+                    border-bottom-right-radius: 10px;
+                    corner-shape: bevel;
+                    font-family: var(--fa-family-classic);
+                }
+
+                &[data-status="abierto"]:before {
+                    content: '\f304';
+                    background: var(--gr7b);
+                    
+                }
+
+                &[data-status="cerrado"]:before {
+                    content: '\f023';
+                    background: var(--gr6a);
+                    
+                }
+
+                &[data-status="abandonado"]:before {
+                    content: '\f6e2';
+                }
+
+                &[data-status="global"]:before {
+                    content: '\f0ac';
+                    background: var(--gr7a);
+                    color:var(--bg1);
+                }
+            }
+
+        }
+
+        c-list{}
+
+    }
+
+    /* =========================================
+   CRONOLOGÍA DE SEMÁFORO (DATA-*)
+========================================= */
+
+.crono-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg3, #1e1e1e); /* Ajustable a tus variables nativas */
+    border-left: 4px solid #555;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-decoration: none !important;
+    color: var(--text1, #e0e0e0) !important;
+    font-family: var(--font1, sans-serif);
+    transition: transform 0.2s ease, background 0.2s ease;
+    position: relative;
+}
+
+.crono-card:hover {
+    transform: translateX(5px);
+    background: var(--bg4, #2a2a2a);
+}
+
+/* 1. Extracción de Fecha y Compañero (Parte Superior) */
+.crono-card::before {
+    content: attr(data-fecha) " | Con: " attr(data-con);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text2, #999);
+    margin-bottom: 5px;
+}
+
+/* 2. Extracción del Estado / Semáforo (Etiqueta Flotante) */
+.crono-card::after {
+    content: attr(data-estado);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    color: #fff;
+}
+
+/* 3. Lógica Automática de Colores (El Semáforo) */
+.crono-card[data-estado="mi-turno"] { border-left-color: #2ecc71; }
+.crono-card[data-estado="mi-turno"]::after { background: #2ecc71; content: "Mi Turno"; }
+
+.crono-card[data-estado="esperando"] { border-left-color: #f1c40f; }
+.crono-card[data-estado="esperando"]::after { background: #f1c40f; color: #333; content: "Esperando"; }
+
+.crono-card[data-estado="cerrado"] { border-left-color: #e74c3c; opacity: 0.7; }
+.crono-card[data-estado="cerrado"]::after { background: #e74c3c; content: "Cerrado"; }
