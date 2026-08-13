@@ -1173,7 +1173,7 @@ combate {
             font-size: 30px;
             text-align: center;
             color: var(--text2);
-            height: 100%;
+            height: stretch;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1332,6 +1332,9 @@ combate {
 }
 
 .relas {
+    br {
+        display: none;
+    }
     c-intro{
             c-data {
             display: flex;
