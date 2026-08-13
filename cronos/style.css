@@ -167,7 +167,6 @@ tablilla {
     }
 }
 
-
 .crono {
     br {
         display: none;
@@ -248,7 +247,8 @@ tablilla {
             flex-direction: column;
             align-items: flex-start;
             color: var(--text1);
-            padding: 15px;
+            padding: 10px;
+            font-size: 14px;
 
             &:hover {
                 background: var(--bg4);
@@ -260,7 +260,7 @@ tablilla {
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 color: var(--graccent1);
-                margin-bottom: 5px;
+                margin-bottom: 0px;
             }
 
             &:after {
