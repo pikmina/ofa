@@ -1465,6 +1465,7 @@ tablilla {
     --graccent1-text: color-mix(in srgb, var(--graccent1) 30%, black);
     --graccent1-bg: color-mix(in srgb, var(--graccent1) 1%, white);
     --graccent1-bg1: color-mix(in srgb, var(--graccent1) 10%, white);
+     }
 
     hero {
         display: flex;
@@ -1487,7 +1488,6 @@ tablilla {
         background-position: right bottom;
         background-size: 13%;
         box-shadow: 0 0 30px inset color-mix(in srgb, var(--graccent1) 50%, white);
-
         br {
             display: none;
         }
@@ -1518,6 +1518,7 @@ tablilla {
                     flex-direction: row;
                     align-items: center;
                     font-size: 24px;
+                    letter-spacing: 0;
 
                     img {
                         width: 40px;
