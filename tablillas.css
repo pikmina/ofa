@@ -1267,7 +1267,7 @@ tablilla {
             font-size: 26px;
             text-transform: uppercase;
             background: linear-gradient(78deg, var(--graccent1), var(--graccent2));
-            font-weight: bold;
+            font-weight: normal;
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -1391,7 +1391,7 @@ tablilla {
             font-size: 26px;
             text-transform: uppercase;
             background: linear-gradient(78deg, var(--graccent1), var(--graccent2));
-            font-weight: bold;
+            font-weight: normal;
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -1416,11 +1416,6 @@ tablilla {
                 flex-direction: column;
                 border-bottom-right-radius: 30px;
                 corner-shape: bevel;
-                
-                
-                
-                
-                
 
                 i {
                     position: relative;
