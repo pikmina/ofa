@@ -1059,7 +1059,7 @@ combate {
         padding: 30px;
         display: block;
         max-height: 600px;
-        overflow: scroll;
+        overflow-y: scroll;
         color: var(--text1);
         font-family: var(--font1), 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         text-align: justify;
@@ -1431,5 +1431,118 @@ combate {
                     }
             }
         }
+    }
+}
+
+/* ==========================================================================
+   HERO LICENSE
+   ========================================================================== */
+:root {
+    --hbg1: #ebebeb;
+    --htext1: #071a58;
+}
+hero {
+    display: flex;
+    background: var(--hbg1);
+    margin: 0 auto;
+    width: 600px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: var(--font3);
+    color: var(--htext1);
+    border-radius: 10px;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    h-header{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        align-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        font-family: var(--font1);
+        font-size: 24px;
+        font-weight: 600;
+        align-items: center;
+        border-bottom: 10px solid var(--htext1);
+        h-col{
+            display: flex;
+            flex-direction: column;
+            letter-spacing: -1px;
+            gap: 5px;
+            &.id{
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0px;
+                text-align: right;
+
+            }
+            &.bt{
+                border: 3px solid var(--htext1);
+                padding: 3px 10px;
+                width: 44px;
+            }
+        }
+    }
+    h-content{
+        --width: 185px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        flex-direction: row;
+        justify-content: space-between;
+        h-col{
+            display: flex;
+            padding:5px;
+            &.data{
+            width: calc(100% - var(--width));
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            span{
+                letter-spacing: -1px;
+                font-size: 16px;
+                &.hero-name{
+                    text-align: center;
+                    font-size: 30px;
+                    label{
+                        width: 100%;
+                        display: block;
+                        padding: 10px;
+                    }
+                    span{
+                        background-color: #dfdfdf;
+                        width: 100%;
+                        display: block;
+                        padding: 20px 15px;
+                        font-size: 30px;
+                    }
+                }
+                label{
+                    width: 18%;
+                    display: inline-block;
+                    color: var(--text3);
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+            }
+
+        }
+        &.img{
+            width: var(--width);
+        }
+
+        }
+      
+    }
+    h-footer{
+        font-size: 14px;
+        text-align: center;
     }
 }
