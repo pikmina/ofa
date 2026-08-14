@@ -1459,15 +1459,9 @@ tablilla {
 /* ==========================================================================
    HERO LICENSE
    ========================================================================== */
-:root {
-    --hbg1: color-mix(in srgb, var(--graccent1) 1%, white);
-    --htext1: color-mix(in srgb, var(--graccent1) 30%, black);
-    --graccent1-bg1: color-mix(in srgb, var(--graccent1) 10%, white);
-     }
-
     hero {
         display: flex;
-        background: var(--hbg1);
+        background-color: color-mix(in srgb, var(--graccent1) 1%, white);
         background-image: url(https://i.ibb.co/5XgQ9fvW/sello-ha.png);
         background-repeat: no-repeat;
         margin: 0 auto;
@@ -1475,7 +1469,7 @@ tablilla {
         padding: 15px 20px;
         font-size: 16px;
         font-family: var(--font3);
-        color: var(--htext1);
+        color: color-mix(in srgb, var(--graccent1) 30%, black);
         border-radius: 10px;
         flex-direction: column;
         align-content: space-between;
@@ -1583,7 +1577,7 @@ tablilla {
                                 &::before,
                                 &::after {
                                     content: '';
-                                    background-color: var(--graccent1-bg1);
+                                    background-color: color-mix(in srgb, var(--graccent1) 10%, white);
                                     display: inline-block;
                                     width: 25%;
                                     height: 5px;
@@ -1592,7 +1586,7 @@ tablilla {
                             }
 
                             span {
-                                background-color: var(--graccent1-bg1);
+                                background-color: color-mix(in srgb, var(--graccent1) 10%, white);
                                 width: 100%;
                                 display: block;
                                 padding: 20px 15px;
