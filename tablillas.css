@@ -1460,10 +1460,8 @@ tablilla {
    HERO LICENSE
    ========================================================================== */
 :root {
-    --hbg1: var(--graccent1-bg);
-    --htext1: var(--graccent1-text);
-    --graccent1-text: color-mix(in srgb, var(--graccent1) 30%, black);
-    --graccent1-bg: color-mix(in srgb, var(--graccent1) 1%, white);
+    --hbg1: color-mix(in srgb, var(--graccent1) 1%, white);
+    --htext1: color-mix(in srgb, var(--graccent1) 30%, black);
     --graccent1-bg1: color-mix(in srgb, var(--graccent1) 10%, white);
      }
 
