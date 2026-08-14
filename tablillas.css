@@ -1408,9 +1408,11 @@ tablilla {
             justify-content: center;
             flex-direction: row;
             align-content: flex-start;
+            background: var(--bg2);
+            padding: 20px 10px;
 
             relacion {
-                background: var(--bg2);
+                background: var(--bg8);
                 width: 150px;
                 display: flex;
                 flex-direction: column;
