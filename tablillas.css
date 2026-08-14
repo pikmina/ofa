@@ -1249,6 +1249,9 @@ combate {
         }
     }
     c-content {
+        br{
+            display: none;
+        }
         h2 {
             font-family: var(--font3);
             font-size: 26px;
