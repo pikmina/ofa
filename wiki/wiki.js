@@ -1,9 +1,9 @@
 // ===============================
 // CONFIG
 // ===============================
-const API_CATEGORIES = "https://saxagenia.com/wp-json/wp/v2/doc_category?per_page=100";
-const API_DOCS = "https://saxagenia.com/wp-json/wp/v2/docs?per_page=100";
-const API_DOC = id => `https://saxagenia.com/wp-json/wp/v2/docs/${id}`;
+const API_CATEGORIES = "https://oneforallrpg.org/wp-json/wp/v2/doc_category?per_page=100";
+const API_DOCS = "https://oneforallrpg.org/wp-json/wp/v2/docs?per_page=100";
+const API_DOC = id => `https://oneforallrpg.org/wp-json/wp/v2/docs/${id}`;
 
 let ALL_DOCS = [];
 let ALL_CATEGORIES = [];
