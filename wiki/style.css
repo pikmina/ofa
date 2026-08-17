@@ -721,8 +721,7 @@ ul.wp-block-list {
 }
 
 ul.wp-block-list li {
-    background: var(--bg6);
-    padding: 14px;
+    padding: 5px 14px;
     border-radius: 3px;
     margin-bottom: 6px;
     line-height: 140%;
@@ -770,20 +769,21 @@ div#wiki-article-body h1 {
 .wp-block-group {
     background: var(--grad3);
     position: relative;
+    line-height: normal;
 }
 
 .wp-block-group .wp-block-font-awesome-icon {
     clip-path: polygon(0% 0%, 100% 0%, 127% 46%, 51% 120%, 0% 100%);
     background: var(--bg4);
-    height: 90px;
-    width: 90px;
+    height: 50px;
+    width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 18px;
     color: var(--text1);
     flex-shrink: 0;
-    padding: 19px;
+    padding: 10px;
     margin-right: 17px;
 }
 
