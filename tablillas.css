@@ -1715,6 +1715,7 @@ mini-id {
         .prfl-rasgos-p {
             font-size: 12px;
             padding-bottom: 5px;
+            line-height: 1.7em;
 
             strong {
                 color: var(--graccent1)
