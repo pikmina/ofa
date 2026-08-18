@@ -97,25 +97,88 @@
             margin: 20px;
             padding-top: 100px;
         }
-        </style>
+    </style>
 </head>
 
 <body>
+    <mini-id>
+        <h-col class="data">
+            <span class="name">✦ Toga Himiko</span>
+            <img class="avie" src="https://i.ibb.co/QFyZYfJz/chiquis-toga.jpg" />
+            <bs class="barras">
+                <bas>
+                    <label><i class="fa-solid fa-briefcase-medical"></i> Salud <valor>22
+                        </valor></label>
+                    <progress class="hp" value="17" max="22"></progress>
+
+                </bas>
+                <bas>
+                    <label><i class="fa-solid fa-battery-bolt"></i> EST <valor>25</valor>
+                        </label>
+                    <progress class="st" value="20" max="25"></progress>
+
+                </bas>
+            </bs>
+
+        </h-col>
+        <h-col class="stats-container">
+            <div class="stats-c">
+                <div class="atr">Atributos Base</div>
+                <div class="stats"><span><i class="fa-solid fa-hand-fist"></i> FUE</span>
+                    4
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-heart-pulse"></i> RES</span>
+                    2
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-bolt"></i> DES</span>
+                    3
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-brain"></i> INT</span>
+                    5
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-wind"></i> VEL</span>
+                    5
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-fire"></i> VOL</span>
+                    3 + 1
+                </div>
+                <div class="atr">Atributos Derivados</div>
+                <div class="stats"><span><i class="fa-solid fa-shuffle"></i> EVA</span>
+                    15
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-shield"></i> COR</span>
+                    14
+                </div>
+                <div class="stats "><span><i class="fa-solid fa-burst"></i> DB</span>
+                    1D8+2
+                </div>
+                <div class="stats"><span><i class="fa-solid fa-infinity"></i> PU</span>
+                    1
+                </div>
+            </div>
+
+        </h-col>
+        <h-col class="habs">info</h-col>
+    </mini-id>
+
+    <hr />
+    <hr />
 
     <hero>
         <h-header>
-           <h-col class="title"><img src="https://pikmina.github.io/ofa/cronos/cpdh.svg" alt="Comisión de Seguridad Pública de Héroes">PROVISIONAL HERO LICENSE</h-col>
-           <h-col class="id"><span><b>ID</b> IM318020A</span><span><b>REF</b> 76975HGHJG</span></h-col>
-           <h-col class="bt">AB-</h-col>
+            <h-col class="title"><img src="https://pikmina.github.io/ofa/cronos/cpdh.svg"
+                    alt="Comisión de Seguridad Pública de Héroes">PROVISIONAL HERO LICENSE</h-col>
+            <h-col class="id"><span><b>ID</b> IM318020A</span><span><b>REF</b> 76975HGHJG</span></h-col>
+            <h-col class="bt">AB-</h-col>
         </h-header>
         <h-content>
             <h-col class="data">
                 <span class="name"><label>Nombre</label>Midoriya Izuku</span>
                 <span class="agency"><label>Agencia</label> Comisión de Seguridad Pública de Héroes</span>
-                <span class="grade"><label>Grado</label> Primer Año, 1-A</span>  
-                <span class="quirk"><label>Quirk</label> Super Fuerza</span> 
-                <span class="expedicion"><label>Expedición</label> xx/xx/2202</span> 
-                <span class="vigencia"><label>Vigencia</label> xx/xx/2202</span> 
+                <span class="grade"><label>Grado</label> Primer Año, 1-A</span>
+                <span class="quirk"><label>Quirk</label> Super Fuerza</span>
+                <span class="expedicion"><label>Expedición</label> xx/xx/2202</span>
+                <span class="vigencia"><label>Vigencia</label> xx/xx/2202</span>
 
                 <span class="hero-name"><label>Nombre de Héroe</label> <span>Deku</span></span>
 
@@ -135,8 +198,9 @@
         </h-footer>
     </hero>
 
-    <hr/><hr/>
-        <tablilla class="relas">
+    <hr />
+    <hr />
+    <tablilla class="relas">
         <c-header>
             <c-left>
                 <i class="fa-regular fa-bolt"></i>
@@ -155,59 +219,60 @@
             </c-icon>
             <c-data>
                 <c-status>
-                   <i class="fa-solid fa-star"></i> Amigo
+                    <i class="fa-solid fa-star"></i> Amigo
                 </c-status>
                 <c-status>
-                   <i class="fa-solid fa-house"></i> Familiar
+                    <i class="fa-solid fa-house"></i> Familiar
                 </c-status>
                 <c-status>
-                  <i class="fa-solid fa-heart"></i>  Amor
+                    <i class="fa-solid fa-heart"></i> Amor
                 </c-status>
                 <c-status>
-                  <i class="fa-solid fa-sparkles"></i>  Interés
+                    <i class="fa-solid fa-sparkles"></i> Interés
                 </c-status>
                 <c-status>
-                   <i class="fa-solid fa-fire"></i> Rival
+                    <i class="fa-solid fa-fire"></i> Rival
                 </c-status>
-                 <c-status>
-                   <i class="fa-solid fa-bomb"></i> Enemigo
+                <c-status>
+                    <i class="fa-solid fa-bomb"></i> Enemigo
                 </c-status>
             </c-data>
         </c-intro>
         <c-content>
             <h2>Amiguis</h2>
             <relas>
-                  <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
+                <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
                     <i class="fa-solid fa-heart"></i>
                     <img src="https://i.ibb.co/yc2K786K/d71bf138a1038194792a4a7b779a2a5b.jpg">
-                    </relacion>
-                    <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
+                </relacion>
+                <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
                     <i class="fa-solid fa-heart"></i>
                     <img src="https://placehold.jp/282828/b0b0b0/150x150.png">
-                    </relacion>
-                    <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
+                </relacion>
+                <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
                     <i class="fa-solid fa-heart"></i>
                     <img src="https://placehold.jp/282828/b0b0b0/150x150.png">
-                    </relacion>
-                    <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
+                </relacion>
+                <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
                     <i class="fa-solid fa-heart"></i>
                     <img src="https://placehold.jp/282828/b0b0b0/150x150.png">
-                    </relacion>
-                    <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
+                </relacion>
+                <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
                     <i class="fa-solid fa-heart"></i>
                     <img src="https://placehold.jp/282828/b0b0b0/150x150.png">
-                    </relacion>
-                    <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
+                </relacion>
+                <relacion data-pj="Katsuki Bakugo" data-rela="Novio">
                     <i class="fa-solid fa-heart"></i>
                     <img src="https://placehold.jp/282828/b0b0b0/150x150.png">
-                    </relacion>
-                 
+                </relacion>
+
             </relas>
 
         </c-content>
         <dec>✦</dec>
     </tablilla>
-    <hr/><hr/>
+    <hr />
+    <hr />
     <tablilla>
         <c-header>
             <c-left>
@@ -243,16 +308,26 @@
         <c-content>
             <h2>Julio, 2201</h2>
             <t-para>
-            Lorem ipsum dolor sit <strong>met, consectetur adipiscing</strong>a elit. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl <em>nunc vel nisl. Sed euismod,</em> nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. </t-para>
-            
+                Lorem ipsum dolor sit <strong>met, consectetur adipiscing</strong>a elit. Sed euismod, nunc ut aliquam
+                tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam
+                tincidunt, nunc nisl aliquam nunc, eget aliquam nisl <em>nunc vel nisl. Sed euismod,</em> nunc ut
+                aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. </t-para>
+
             <t-para>
-            Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel.nisl. Sed euismod,.nsl.
+                Sed euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed
+                euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed
+                euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed
+                euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed
+                euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Sed
+                euismod, nunc ut aliquam tincidunt, nunc nisl aliquam nunc, eget aliquam nisl nunc vel.nisl. Sed
+                euismod,.nsl.
             </t-para>
 
         </c-content>
         <dec>✦</dec>
     </tablilla>
-<hr/><hr/>
+    <hr />
+    <hr />
     <tablilla class="crono">
         <c-header>
             <c-left>
@@ -287,22 +362,30 @@
         </c-intro>
         <c-content>
             <h2>Julio, 2201</h2>
-            <a href="URL_DEL_TEMA" class="c-card" data-status="abierto" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol Título del Tema de Rol Título del Tema de Rol</a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="abierto" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol Título del Tema de Rol Título del Tema de Rol</a>
 
-            <a href="URL_DEL_TEMA" class="c-card" data-status="cerrado" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol</a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="cerrado" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol</a>
 
-            <a href="URL_DEL_TEMA" class="c-card" data-status="abandonado" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol </a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="abandonado" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol </a>
 
-            <a href="URL_DEL_TEMA" class="c-card" data-status="global" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol </a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="global" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol </a>
 
-               <h2>Julio, 2201</h2>
-            <a href="URL_DEL_TEMA" class="c-card" data-status="abierto" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol Título del Tema de Rol Título del Tema de Rol</a>
+            <h2>Julio, 2201</h2>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="abierto" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol Título del Tema de Rol Título del Tema de Rol</a>
 
-            <a href="URL_DEL_TEMA" class="c-card" data-status="cerrado" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol</a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="cerrado" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol</a>
 
-            <a href="URL_DEL_TEMA" class="c-card" data-status="abandonado" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol </a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="abandonado" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol </a>
 
-            <a href="URL_DEL_TEMA" class="c-card" data-status="global" data-fecha="10 de Agosto" data-con="Katsuki Bakugo">Título del Tema de Rol </a>
+            <a href="URL_DEL_TEMA" class="c-card" data-status="global" data-fecha="10 de Agosto"
+                data-con="Katsuki Bakugo">Título del Tema de Rol </a>
 
         </c-content>
         <dec>✦</dec>
