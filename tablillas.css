@@ -1648,7 +1648,7 @@ hero {
 
 mini-id {
     background-color: var(--bg1);
-    margin: 0 auto;
+    margin: 20px auto;
     font-size: 14px;
     font-family: var(--font1);
     box-sizing: border-box;
@@ -1847,12 +1847,9 @@ mini-id {
                 background: var(--bg3);
                 padding: 10px;
                 font-size: 12px;
-                background: var(--bg3);
-                padding: 10px;
-                font-size: 12px;
                 max-height: 250px;
                 overflow-y: scroll;
-
+                width: 100%;
                 i.back {
                     font-size: 90px;
                     position: absolute;
