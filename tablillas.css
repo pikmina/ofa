@@ -1666,7 +1666,7 @@ mini-id {
         font-family: var(--fa-family-classic);
         font-weight: bold;
         position: absolute;
-        margin-top: -46px;
+        margin-top: 2px;
         font-size: 80px;
         margin-left: -27px;
         color: var(--bg2);
