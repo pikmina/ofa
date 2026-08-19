@@ -1298,7 +1298,7 @@ tablilla {
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 color: var(--graccent1);
-                margin-bottom: 5px;
+                margin-bottom: 0px;
             }
 
             &:after {
@@ -1747,7 +1747,7 @@ mini-id {
                         font-size: 10px;
                         border-radius: 5px;
                         line-height: 16px;
-                        margin-top: -1px;
+                        margin-top: 5px;
                         position: absolute;
                         margin-left: 5px;
                     }
