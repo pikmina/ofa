@@ -72,21 +72,6 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
     <link rel="stylesheet" type="text/css" href="https://mhaoneforallrpg.foroactivo.com/73-ltr.css">
     <link rel="stylesheet" href="../tablillas.css">
-    <link rel="stylesheet" href="combat.css">
-
-    <script src="combate.js"></script>
-    <script src="npc.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-     <script>
-            (function($) {
-                $.getScript('https://unpkg.com/lucide@latest', function() {
-                    $(function() {
-                        lucide.createIcons();
-                    });
-                });
-            })(jQuery);
-  </script>
-
 
     <style>
         :root {
@@ -128,19 +113,48 @@
     <div class="postbody" style="margin-right:0 !important;">
     <div class="content"> 
     <div>
-                <playlist>
+
+        <song>
+            <album-info>
+                Now playing...
+                <c-row class="buttons">
+                    <c-button class="backward"><i class="fa-regular fa-backward"></i></c-button>
+                    <c-button class="waveform"><i class="fa-solid fa-play-pause"></i></c-button>
+                    <c-button class="forward"><i class="fa-regular fa-forward"></i></c-button>
+                </c-row>
+            </album-info>
+            <c-item>
+                <c-row>
+                    <c-album><img src="https://i.ibb.co/jPckXZ38/ab67616d0000b27363ccaccd9527f9081f8130fa.jpg"
+                            alt="The Man Who Sold The World"></c-album>
+                </c-row>
+                <c-column>
+                    <c-row>
+                        <c-title> The Man Who Sold the World (Remastered)</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>David Bowie</c-artist>
+                        <c-duration>4:02</c-duration>
+                    </c-row>
+                </c-column>
+        
+            </c-item>
+        </song>
+        
+        
+        <playlist>
             <c-intro>
                 <album>
                     <album-info>
-                         <c-row class="buttons">
+                        <c-row class="buttons">
                             <c-button class="backward"><i class="fa-regular fa-backward"></i></c-button>
                             <c-button class="waveform"><i class="fa-solid fa-waveform-lines"></i></c-button>
                             <c-button class="forward"><i class="fa-regular fa-forward"></i></c-button>
                         </c-row>
                         <c-title>オトノケ (Otonoke)</c-title>
-                    <c-artist>Creepy Nuts</c-artist>
+                        <c-artist>Creepy Nuts</c-artist>
                     </album-info>
-                </album>   
+                </album>
             </c-intro>
             <c-header>
                 <c-row>
@@ -198,14 +212,15 @@
                         <c-title> Ya Hey</c-title>
                     </c-row>
                     <c-row class="details">
-                        <c-artist>Vampire  Weekend</c-artist>
+                        <c-artist>Vampire Weekend</c-artist>
                         <c-duration>5:13</c-duration>
                     </c-row>
                 </c-item>
             </c-body>
         </playlist>
-
-        <hr/><hr/>
+        
+        <hr />
+        <hr />
 
     </div>
     </div>
