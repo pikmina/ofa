@@ -1,6 +1,8 @@
 :root {
     --bg-general: var(--bg1);
     --bg-secondary: var(--bg2);
+    --bg-border: var(--bg3);
+    --bg-accent: var(--bg5);
     --bg-light: var(--text1);
     --b-color: var(--bg4);
     --text-dark: var(--bg6);
@@ -14,7 +16,7 @@
     --fs-xl: 150%;
     --fs-xxl: 200%;
     --bg-img-1: url(https://i.ibb.co/Dh4c1n6/avatar-duncan-8.jpg);
-    --bg-img-2: url(https://i.ibb.co/2YPWCQcq/ab67616d0000b2731596b18678ae04bd27f85f41.jpg);
+    --album: url(https://i.ibb.co/2YPWCQcq/ab67616d0000b2731596b18678ae04bd27f85f41.jpg);
     --w-square: 300px;
 }
 
@@ -32,7 +34,7 @@
 
 playlist {
     display: block;
-    width: 50%;
+    width: 80%;
     margin: 20px auto;
     padding-bottom: 20px;
     border-radius: 10px;
@@ -56,7 +58,7 @@ playlist {
         z-index: 99;
         position: relative;
         album {
-            background-image: var(--bg-img-2);
+            background-image: var(--album);
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -223,17 +225,7 @@ playlist {
         height: 300px;
         overflow: scroll;
         overflow-x: hidden;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
+    
         c-item {
             display: flex;
             padding: 10px;
@@ -244,15 +236,6 @@ playlist {
             background: var(--bg-general);
             flex-wrap: wrap;
             
-            
-            
-            
-            
-            
-            
-            
-            
-
             &::before {
                 content: "\f04b";
                 font-family: 'Font Awesome 7 Pro' !important;
@@ -283,33 +266,6 @@ playlist {
                 line-height: normal;
                 padding: 0;
                 margin: 0;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
 
                 &:hover c-title {
                     animation: deslizar-texto 3s linear infinite alternate;                
@@ -1410,19 +1366,19 @@ combate {
 tablilla {
     display: flex;
     gap: 0;
-    background: var(--bg6);
+    background: var(--bg-secondary);
     margin: 0 auto;
     width: 90%;
     max-width: 750px;
     flex-flow: column wrap;
-    font-size: 16px;
+    font-size: var(--fs-base);
     font-family: var(--font3);
-    color: var(--text1);
+    color: var(--text-light);
 
     dec {
         display: block;
         text-align: center;
-        background: var(--bg3);
+        background: var(--bg-secondary);
         padding: 20px 10px;
     }
 
@@ -1431,7 +1387,7 @@ tablilla {
         display: block;
         max-height: 600px;
         overflow-y: scroll;
-        color: var(--text1);
+        color: var(--text-light);
         font-family: var(--font1), 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         text-align: justify;
 
@@ -1444,7 +1400,7 @@ tablilla {
 
         h2 {
             font-family: var(--font3);
-            font-size: 26px;
+            font-size: var(--fs-xl);
             text-transform: uppercase;
             font-weight: normal;
             margin: 20px 10px;
@@ -1463,7 +1419,7 @@ tablilla {
         justify-content: space-between;
         border-bottom-right-radius: 50px;
         corner-shape: bevel;
-        background: var(--bg3);
+        background: var(--bg-border);
         margin: 0;
         overflow: hidden;
 
@@ -1476,7 +1432,7 @@ tablilla {
                 font-size: 130px;
                 opacity: 0.3;
                 top: 35px;
-                color: var(--bg5);
+                color: var(--bg-accent);
             }
 
             span {
@@ -1494,7 +1450,7 @@ tablilla {
             b {
                 text-transform: uppercase;
                 font-family: var(--font2);
-                font-size: 13px;
+                font-size: var(--fs-sm);
                 letter-spacing: 2px;
                 margin-top: 6px;
                 position: relative;
@@ -1507,7 +1463,7 @@ tablilla {
             c-icon {
                 border-bottom-right-radius: 30px;
                 corner-shape: bevel;
-                background: var(--bg2);
+                background: var(--bg-secondary);
                 padding: 20px;
                 margin-right: -6px;
                 display: block;
@@ -1538,12 +1494,12 @@ tablilla {
         c-icon {
             border-bottom-right-radius: 30px;
             corner-shape: bevel;
-            background: var(--bg3);
+            background: var(--bg-border);
             padding: 20px 10px;
             width: 80px;
-            font-size: 30px;
+            font-size: var(--fs-xl);
             text-align: center;
-            color: var(--text2);
+            color: var(--text-light);
             height: stretch;
             display: flex;
             align-items: center;
@@ -1576,19 +1532,19 @@ tablilla {
             width: calc(100% - 80px);
 
             c-status {
-                background: var(--bg5);
+                background: transparent;
                 text-align: center;
                 text-transform: uppercase;
                 padding-right: 15px;
-                font-size: 14px;
+                font-size: var(--fs-sm);
                 line-height: 2em;
 
                 &:before {
                     content: '\f304';
-                    font-size: 20px;
+                    font-size: var(--fs-xl);
                     margin-right: 5px;
                     display: inline-block;
-                    background: var(--bg2);
+                    background: var(--bg-accent);
                     padding: 5px 15px;
                     border-bottom-right-radius: 10px;
                     corner-shape: bevel;
@@ -1614,7 +1570,7 @@ tablilla {
                 &[data-status="global"]:before {
                     content: '\f0ac';
                     background: var(--gr7a);
-                    color: var(--bg1);
+                    color: var(--bg-secondary);
                 }
             }
 
@@ -1628,7 +1584,7 @@ tablilla {
 
         h2 {
             font-family: var(--font3);
-            font-size: 26px;
+            font-size: var(--fs-xl);
             text-transform: uppercase;
             background: linear-gradient(78deg, var(--graccent1), var(--graccent2));
             font-weight: normal;
@@ -1642,7 +1598,7 @@ tablilla {
 
         a.c-card {
             display: flex;
-            background: var(--bg3);
+            background: var(--bg-border);
             margin-bottom: 10px;
             transition: transform 0.2s ease, background 0.2s ease;
             position: relative;
@@ -1653,7 +1609,7 @@ tablilla {
             line-height: 1.4em;
 
             &:hover {
-                background: var(--bg4);
+                background: var(--bg-accent);
             }
 
             &:before {
@@ -1673,7 +1629,7 @@ tablilla {
                 height: 100%;
                 text-align: center;
                 font-family: var(--fa-family-classic);
-                font-size: 25px;
+                font-size: var(--fs-xl);
                 font-weight: normal;
                 text-transform: uppercase;
                 color: var(--text1);
@@ -1727,14 +1683,14 @@ tablilla {
         }
 
         c-status {
-            background: var(--bg3);
+            background: var(--bg-border);
             text-align: left;
             width: 24%;
             padding: 5px;
             text-transform: inherit;
             border-bottom-right-radius: 15px;
             corner-shape: bevel;
-            font-size: 14px;
+            font-size: var(--fs-bs);
 
             i {
                 margin-right: 2px;
@@ -1751,7 +1707,7 @@ tablilla {
 
         h2 {
             font-family: var(--font3);
-            font-size: 26px;
+            font-size: var(--fs-xl);
             text-transform: uppercase;
             background: linear-gradient(78deg, var(--graccent1), var(--graccent2));
             font-weight: normal;
@@ -1811,7 +1767,7 @@ tablilla {
 
                 &:after {
                     content: attr(data-pj) " es mi " attr(data-rela);
-                    font-size: 14px;
+                    font-size: var(--fs-bs);
                     padding: 0 20px 5px;
                     font-family: var(--font3);
                     line-height: 1.2em;

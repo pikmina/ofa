@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Tablilla de Combate</title>
+    <title>Combate</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-script-type" content="text/javascript">
@@ -20,16 +20,6 @@
     <link rel="search" type="application/opensearchdescription+xml"
         href="https://www.directorio-foros.com/search/improvedsearch.xml" title="Buscar foros">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-    <script src="https://illipro.net/rs3/18/frm/lang/es.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/cookie/jquery.cookie.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/mentions/tooltipster.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/mentions/init.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/FA_Profiles.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/embed/FA_Embed.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/toolbar/FAToolbar.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/json/json2.js"></script>
-    <script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/printf/printf.js"></script>
 
     <link
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese&display=swap"
@@ -80,16 +70,25 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
     <link rel="stylesheet" type="text/css" href="https://mhaoneforallrpg.foroactivo.com/73-ltr.css">
-     <link rel="stylesheet" href="../tablillas.css">
+    <link rel="stylesheet" href="../tablillas.css">
     <link rel="stylesheet" href="combat.css">
 
-    <script src="combate.js"></script>
-     <script src="npc.js"></script>
-     
+    <script src="combate\combate.js"></script>
+     <script src="combate\npc.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+     <script>
+            (function($) {
+                $.getScript('https://unpkg.com/lucide@latest', function() {
+                    $(function() {
+                        lucide.createIcons();
+                    });
+                });
+            })(jQuery);
+  </script>
     <style>
         :root {
-            --graccent2: #ab6338;
-            --graccent1: #30956f;
+            --graccent1: #4949E7; 
+            --graccent2: #78abdf;
         }
 
         body {
@@ -101,22 +100,36 @@
             margin: 20px;
             padding-top: 100px;
         }
+
+        div#wrap {
+            max-width: 800px;
+        }
     </style>
 </head>
 
 <body>
-    <mini-id name="Himiko Toga" hp="23" st="24" ava="https://i.ibb.co/QFyZYfJz/chiquis-toga.jpg" tecnicas="si"></mini-id>
+    <div id="wrap">
+    <div id="page-body">
+    <div id="content-container">
+    <div id="outer-wrapper">
+    <div id="wrapper">
+    <div id="container">
+    <div id="content-main">
+    <div id="main">
+    <div id="main-content">
+    <div class="ent-titleforum-navtree">
+    <div class="post-bigwrap">
+    <div id="p1955" class="post row2 post--1955" style="--groups: var(--graccent1);">
+
+   <mini-id name="Himiko Toga" hp="23" st="24" ava="https://i.ibb.co/QFyZYfJz/chiquis-toga.jpg" tecnicas="si"></mini-id>
     <hr/><hr/>
 
 <combate turno="1">
-
     <pj name="Gato" hp="15" st="18">
-
         <roll 
             type="INI" 
             dice="7">
         </roll>
-
         <roll 
             type="ACC" 
             stat="int" 
@@ -126,29 +139,38 @@
             modname="Aura del Héroe"
             target="Izuku Midoriya">
         </roll>
-
         <roll 
             type="SAL" 
             stat="vol" 
             dice="9,6">
         </roll>
-
         <roll 
             type="RES" 
             stat="res" 
             dice="1,8" 
             rd="15">
         </roll>
-
         <roll 
             type="DMG" 
             dado="D8" 
             dice="5">
         </roll>
-
     </pj>
-
 </combate>
-</body>
 
+        <hr/><hr/>
+    
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</body>
 </html>

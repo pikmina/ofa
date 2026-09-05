@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Playlist</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <meta http-equiv="content-style-type" content="text/css">
+    <meta name="title" content="Tablilla de Combate">
+
+    <link rel="preconnect" href="https://illipro.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="/73-ltr.css" type="text/css">
+    <link rel="search" type="application/opensearchdescription+xml" href="/improvedsearch.xml" title="MHA: One For All">
+    <link rel="search" type="application/opensearchdescription+xml"
+        href="https://www.directorio-foros.com/search/improvedsearch.xml" title="Buscar foros">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese&display=swap"
+        rel="stylesheet">
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <!--fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yanone+Kaffeesatz:wght@200..700&display=swap"
+        rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/Zellavielle/fonts@main/Haze-Dark-Demo.woff2" as="font"
+        type="font/woff2" crossorigin=""><!--
+ tooltips -->
+    <script src="http://static.tumblr.com/iuw14ew/VSQma1786/jquery.style-my-tooltips.js"></script><!--
+ cappuccicons -->
+    <link href="https://files.jcink.net/uploads2/entouragethemes/font_capuccicons_neo.css" rel="stylesheet"><!--
+ game icons -->
+    <link href="https://files.jcink.net/uploads2/entouragethemes/Game_icons/gmi_game_icons.css" rel="stylesheet"><!--
+ font awesome -->
+    <link rel="stylesheet" href="https://files.jcink.net/uploads2/entouragethemes/Fontawesome7/fontawesome7.css"><!--
+ flat icons -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css"><!--
+ todos los pesos para Phosphor icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mhaoneforallrpg.foroactivo.com/73-ltr.css">
+    <link rel="stylesheet" href="../tablillas.css">
+    <link rel="stylesheet" href="combat.css">
+
+    <script src="combate.js"></script>
+    <script src="npc.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+     <script>
+            (function($) {
+                $.getScript('https://unpkg.com/lucide@latest', function() {
+                    $(function() {
+                        lucide.createIcons();
+                    });
+                });
+            })(jQuery);
+  </script>
+
+
+    <style>
+        :root {
+            --graccent2: #ab6338;
+            --graccent1: #30956f;
+        }
+
+        body {
+            background-image: var(--bggrain);
+            background-color: var(--bg3);
+            background-attachment: fixed;
+            background-size: cover;
+            width: 50%;
+            margin: 20px;
+            padding-top: 100px;
+        }
+
+        div#wrap {
+            max-width: 800px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+    <div id="page-body">
+    <div id="content-container">
+    <div id="outer-wrapper">
+    <div id="wrapper">
+    <div id="container">
+    <div id="content-main">
+    <div id="main">
+    <div id="main-content">
+    <div class="ent-titleforum-navtree">
+    <div class="post-bigwrap">
+    <div id="p1955" class="post row2 post--1955">
+    <div class="postcontainer">
+    <div class="postcontainer">
+    <div class="postbody" style="margin-right:0 !important;">
+    <div class="content"> 
+    <div>
+                <playlist>
+            <c-intro>
+                <album>
+                    <album-info>
+                         <c-row class="buttons">
+                            <c-button class="backward"><i class="fa-regular fa-backward"></i></c-button>
+                            <c-button class="waveform"><i class="fa-solid fa-waveform-lines"></i></c-button>
+                            <c-button class="forward"><i class="fa-regular fa-forward"></i></c-button>
+                        </c-row>
+                        <c-title>オトノケ (Otonoke)</c-title>
+                    <c-artist>Creepy Nuts</c-artist>
+                    </album-info>
+                </album>   
+            </c-intro>
+            <c-header>
+                <c-row>
+                    <c-title><i class="fa-regular fa-music"></i> My creepy list</c-title>
+                </c-row>
+                <c-row class="details">
+                    <c-user>@koichitakahashi</c-user>
+                    <c-duration>1 hora, 23 minutos, 28 segundos</c-duration>
+                </c-row>
+                <c-row class="buttons">
+                    <c-button class="fav"><i class="fa-regular fa-heart"></i></c-button>
+                    <c-button class="play"><i class="fa-regular fa-play"></i></c-button>
+                    <c-button class="share"><i class="fa-regular fa-share"></i></c-button>
+                </c-row>
+            </c-header>
+            <c-body>
+                <c-item>
+                    <c-row>
+                        <c-title>How Villains are Made</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Madalen Duke</c-artist>
+                        <c-duration>3:27</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title>Rolling in the deep</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Adele</c-artist>
+                        <c-duration>4:49</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title>My style (feat. Charlotte)</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Poppy</c-artist>
+                        <c-duration>2:38</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title> The Man Who Sold the World (Remastered)</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>David Bowie</c-artist>
+                        <c-duration>4:02</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title> Ya Hey</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Vampire  Weekend</c-artist>
+                        <c-duration>5:13</c-duration>
+                    </c-row>
+                </c-item>
+            </c-body>
+        </playlist>
+
+        <hr/><hr/>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>  
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
