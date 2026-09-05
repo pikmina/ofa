@@ -1,3 +1,370 @@
+:root {
+    --bg-general: var(--bg1);
+    --bg-secondary: var(--bg2);
+    --bg-light: var(--text1);
+    --b-color: var(--bg4);
+    --text-dark: var(--bg6);
+    --text-light: var(--text1);
+    --dark-graccent1: color-mix(in srgb, var(--graccent1), black 80%);
+    --fs-base: 14px;
+    --fs-bs: 90%;
+    --fs-sm: 80%;
+    --fs-xs: 60%;
+    --fs-lg: 120%;
+    --fs-xl: 150%;
+    --fs-xxl: 200%;
+    --bg-img-1: url(https://i.ibb.co/Dh4c1n6/avatar-duncan-8.jpg);
+    --bg-img-2: url(https://i.ibb.co/2YPWCQcq/ab67616d0000b2731596b18678ae04bd27f85f41.jpg);
+    --w-square: 300px;
+}
+
+/** ==========================================================================
+   Playlist - Test with global variables
+   ========================================================================== */
+.bg-magic {
+    background-color: var(--bg-secondary);
+    background:
+        linear-gradient(135deg, #0000 18.75%, #000000 0 31.25%, #0000 0),
+        repeating-linear-gradient(45deg, #000000 -6.25% 6.25%, #121212 0 18.75%);
+    background-size: 42px 42px;
+
+}
+
+playlist {
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: var(--font2);
+    font-size: var(--fs-base);
+    border: 1px solid var(--dark-graccent1);
+    box-sizing: border-box;
+    isolation: isolate;
+    background-clip: padding-box;
+    box-shadow: inset 0 0 0 1px var(--bg-secondary);
+    background-image: repeating-radial-gradient(circle at top center, var(--bg-general) 0px, var(--dark-graccent1) 1px, transparent 3px, transparent 40px), radial-gradient(circle at bottom center, var(--bg-general), var(--dark-graccent1) 140%);
+    background-color: var(--bg-secondary);
+    c-intro {
+        display: block;
+        padding: 20px;
+        color: var(--text-light);
+        text-align: center;
+        font-size: var(--fs-sm);
+        margin: -1px;
+        z-index: 99;
+        position: relative;
+        album {
+            background-image: var(--bg-img-2);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: var(--w-square);
+            height: var(--w-square);
+            border-radius: 100%;
+            margin: 0 auto;
+            margin-top: -190px;
+            animation: spin 3s linear infinite;
+            animation-play-state: paused;
+            transition: transform 0.5s ease-in-out;
+            border: 4px solid var(--bg-secondary);
+
+            album-info {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                flex-direction: column;
+                text-align: center;
+                width: var(--w-square);
+                height: var(--w-square);
+                border-radius: 50%;
+                animation: spin 3s linear infinite reverse;
+                animation-play-state: paused;
+                transition: transform 0.5s ease-out;
+                backdrop-filter: brightness(0.3);
+                font-family: var(--font3);
+                color: var(--text1);
+                padding-bottom: 20px;
+                border: 4px solid var(--graccent1);
+                border-radius: 100%;
+                .buttons{
+                flex-direction: row;
+                display: flex;
+                justify-content: center;
+                margin: 2px 5px 2px;
+                font-size: var(--fs-xxl);
+                gap: 50px;
+                c-button {
+                    cursor: pointer;
+                    transition: 0.3s ease-in-out;
+                    color: var(--text-light);
+                    &:hover {
+                        color: var(--text2);
+                    }
+
+                }
+            }
+
+                &:hover {
+                    backdrop-filter: brightness(0.5);
+                    border: 4px solid var(--graccent1);
+                }
+
+                c-title {
+                    font-size: var(--fs-lg);
+                    margin-top: 10px;
+                    text-shadow: 1px 1px 20px var(--bg-general);
+                }
+
+                c-artist {
+                    font-family: var(--font2);
+                    font-size: var(--fs-bs);
+                    font-style: italic;
+                    text-shadow: 1px 1px 20px var(--bg-general);
+
+                }
+            }
+
+            &:hover {
+                animation-play-state: running;
+                album-info {
+                    animation-play-state: running;
+                }
+            }
+        }
+    }
+
+    c-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 30px;
+        margin-top: -50px;
+        padding: 10px;
+        padding-top: 50px;
+        backdrop-filter: brightness(0.8);
+        border-radius: 10px;
+        z-index: 2;
+        position: relative;
+
+        c-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 5px;
+
+            c-title {
+                font-size: var(--fs-lg);
+                font-weight: bold;
+                font-family: var(--font3);
+                font-size: var(--fs-xl);
+                text-transform: uppercase;
+                color: var(--graccent1);
+                line-height: normal;
+            }
+
+            &.details {
+                padding-top: 2px;
+                font-style: italic;
+                color: var(--text2);
+                font-size: var(--fs-sm);
+                margin: 1px 0;
+                line-height: normal;
+                text-align: center;
+
+                c-user {
+                    color: var(--text-light);
+                    padding: 5px 8px;
+                }
+
+                c-duration {
+                    font-size: var(--fs-sm);
+                    color: var(--text2);
+                    font-style: normal;
+                    padding: 3px;
+                }
+            }
+            &.buttons{
+                flex-direction: row;
+                display: flex;
+                justify-content: space-around;
+                margin: 10px 20px 2px;
+                font-size: var(--fs-lg);
+                c-button {
+                    cursor: pointer;
+                    transition: 0.3s ease-in-out;
+                    color: var(--text-light);
+                    &.fav:hover {
+                        color: var(--gr5a);
+                    }
+                    &.play:hover {
+                        color: var(--graccent1);
+                    }
+                    &.share:hover {
+                        color: var(--graccent2);
+                    }
+                }
+            }
+        }
+    }
+    c-body {
+        display: flex;
+        flex-direction: column;
+        padding: 5px 20px 15px;
+        color: var(--text-light);
+        font-size: var(--fs-sm);
+        justify-content: space-around;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        height: 300px;
+        overflow: scroll;
+        overflow-x: hidden;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        c-item {
+            display: flex;
+            padding: 10px;
+            border: 1px solid var(--dark-graccent1  );
+            margin: 5px;
+            border-radius: 10px;
+            padding-left: 45px;
+            background: var(--bg-general);
+            flex-wrap: wrap;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            &::before {
+                content: "\f04b";
+                font-family: 'Font Awesome 7 Pro' !important;
+                padding: 2px;
+                position: relative;
+                font-size: var(--fs-xl);
+                margin-left: -35px;
+                width: 20px;
+                height: max-content;
+                display: inline-block;
+                margin-right: 9px;
+                margin-top: 0px;
+            }
+
+            c-row {
+                display: inline-flex;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+                font-size: var(--fs-sm);
+                gap: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                flex-wrap: wrap;
+                flex-direction: row;
+                align-content: center;
+                line-height: normal;
+                padding: 0;
+                margin: 0;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+                &:hover c-title {
+                    animation: deslizar-texto 3s linear infinite alternate;                
+                }
+
+                &.details {
+                    justify-content: space-between;
+                    padding-right: 10px;
+                    padding-top: 0px;
+                    font-style: italic;
+                    color: var(--text2);
+                    font-size: var(--fs-sm);
+                    margin: -5px 0 0;
+                    line-height: normal;
+                }
+
+                c-title {
+                    font-size: var(--fs-base);
+                    font-weight: bold;
+                    color: var(--graccent1);
+                    margin: 0;
+                    padding: 0;
+                    line-height: normal;
+                    display: inline-block;
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes deslizar-texto {
+    0%, 10% {
+        transform: translateX(0);
+    }
+    90%, 100% {
+        /* Resta el ancho total del texto (100%) al ancho de tu contenedor (200px) */
+        transform: translateX(calc(200px - 100%)); 
+    }
+}
+
+/** ==========================================================================
+   TABLAS
+   ========================================================================== */
+
 table.has-fixed-layout tr {
     background: var(--bg7);
 }
@@ -909,8 +1276,6 @@ progress.hp[value="-1"]::-webkit-progress-bar {
     }
 }
 
-
-
 /* ==========================================================================
    COMBATE
    ========================================================================== */
@@ -1199,7 +1564,6 @@ tablilla {
     }
 }
 
-
 .crono {
     c-intro {
         c-data {
@@ -1378,7 +1742,6 @@ tablilla {
                 padding: 5px;
                 font-size: 18px;
             }
-
         }
     }
 
@@ -1529,7 +1892,6 @@ hero {
                 margin: 0;
                 margin-bottom: -4px;
                 line-height: .8em;
-
             }
 
             &.bt {
@@ -1607,7 +1969,6 @@ hero {
                         letter-spacing: 0px;
                     }
                 }
-
             }
 
             &.img {
@@ -1631,9 +1992,7 @@ hero {
                     }
                 }
             }
-
         }
-
     }
 
     h-footer {
@@ -1709,7 +2068,6 @@ mini-id {
             letter-spacing: 1px;
             margin-bottom: 6px;
             width: 100%;
-
         }
 
         .prfl-rasgos-p {
@@ -1774,7 +2132,6 @@ mini-id {
                 & progress.st::-webkit-progress-value {
                     background: var(--gr3a);
                 }
-
             }
         }
 
@@ -1851,6 +2208,7 @@ mini-id {
                 max-height: 250px;
                 overflow-y: scroll;
                 width: 100%;
+
                 i.back {
                     font-size: 90px;
                     position: absolute;
@@ -1859,10 +2217,12 @@ mini-id {
                     margin-top: -18px;
                     margin-left: -30px;
                 }
+
                 .prfl-tecnicas-p {
                     z-index: 10;
                     position: relative;
-                    h3{
+
+                    h3 {
                         background-color: var(--bg2);
                         border: none;
                         font-family: var(--font3);
@@ -1872,14 +2232,17 @@ mini-id {
                         padding: 10px;
                         color: var(--graccent2);
                     }
+
                     .tecnica-item {
                         padding: 0 5px;
                         display: block;
                         color: var(--text2);
                         margin-bottom: 15px;
-                        strong{
+
+                        strong {
                             color: var(--graccent1);
                         }
+
                         span {
                             padding: 6px 5px 3px;
                             font-size: 10px;
@@ -1890,6 +2253,7 @@ mini-id {
                             font-style: normal !important;
                             font-weight: bold;
                         }
+
                         efec {
                             display: block;
                             border: var(--border1);

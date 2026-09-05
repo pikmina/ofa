@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Tablilla de Combate</title>
+    <title>Playlist</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-script-type" content="text/javascript">
@@ -80,12 +80,23 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
     <link rel="stylesheet" type="text/css" href="https://mhaoneforallrpg.foroactivo.com/73-ltr.css">
-     <link rel="stylesheet" href="../tablillas.css">
+    <link rel="stylesheet" href="../tablillas.css">
     <link rel="stylesheet" href="combat.css">
 
     <script src="combate.js"></script>
-     <script src="npc.js"></script>
-     
+    <script src="npc.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+     <script>
+            (function($) {
+                $.getScript('https://unpkg.com/lucide@latest', function() {
+                    $(function() {
+                        lucide.createIcons();
+                    });
+                });
+            })(jQuery);
+  </script>
+
+
     <style>
         :root {
             --graccent2: #ab6338;
@@ -101,54 +112,120 @@
             margin: 20px;
             padding-top: 100px;
         }
+
+        div#wrap {
+            max-width: 800px;
+        }
     </style>
 </head>
 
 <body>
-    <mini-id name="Himiko Toga" hp="23" st="24" ava="https://i.ibb.co/QFyZYfJz/chiquis-toga.jpg" tecnicas="si"></mini-id>
-    <hr/><hr/>
+    <div id="wrap">
+    <div id="page-body">
+    <div id="content-container">
+    <div id="outer-wrapper">
+    <div id="wrapper">
+    <div id="container">
+    <div id="content-main">
+    <div id="main">
+    <div id="main-content">
+    <div class="ent-titleforum-navtree">
+    <div class="post-bigwrap" style="--graccent1: #58855D; --graccent2: #946c43;">
+    <div id="p1955" class="post row2 post--1955" style="--groups: #58855D;">
 
-<combate turno="1">
+        <playlist>
+            <c-intro>
+                <album>
+                    <album-info>
+                         <c-row class="buttons">
+                            <c-button class="backward"><i class="fa-regular fa-backward"></i></c-button>
+                            <c-button class="waveform"><i class="fa-solid fa-waveform-lines"></i></c-button>
+                            <c-button class="forward"><i class="fa-regular fa-forward"></i></c-button>
+                        </c-row>
+                        <c-title>オトノケ (Otonoke)</c-title>
+                    <c-artist>Creepy Nuts</c-artist>
+                    </album-info>
+                </album>   
+            </c-intro>
+            <c-header>
+                <c-row>
+                    <c-title><i class="fa-regular fa-music"></i> My creepy list</c-title>
+                </c-row>
+                <c-row class="details">
+                    <c-user>@koichitakahashi</c-user>
+                    <c-duration>1 hora, 23 minutos, 28 segundos</c-duration>
+                </c-row>
+                <c-row class="buttons">
+                    <c-button class="fav"><i class="fa-regular fa-heart"></i></c-button>
+                    <c-button class="play"><i class="fa-regular fa-play"></i></c-button>
+                    <c-button class="share"><i class="fa-regular fa-share"></i></c-button>
+                </c-row>
+            </c-header>
+            <c-body>
+                <c-item>
+                    <c-row>
+                        <c-title>How Villains are Made</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Madalen Duke</c-artist>
+                        <c-duration>3:27</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title>Rolling in the deep</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Adele</c-artist>
+                        <c-duration>4:49</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title>My style (feat. Charlotte)</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Poppy</c-artist>
+                        <c-duration>2:38</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title> The Man Who Sold the World (Remastered)</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>David Bowie</c-artist>
+                        <c-duration>4:02</c-duration>
+                    </c-row>
+                </c-item>
+                <c-item>
+                    <c-row>
+                        <c-title> Ya Hey</c-title>
+                    </c-row>
+                    <c-row class="details">
+                        <c-artist>Vampire  Weekend</c-artist>
+                        <c-duration>5:13</c-duration>
+                    </c-row>
+                </c-item>
 
-    <pj name="Gato" hp="15" st="18">
+            </c-body>
 
-        <roll 
-            type="INI" 
-            dice="7">
-        </roll>
+        </playlist>
 
-        <roll 
-            type="ACC" 
-            stat="int" 
-            hab="Investigación" 
-            dice="10,4" 
-            mod="2" 
-            modname="Aura del Héroe"
-            target="Izuku Midoriya">
-        </roll>
 
-        <roll 
-            type="SAL" 
-            stat="vol" 
-            dice="9,6">
-        </roll>
-
-        <roll 
-            type="RES" 
-            stat="res" 
-            dice="1,8" 
-            rd="15">
-        </roll>
-
-        <roll 
-            type="DMG" 
-            dado="D8" 
-            dice="5">
-        </roll>
-
-    </pj>
-
-</combate>
+        <hr/><hr/>
+    
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </body>
-
 </html>
