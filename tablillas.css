@@ -34,19 +34,19 @@
 
 playlist {
     display: block;
-    width: 80%;
+    width: 60%;
     margin: 20px auto;
     padding-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
     font-family: var(--font2);
     font-size: var(--fs-base);
-    border: 1px solid var(--dark-graccent1);
+    border: 1px solid color-mix(in srgb, var(--graccent1), black 80%);
     box-sizing: border-box;
     isolation: isolate;
     background-clip: padding-box;
     box-shadow: inset 0 0 0 1px var(--bg-secondary);
-    background-image: repeating-radial-gradient(circle at top center, var(--bg-general) 0px, var(--dark-graccent1) 1px, transparent 3px, transparent 40px), radial-gradient(circle at bottom center, var(--bg-general), var(--dark-graccent1) 140%);
+    background-image: repeating-radial-gradient(circle at top center, var(--bg-general) 0px, color-mix(in srgb, var(--graccent1), black 80%) 1px, transparent 3px, transparent 40px), radial-gradient(circle at bottom center, var(--bg-general), color-mix(in srgb, var(--graccent1), black 80%)   140%);
     background-color: var(--bg-secondary);
     c-intro {
         display: block;
@@ -229,7 +229,7 @@ playlist {
         c-item {
             display: flex;
             padding: 10px;
-            border: 1px solid var(--dark-graccent1  );
+            border: 1px solid color-mix(in srgb, var(--graccent1), black 80%);
             margin: 5px;
             border-radius: 10px;
             padding-left: 45px;
@@ -274,14 +274,14 @@ playlist {
                 &.details {
                     justify-content: space-between;
                     padding-right: 10px;
-                    padding-top: 0px;
+                    padding-top: 2px;
                     font-style: italic;
                     color: var(--text2);
                     font-size: var(--fs-sm);
-                    margin: -5px 0 0;
+                    margin: -5px;
                     line-height: normal;
+                    padding-left: 0;
                 }
-
                 c-title {
                     font-size: var(--fs-base);
                     font-weight: bold;
@@ -291,6 +291,10 @@ playlist {
                     line-height: normal;
                     display: inline-block;
                     padding-right: 10px;
+                }
+                c-artist{
+                    padding-top: 2px;
+                    padding-bottom: 3px;
                 }
             }
         }
