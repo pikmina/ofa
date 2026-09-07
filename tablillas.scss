@@ -1650,6 +1650,10 @@ tablilla {
                     background: var(--gr6a);
 
                 }
+                .crono c-content a.c-card[data-status=mision]:after {
+                    content: '\f71d';
+                    background: var(--gr5a);
+                }
 
                 &[data-status="abandonado"]:before {
                     content: '\f6e2';

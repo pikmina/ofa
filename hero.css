@@ -1,0 +1,166 @@
+:root {
+  --bg-general: var(--bg1);
+  --bg-secondary: var(--bg2);
+  --bg-border: var(--bg3);
+  --bg-accent: var(--bg5);
+  --bg-light: var(--text1);
+  --b-color: var(--bg4);
+  --text-dark: var(--bg6);
+  --text-light: var(--text1);
+  --dark-graccent1: color-mix(in srgb, var(--graccent1), black 80%);
+  --fs-base: 14px;
+  --fs-bs: 90%;
+  --fs-sm: 80%;
+  --fs-xs: 60%;
+  --fs-lg: 120%;
+  --fs-xl: 150%;
+  --fs-xxl: 200%;
+  --bg-img-1: url(https://i.ibb.co/Dh4c1n6/avatar-duncan-8.jpg);
+  --album: url(https://i.ibb.co/2YPWCQcq/ab67616d0000b2731596b18678ae04bd27f85f41.jpg);
+  --w-square: 300px;
+  --hero: var(--gr1a) ;
+  --villain: var(--gr5a);
+  --gold: var(--gr7a);
+}
+
+.hero-ranking {
+  padding: 20px;
+  background-image: radial-gradient(circle, var(--bg2) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+.mha-ranking-wrapper {
+  margin: 0 auto;
+  font-family: var(--font3, sans-serif);
+}
+.mha-ranking-wrapper h2 {
+  font-size: var(--fs-xxl);
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background: var(--bg-general);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.mha-grid-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.mha-card-big {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px dotted var(--bg-accent);
+  transition: all 100ms ease-in-out;
+}
+.mha-card-big:hover {
+  transform: scale(1.1);
+}
+.mha-card-big:before {
+  content: "\f0e7";
+  font-family: "Font Awesome 7 Pro";
+  font-size: 60px;
+  position: absolute;
+  z-index: 1;
+  color: var(--bg3);
+  margin-left: -15px;
+}
+.mha-card-big:after {
+  content: "";
+  width: 50px;
+  height: 1px;
+  background-color: var(--hero);
+  display: block;
+  transform: rotate(-45deg);
+  right: 0;
+  position: absolute;
+  box-shadow: 0 0 20px;
+}
+
+.mha-rank-name {
+  font-size: var(--fs-lg);
+  font-weight: bold;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  z-index: 3;
+  position: relative;
+}
+
+.mha-rank-num {
+  font-size: var(--fs-xxl);
+  font-weight: 900;
+  color: var(--text1);
+  width: 35px;
+  text-align: center;
+  z-index: 3;
+  position: relative;
+}
+
+.mha-rank-score {
+  z-index: 3;
+  position: relative;
+}
+
+.mha-rank-badge {
+  background-color: var(--hero);
+  padding: 3px 8px;
+  margin-right: 5px;
+  font-size: var(--fs-bs);
+  border-radius: 3px;
+  color: var(--text1);
+  font-weight: bold;
+  margin-top: -5px;
+  border: 1px solid color-mix(in srgb, var(--hero), black 80%);
+}
+
+.mha-list-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mha-card-small {
+  padding: 10px 15px;
+  display: flex;
+  width: 80%;
+  margin: 5px auto;
+  justify-content: flex-start;
+  font-size: var(--fs-base);
+  align-items: center;
+  border-bottom: 1px dotted var(--bg-accent);
+  gap: 80px;
+  transition: all 100ms ease-in-out;
+}
+.mha-card-small:hover {
+  transform: scale(1.1);
+}
+.mha-card-small:before {
+  content: "";
+  width: 50px;
+  height: 1px;
+  background-color: var(--hero);
+  display: block;
+  transform: rotate(45deg);
+  margin-right: -60px;
+}
+.mha-card-small .mha-rank-badge {
+  border-radius: 100%;
+  width: 27px;
+  height: 27px;
+  font-size: var(--fs-base);
+  padding: 4px 7px;
+  display: inline-block;
+  margin: 0 5px;
+}
+.mha-card-small .mha-rank-name {
+  width: 300px;
+}/*# sourceMappingURL=hero.css.map */

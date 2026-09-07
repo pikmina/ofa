@@ -1535,6 +1535,10 @@ tablilla c-intro c-data {
   content: "\f023";
   background: var(--gr6a);
 }
+.crono c-intro c-data c-status .crono c-content a.c-card[data-status=mision]:after {
+  content: "\f71d";
+  background: var(--gr5a);
+}
 .crono c-intro c-data c-status[data-status=abandonado]:before {
   content: "\f6e2";
 }
