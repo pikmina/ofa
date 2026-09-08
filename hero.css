@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --bg-general: var(--bg1);
   --bg-secondary: var(--bg2);
@@ -38,15 +39,17 @@
   font-weight: bold;
   text-align: center;
   padding: 10px;
-  background: var(--bg-general);
+  background: var(--grad1);
   margin-bottom: 20px;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--text1);
+  border-bottom-right-radius: 30px;
+  corner-shape: bevel;
 }
 
 .mha-grid-top {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 30px;
 }
@@ -59,10 +62,25 @@
   position: relative;
   overflow: hidden;
   border-bottom: 1px dotted var(--bg-accent);
-  transition: all 100ms ease-in-out;
+  /* Se requiere un color de fondo base oscuro */
+  background-color: var(--bg-general);
+  transition: all 150ms ease-in-out;
+  /* Variable para la imagen individual de cada héroe */
+  --hover-img: none;
 }
 .mha-card-big:hover {
   transform: scale(1.1);
+  /* Apilamos tus 3 capas: degradado, puntos halftone y la imagen */
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--accent4) 70%, transparent), color-mix(in srgb, var(--bg-accent) 70%, transparent)), radial-gradient(circle, color-mix(in srgb, var(--text-dark), white 70%) 20%, transparent 20%), var(--hover-img);
+  /* Ajustes para las 3 capas en orden: degradado, puntos, imagen */
+  background-size: 100% 100%, 5px 5px, cover;
+  background-position: left top, left top, right center;
+  background-repeat: no-repeat, repeat, no-repeat;
+  -webkit-mask-image: linear-gradient(135deg, black 40%, transparent 100%);
+          mask-image: linear-gradient(135deg, black 40%, transparent 100%);
+}
+.mha-card-big:hover .mha-rank-name, .mha-card-big:hover .mha-rank-score {
+  color: var(--text1);
 }
 .mha-card-big:before {
   content: "\f0e7";
@@ -72,12 +90,17 @@
   z-index: 1;
   color: var(--bg3);
   margin-left: -15px;
+  /* Recomendado: añade transición para que el rayo desaparezca suavemente */
+  transition: color 150ms ease;
+}
+.mha-card-big:hover:before {
+  color: transparent;
 }
 .mha-card-big:after {
   content: "";
   width: 50px;
   height: 1px;
-  background-color: var(--hero);
+  background-color: var(--accent2);
   display: block;
   transform: rotate(-45deg);
   right: 0;
@@ -88,7 +111,7 @@
 .mha-rank-name {
   font-size: var(--fs-lg);
   font-weight: bold;
-  color: var(--gold);
+  color: var(--accent1);
   text-transform: uppercase;
   letter-spacing: -1px;
   z-index: 3;
@@ -111,15 +134,15 @@
 }
 
 .mha-rank-badge {
-  background-color: var(--hero);
-  padding: 3px 8px;
+  background-color: var(--accent2);
+  padding: 3px 8px 1px;
   margin-right: 5px;
   font-size: var(--fs-bs);
   border-radius: 3px;
   color: var(--text1);
   font-weight: bold;
   margin-top: -5px;
-  border: 1px solid color-mix(in srgb, var(--hero), black 80%);
+  border: 1px solid color-mix(in srgb, var(--accent4), black 80%);
 }
 
 .mha-list-bottom {
@@ -147,7 +170,7 @@
   content: "";
   width: 50px;
   height: 1px;
-  background-color: var(--hero);
+  background-color: var(--accent1);
   display: block;
   transform: rotate(45deg);
   margin-right: -60px;

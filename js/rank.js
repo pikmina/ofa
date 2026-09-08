@@ -36,18 +36,22 @@ jQuery(document).ready(function($) {
             var lineas = data.split(/\r?\n/);
             var personajes = [];
 
-            // Empezamos en 1 para saltar las cabeceras (Nombre, Fama)
+            // Empezamos en 1 para saltar las cabeceras (Nombre, Fama, Imagen)
             for (var j = 1; j < lineas.length; j++) {
                 if (!lineas[j]) continue;
                 var cols = parseCSVRow(lineas[j]);
                 var pjNombre = $.trim(cols[0]);
                 var famaPts = parseInt($.trim(cols[1]), 10) || 0;
+                
+                // Extraemos la URL de la imagen de la tercera columna (índice 2)
+                var pjImagen = cols[2] ? $.trim(cols[2]) : ""; 
 
                 if (pjNombre) {
                     personajes.push({
                         nombre: pjNombre,
                         puntos: famaPts,
-                        rango: calcularRango(famaPts)
+                        rango: calcularRango(famaPts),
+                        imagen: pjImagen // Guardamos la imagen en el objeto del personaje
                     });
                 }
             }
@@ -61,8 +65,12 @@ jQuery(document).ready(function($) {
                 var posicion = i + 1;
 
                 if (i < 10) {
+                    // Creamos el atributo style solo si el personaje tiene una URL de imagen válida
+                    var styleAtributo = pj.imagen ? ' style="--hover-img: url(\'' + pj.imagen + '\');"' : '';
+
                     $("#mha-top-10").append(
-                        '<div class="mha-card-big">' +
+                        // Inyectamos la variable CSS directamente en el contenedor principal
+                        '<div class="mha-card-big"' + styleAtributo + '>' + 
                             '<div class="mha-rank-num">' + posicion + '</div>' +
                             '<span class="mha-rank-badge">' + pj.rango + '</span>' +
                                 '<div> <div class="mha-rank-name">'
