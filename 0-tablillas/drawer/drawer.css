@@ -1,0 +1,438 @@
+     :root{
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+     }
+     
+     
+     
+     body {
+            background: var(--bg1);
+            color: var(--text1);
+            font-family: var(--font1);
+            padding: 30px 15px;
+            margin: 0;
+        }
+
+        .topic-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- CLASES DEL DOM ORIGINAL DE FOROACTIVO --- */
+        .post-bigwrap-line { height: 1px; background: var(--bg4); margin: 15px 0; }
+        .post-bigwrap { background: var(--bg4); border-radius: 8px; overflow: hidden; }
+        .ent-topbarprf { height: 110px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(45deg, var(--graccent1) -34%, transparent); }
+        .ent-topbarprf-left { display: flex; justify-content: space-between; gap: 40px; height: 100%; align-items: center; padding-right: 20px; background: var(--bg1); flex-grow: 1;  border-bottom-right-radius: 20px; corner-shape: bevel; }
+        .topbarprf-namealias-datas { height: 100%; display: flex; flex-direction: column; justify-content: center; padding-left: 30px; }
+        .topbarprf-namealias { display: flex; gap: 10px; align-items: center; }
+        .topbarprf-name a { font-size: 24px; color: var(--text1); text-decoration: none; font-weight: bold; }
+        .topbarprf-alias { text-transform: uppercase; font-weight: 700; color: var(--graccent1); font-size: 14px; }
+        .topbarprf-datas { display: flex; gap: 8px; margin-top: 10px; }
+        .topbarprf-datas span { display: flex; gap: 6px; align-items: center; background: var(--bg4); padding: 2px 8px; color: var(--text2); font-size: 12px; border-radius: 3px; }
+        .topbarprf-datas span b { color: var(--text1); }
+        .topbarprf-icongrp { width: 80px; height: 80px; background: var(--bg2); display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 32px; color: var(--graccent1); }
+        .ent-topbarprf-right { display: flex; align-items: center; flex-direction: row-reverse; padding-right: 15px; padding-left: 20px; }
+        .topbarprf-icon { width: 80px; height: 80px; border-radius: 6px; overflow: hidden; margin-left: 15px; }
+        .topbarprf-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .topbarprf-msgs-credits { display: flex; gap: 15px; text-align: center; }
+        .topbarprf-msgs-credits em { font-style: normal; font-size: 22px; color: var(--text1); display: block; font-weight: bold; }
+        .topbarprf-msgs-credits b { font-size: 11px; text-transform: uppercase; color: var(--graccent2); }
+        
+        .ent-middlepart { display: flex; padding: 20px; background: #202020; gap: 20px; }
+        .avatar-container { width: 260px; flex-shrink: 0; background: var(--bg2); padding: 15px; border-radius: 6px; border: 1px solid var(--bg4); }
+        .avatar-main img { width: 100%; border-radius: 4px; display: block; }
+        .usermygroup { background: var(--bg1); padding: 8px; margin-top: 10px; border-radius: 4px; text-align: center; font-weight: bold; }
+        
+        /* Contenedor de Enlaces de Contacto */
+        .user-mycontact { margin-top: 10px; background: var(--bg4); display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border-radius: 4px; }
+        .user-mycontact a { background: var(--bg1); width: 34px; height: 34px; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid var(--bg3); transition: border-color 0.2s; }
+        .user-mycontact a:hover { border-color: var(--graccent1); }
+        .user-mycontact a i { color: var(--text1); font-size: 14px; }
+        
+        .postcontainer { flex-grow: 1; background: var(--bg2); border-radius: 6px; overflow: hidden; border: 1px solid var(--bg4); }
+        .postcontainer-top { background: var(--bg1); display: flex; justify-content: space-between; align-items: center; height: 46px; padding: 0 16px; font-size: 12px; }
+        .postcontainer-left ul { display: flex; gap: 15px; padding: 0; margin: 0; list-style: none; }
+        .postcontainer-left ul li a { color: var(--graccent1); text-decoration: none; }
+        .postbody .content { padding: 25px; line-height: 170%; font-size: 14px; color: var(--text1); }
+        .post{ margin-bottom: 0px; !important; }
+
+/* ====================================================
+   CONTROL DE PESTAÑAS (TABS) DEL DRAWER
+   ==================================================== */
+
+/* Oculta todos los paneles por defecto */
+.drawer-tab-pane {
+    display: none;
+}
+
+/* Muestra únicamente el panel que tenga la clase .active */
+.drawer-tab-pane.active {
+    display: block;
+    animation: fadeInDrawerTab 0.2s ease-out;
+}
+
+@keyframes fadeInDrawerTab {
+    from {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====================================================
+   ESTILO DE LA BOTONERA DE PESTAÑAS (.drawer-tabs)
+   ==================================================== */
+
+.drawer-tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--bg1);
+    padding: 6px;
+}
+.drawer-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    padding: 7px 4px;
+    font-family: var(--font3);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.drawer-tab:hover {
+    color: var(--text1);
+    background: var(--bg4);
+}
+
+/* Pestaña seleccionada (activa) */
+.drawer-tab.active {
+    background: var(--graccent1);
+    color: var(--text1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+/* ====================================================
+   SHADOWAPP DRAWER (SIEMPRE ABIERTO / TESTING LOCAL)
+   ==================================================== */
+
+   button.open-shadow-drawer.shadow-trigger-btn {
+    background: var(--graccent1);
+    padding: 10px;
+    border-radius: 4px;
+    color: var(--text1);
+}
+/* Contenedor principal fijado y siempre visible */
+.shadow-drawer-container {
+    position: fixed;
+    top: 0;
+    right: 0 !important; /* Siempre desplegado a la derecha */
+    width: 400px;
+    max-width: 90%;
+    height: 100%;
+    background: var(--bg2);
+    color: var(--text1);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid var(--bg2);
+    box-sizing: border-box;
+    background-image: radial-gradient(var(--bg8) 1px, transparent 0px);
+    background-size: 8px 8px;
+}
+
+/* Ocultamos el overlay oscuro para permitir scroll libre en el tema */
+.shadow-drawer-overlay {
+    display: none !important;
+}
+
+/* Cabecera del Drawer */
+.shadow-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--bg3);
+}
+
+.shadow-drawer-header h3 {
+font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    color: var(--graccent2);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    border: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.shadow-close-btn {
+    background: none;
+    border: none;
+    color: var(--text1);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.drawer-intro {
+margin: 10px;
+    font-family: var(--font3);
+    font-size: 14px;
+    background: var(--bg3);
+    padding: 10px;
+    corner-shape: bevel;
+    border-bottom-right-radius: 40px;
+}
+.drawer-intro h3 {
+    border: none;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    color: var(--text2);
+    padding-right: 20px;
+    margin-bottom: 2px;
+}
+span#drawer-char-name {
+    color: var(--graccent1);
+    font-size: 18px;
+    font-weight: bold;
+}
+span#drawer-char-stage {
+    font-size: small;
+    font-style: italic;
+}
+
+span#drawer-quirk-name {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-style: italic;
+    display: block;
+    color: var(--graccent1);
+    font-weight: bold;
+}
+
+.quirk-info {
+    padding-right: 20px;
+}
+span#drawer-char-quirk-level {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--text2);
+    line-height: .8em;
+    padding: 0;
+    margin: 0;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Cuerpo desplazable */
+.shadow-drawer-body {
+    overflow-y: auto;
+    flex: 1;
+    font-size: 13px;
+    line-height: 160%;
+    margin: 10px;
+}
+
+.shadow-drawer-body h3 {
+    padding: 3px 10px;
+    font-family: var(--font3);
+    border: none;
+    color: var(--text1);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+.shadow-drawer-body h3 i {
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 20px;
+    margin: 10px 0 10px 0;
+}
+.shadow-drawer-body h3 span{
+    font-size: 10px;
+    color: var(--graccent1);
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-style: italic;
+}
+.status, .stats, .derived {
+    display: grid;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--font1);
+    text-transform: uppercase;
+}
+.status {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.stats{ 
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.derived {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.status div, .stats div, .derived div{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg3);
+}
+.stats div i,.status div i, .derived div i {
+    color: color-mix(in srgb, var(--graccent1), #fff 12%) !important;
+    background:color-mix(in srgb, var(--bg1), transparent 30%);
+    min-width: 35px;
+    font-size: 16px;
+    padding: 14px 10px;
+    margin-right: 3px;
+    border-bottom-right-radius: 10px;
+    corner-shape: bevel;
+} 
+.stats div span, .status div span, .derived div span {
+    color: var(--text1);
+    font-family: var(--font3);
+    font-size: 14px;
+    text-align: right;
+    margin-left: auto;
+    margin-right: 10px;
+    letter-spacing: 0;
+}
+.status div.status-hp i {
+    background: color-mix(in srgb, var(--gr5a), #000 85%);
+    margin-right: 6px;
+    color: color-mix(in srgb, var(--gr5a), #fff 5%) !important;
+}
+.status div.status-es i {
+    background: color-mix(in srgb, var(--gr3a), #000 85%);
+    margin-right: 6px;
+    color: color-mix(in srgb, var(--gr3a), #fff 5%) !important;
+}
+.status .status-hp {
+   border: 1px solid color-mix(in srgb, var(--gr5a), #000 40%);
+    background: color-mix(in srgb, var(--gr5a), transparent 80%);
+}
+.status .status-es {
+    border: 1px solid color-mix(in srgb, var(--gr3a), #000 40%);
+    background: color-mix(in srgb, var(--gr3a), transparent 80%);
+}
+.skills-list, .traits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--bg3);
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.drawer-tech-card {
+    background: var(--bg3);
+    padding: 5px 10px;
+    border-bottom-right-radius: 20px;
+    corner-shape: bevel;
+    margin-bottom: 10px;
+}
+.drawer-tech-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 5px;
+}
+.tech-name {
+    font-size: 1.3em;
+    color: var(--graccent1);
+    text-transform: uppercase;
+    font-family: var(--font3);
+    letter-spacing: -0.5px;
+}
+
+span.drawer-tech-cost {
+    padding: 1px 8px 0;
+    font-weight: bold;
+    background: color-mix(in srgb, var(--graccent2), #000 70%);
+    color: var(--text1);
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.drawer-tech-badges {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 6px;
+}
+.drawer-tech-classification {
+    background: color-mix(in srgb, var(--graccent1), #000 70%);
+    color: var(--text1);
+    padding: 1px 8px 0px;
+    border-radius: 5px;
+    font-size: .8em;
+    text-transform: uppercase;
+}
+.tech-class-ofensiva {
+    background: rgba(217, 83, 79, 0.18);
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.45);
+}
+.tech-class-soporte {
+    background: rgba(74, 144, 226, 0.18);
+    color: #5dade2;
+    border-color: rgba(93, 173, 226, 0.45);
+}
+.tech-class-defensiva {
+    background: rgba(46, 204, 113, 0.18);
+    color: #48c774;
+    border-color: rgba(72, 199, 116, 0.45);
+}
+.tech-class-control {
+    background: rgba(243, 156, 18, 0.18);
+    color: #f39c12;
+    border-color: rgba(243, 156, 18, 0.45);
+}
+.tech-class-hibrido {
+    background: rgba(155, 89, 182, 0.18);
+    color: #bb86fc;
+    border-color: rgba(187, 134, 252, 0.45);
+}
+.drawer-tech-desc {
+    padding: 5px 0;
+}
+.drawer-tech-mechanical-box {
+    border: var(--border1);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-bottom-right-radius: 20px;
+    corner-shape: bevel;
+}
+.drawer-tech-mechanical-title {
+    font-weight: bold;
+    color: var(--graccent2);
+}div#drawer-inventory {
+    display: grid;
+    align-content: start;
+    justify-content: start;
+    align-items: center;
+    justify-items: stretch;
+}
+
+.drawer-inv-item {
+    background: var(--bg3);
+    padding: 10px;
+    border-left: 2px solid var(--graccent1);
+}
+/* Espaciador para evitar que el drawer tape los mensajes */

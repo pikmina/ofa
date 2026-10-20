@@ -10,6 +10,7 @@
     --dark-graccent1: color-mix(in srgb, var(--graccent1), black 80%);
     --fs-base: 14px;
     --fs-bs: 90%;
+    --fs-nrm: 100%;
     --fs-sm: 80%;
     --fs-xs: 60%;
     --fs-lg: 120%;
@@ -18,6 +19,7 @@
     --bg-img-1: url(https://i.ibb.co/Dh4c1n6/avatar-duncan-8.jpg);
     --album: url(https://i.ibb.co/2YPWCQcq/ab67616d0000b2731596b18678ae04bd27f85f41.jpg);
     --w-square: 300px;
+    --avatar-size: 120px;
 }
 
 /** ==========================================================================
@@ -35,10 +37,126 @@
 @mixin bg-waves {
     border: 1px solid color-mix(in srgb, var(--graccent1), black 80%);
     box-shadow: inset 0 0 0 1px var(--bg-secondary);
-    background-image: 
+    background-image:
         repeating-radial-gradient(circle at top center, var(--bg-general) 0px, color-mix(in srgb, var(--graccent1), black 80%) 1px, transparent 3px, transparent 40px), radial-gradient(circle at bottom center, var(--bg-general), color-mix(in srgb, var(--graccent1), black 80%) 140%);
     background-color: var(--bg-secondary);
 }
+
+@mixin bg-dots {
+    background-image: radial-gradient(var(--bg3) 1px, transparent 0px);
+    background-size: 8px 8px;
+    background-color: var(--bg-secondary);
+}
+
+instahero {
+    display: block;
+    width: 60%;
+    max-width: 430px;
+    margin: 20px auto;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    @include bg-dots;
+    padding: 10px;
+
+    header {
+      background: var(--bg3);
+    display: grid;
+    padding: 15px;
+    align-items: start;
+    grid-template-columns: 2fr 1fr;
+    border-bottom: 2px solid var(--accent2);
+    border-bottom-right-radius: 30px;
+    corner-shape: bevel;
+    border-right: 2px solid var(--accent2);
+    align-content: start;
+    justify-content: center;
+
+        .i-header {
+            min-width: 70%;
+
+            .i-name {
+                font-family: var(--font3);
+                font-size: var(--fs-xl);
+                color: var(--graccent1);
+                text-transform: uppercase;
+            }
+
+            .i-handle {
+                font-family: var(--font3);
+                font-size: var(--fs-nrm);
+                color: var(--text2);
+                margin-top: 5px;
+            }
+
+            .i-metrics {
+                font-size: var(--fs-bs);
+                color: var(--text2);
+                margin-top: 5px;
+                met{
+                    color: var(--text1);
+                    margin-right: 10px;
+                    span{
+                        font-weight: bold;
+                        }
+                    }
+            }
+            .i-bio {
+                    color: var(--text2);
+                    margin-top: 5px;
+                    a{
+                        color: var(--graccent2);
+                        text-decoration: none;
+                        display: block;
+                        margin-top: 5px;
+                        &:before{
+                            content: "\f0c1";
+                            font-family: 'Font Awesome 7 Pro' !important;
+                            margin-right: 5px;
+                        }
+                    }
+                }
+    }
+
+    .i-avatar {
+        width: var(--avatar-size);
+        height: var(--avatar-size);
+        border-radius: 100%;
+        overflow: hidden;
+        border: 3px solid var(--accent1);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            }
+        }
+    }
+    /* Header END*/
+    cuerpo{
+        margin-top: 20px;
+        background: var(--bg3);
+        display: grid;
+        justify-content: space-between;
+        padding: 15px;
+        align-items: center;
+        border-bottom: 2px solid var(--accent2);
+        max-height: 400px;
+        overflow-y: scroll;
+        imgs{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            padding: 10px;
+        }
+    }
+    footer{
+        text-align: center;
+        padding: 10px 10px 5px;
+        font-size: var(--fs-sm);
+    }
+}
+
 
 song {
     display: block;
@@ -239,12 +357,14 @@ playlist {
         }
     }
 }
+
 /* SONG ELEMENT */
-song{
+song {
     display: flex;
     flex-direction: column;
     align-items: center;
-    album-info{
+
+    album-info {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -253,34 +373,42 @@ song{
         font-family: var(--font3);
         color: var(--text1);
         padding-bottom: 10px;
-        padding-top:20px;
+        padding-top: 20px;
         width: 100%;
         font-family: var(--font3);
-        .buttons{
+
+        .buttons {
             width: 100%;
-            margin-top:20px;
+            margin-top: 20px;
             align-items: center;
-            .waveform{
+
+            .waveform {
                 font-size: var(--fs-xxl);
-                &:hover{
+
+                &:hover {
                     transform: scale(1.2);
                 }
             }
         }
     }
-    c-item{
+
+    c-item {
         padding-left: 0;
-        c-row{
+
+        c-row {
             width: auto;
-             c-album{
+
+            c-album {
                 width: 35px;
                 margin-left: 10px;
-            img{
-                width: 100%;
+
+                img {
+                    width: 100%;
+                }
             }
         }
-        }
-        c-column{
+
+        c-column {
             display: flex;
             flex-direction: column;
             width: auto;
@@ -1650,6 +1778,7 @@ tablilla {
                     background: var(--gr6a);
 
                 }
+
                 .crono c-content a.c-card[data-status=mision]:after {
                     content: '\f71d';
                     background: var(--gr5a);

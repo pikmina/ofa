@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es" class="dark-mode body-palette1">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba Local - ShadowApp Drawer con DOM Real</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://illipro.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="/73-ltr.css" type="text/css">
+    <link rel="search" type="application/opensearchdescription+xml" href="/improvedsearch.xml" title="MHA: One For All">
+    <link rel="search" type="application/opensearchdescription+xml"
+        href="https://www.directorio-foros.com/search/improvedsearch.xml" title="Buscar foros">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese&display=swap"
+        rel="stylesheet">
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <!--fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Yanone+Kaffeesatz:wght@200..700&display=swap"
+        rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/gh/Zellavielle/fonts@main/Haze-Dark-Demo.woff2" as="font"
+        type="font/woff2" crossorigin=""><!--
+ tooltips -->
+    <script src="http://static.tumblr.com/iuw14ew/VSQma1786/jquery.style-my-tooltips.js"></script><!--
+ cappuccicons -->
+    <link href="https://files.jcink.net/uploads2/entouragethemes/font_capuccicons_neo.css" rel="stylesheet"><!--
+ game icons -->
+    <link href="https://files.jcink.net/uploads2/entouragethemes/Game_icons/gmi_game_icons.css" rel="stylesheet"><!--
+ font awesome -->
+    <link rel="stylesheet" href="https://files.jcink.net/uploads2/entouragethemes/Fontawesome7/fontawesome7.css"><!--
+ flat icons -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css"><!--
+ todos los pesos para Phosphor icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mhaoneforallrpg.foroactivo.com/73-ltr.css">
+    <link rel="stylesheet" href="../tablillas.css">
+    <link rel="stylesheet" href="drawer.css">
+    <script src="drawer.js"></script>
+    <script src="tabs.js"></script>
+
+</head>
+
+<body>
+
+    <div class="topic-wrapper">
+
+        <!-- ====================================================
+             POST 1: IZUKU MIDORIYA (ID: p7739)
+             ==================================================== -->
+        <div class="post-bigwrap" style="--graccent1: #58855D; --graccent2: #946c43;">
+            <div id="p7739" class="post row2 online post--7739">
+                <div class="ent-topbarprf">
+                    <div class="ent-topbarprf-left">
+                        <div class="topbarprf-namealias-datas">
+                            <div class="topbarprf-namealias">
+                                <div class="topbarprf-name"><a href="/u5"><strong>Izuku Midoriya</strong></a></div>
+                                <div class="topbarprf-alias">
+                                    <kcont>Deku</kcont>
+                                </div>
+                            </div>
+                            <div class="topbarprf-datas">
+                                <span><i class="fa-solid fa-droplet"></i><b>Grupo</b>
+                                    <kcont>0+</kcont>
+                                </span>
+                                <span><b>Edad</b>
+                                    <kcont>15 años</kcont>
+                                </span>
+                                <span><b>Alineación</b>
+                                    <kcont>Heroica</kcont>
+                                </span>
+                                <button class="open-shadow-drawer shadow-trigger-btn" data-post-id="p7739">
+                                    <i class="fa-solid fa-dice-d20"></i> Sistema
+                                </button>
+                            </div>
+                        </div>
+                        <div class="topbarprf-icongrp"><i class="fa-solid fa-graduation-cap"></i></div>
+                    </div>
+                    <div class="ent-topbarprf-right">
+                        <div class="topbarprf-icon"><img src="https://i.ibb.co/3tpM1m2/chiquis-izuku.jpg"
+                                alt="Izuku Icon"></div>
+                        <div class="topbarprf-msgs-credits">
+                            <div class="topbarprf-msgs"><em>270</em><b>mensajes</b></div>
+                            <div class="topbarprf-credits"><em>3169</em><b>yenes</b></div>
+                            <div class="topbarprf-exp"><em>1302</em><b>EXP</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="post-bigwrap-line"></div>
+
+        <!-- ====================================================
+             POST 2: AIKO KUROGANE (ID: p7741)
+             ==================================================== -->
+        <div class="post-bigwrap" style="--graccent1: #8B59DD; --graccent2: #455b83;">
+            <div id="p7741" class="post row1 post--7741">
+                <div class="ent-topbarprf">
+                    <div class="ent-topbarprf-left">
+                        <div class="topbarprf-namealias-datas">
+                            <div class="topbarprf-namealias">
+                                <div class="topbarprf-name"><a href="/u9"><strong>Aiko Kurogane</strong></a></div>
+                                <div class="topbarprf-alias">
+                                    <kcont>Kurochō</kcont>
+                                </div>
+                            </div>
+                            <div class="topbarprf-datas">
+                                <span><i class="fa-solid fa-droplet"></i><b>Grupo</b>
+                                    <kcont>B+</kcont>
+                                </span>
+                                <span><b>Edad</b>
+                                    <kcont>15 años</kcont>
+                                </span>
+                                <span><b>Alineación</b>
+                                    <kcont>Heroica</kcont>
+                                </span>
+                                <button class="open-shadow-drawer shadow-trigger-btn" data-post-id="p7741">
+                                    <i class="fa-solid fa-dice-d20"></i> Sistema
+                                </button>
+                            </div>  
+                        </div>
+                        <div class="topbarprf-icongrp"><i class="fa-solid fa-graduation-cap"></i></div>
+                    </div>
+                    <div class="ent-topbarprf-right">
+                        <div class="topbarprf-icon"><img src="https://i.ibb.co/Z6PxSp9z/befunky-2026-7-0-20-35-51.jpg" alt="Tora Icon">
+                        </div>
+                        <div class="topbarprf-msgs-credits">
+                            <div class="topbarprf-msgs"><em>470</em><b>mensajes</b></div>
+                            <div class="topbarprf-credits"><em>5964</em><b>yenes</b></div>
+                            <div class="topbarprf-exp"><em>2867</em><b>EXP</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="post-bigwrap-line"></div>
+        <!-- ====================================================
+             POST 3: HIMIKO TOGA (ID: p4622)
+             ==================================================== -->
+        <div class="post-bigwrap" style="--graccent1: #C94141; --graccent2: #8d6d6d;">
+            <div id="p4622" class="post row1 post--4622">
+                <div class="ent-topbarprf">
+                    <div class="ent-topbarprf-left">
+                        <div class="topbarprf-namealias-datas">
+                            <div class="topbarprf-namealias">
+                                <div class="topbarprf-name"><a href="/u9"><strong>Himiko Toga</strong></a></div>
+                                <div class="topbarprf-alias">
+                                    <kcont>Toga</kcont>
+                                </div>
+                            </div>
+                            <div class="topbarprf-datas">
+                                <span><i class="fa-solid fa-droplet"></i><b>Grupo</b>
+                                    <kcont>B+</kcont>
+                                </span>
+                                <span><b>Edad</b>
+                                    <kcont>15 años</kcont>
+                                </span>
+                                <span><b>Alineación</b>
+                                    <kcont>Heroica</kcont>
+                                </span>
+                                <button class="open-shadow-drawer shadow-trigger-btn" data-post-id="p4622">
+                                    <i class="fa-solid fa-dice-d20"></i> Sistema
+                                </button>
+                            </div>  
+                        </div>
+                        <div class="topbarprf-icongrp"><i class="fa-solid fa-graduation-cap"></i></div>
+                    </div>
+                    <div class="ent-topbarprf-right">
+                        <div class="topbarprf-icon"><img src="https://i.ibb.co/QFyZYfJz/chiquis-toga.jpg" alt="Tora Icon">
+                        </div>
+                        <div class="topbarprf-msgs-credits">
+                            <div class="topbarprf-msgs"><em>470</em><b>mensajes</b></div>
+                            <div class="topbarprf-credits"><em>5964</em><b>yenes</b></div>
+                            <div class="topbarprf-exp"><em>2867</em><b>EXP</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- END POSTS -->
+    </div>
+
+    <!-- ====================================================
+         ESTRUCTURA DEL DRAWER
+         ==================================================== -->
+    <div id="shadow-drawer" class="shadow-drawer-container">
+        <div class="shadow-drawer-header">
+            <h3><i class="fa-solid fa-microchip"></i> \\ DATA.SYSTEM</h3>
+            <button id="close-shadow-drawer" class="shadow-close-btn">&times;</button>
+        </div>
+        <div class="drawer-intro">
+            <h3><i class="fa-solid fa-sparkle"></i> <span id="drawer-char-name">--</span>
+                <span id="drawer-char-stage">...</span>
+            </h3>
+            <div class="quirk-info">
+                <span id="drawer-quirk-name">...</span>
+                <span id="drawer-char-quirk-level">...</span>
+
+            </div>
+        </div>
+        <div class="drawer-tabs">
+                <button class="drawer-tab active" data-tab="status"> Básicos</button>
+                <button class="drawer-tab" data-tab="skills"> Habilidades</button>
+                <button class="drawer-tab" data-tab="techniques"> Técnicas</button>
+                <button class="drawer-tab" data-tab="inventory">Inventario</button>
+            </div>
+        <div class="shadow-drawer-body" id="drawer-content-dynamic">
+    <div class="drawer-tabs-content">
+
+        <!-- Panel: Básicos (data-tab="status") -->
+        <div class="drawer-tab-pane active" id="tab-status">
+
+            <div class="drawer-status">
+                <h3><i class="fa-solid fa-wave-pulse"></i> Estatus</h3>
+                <div class="status">
+                    <div class="status-hp"><i class="fa-regular fa-heart"></i> Salud <span id="drawer-health">--</span>
+                    </div>
+                    <div class="status-es"><i class="fa-regular fa-bolt"></i> Estamina <span
+                            id="drawer-stamina">--</span></div>
+                    <div class="status-eva"><i class="fa-regular fa-sneaker-running"></i> Evasión <span
+                            id="drawer-evasion">--</span></div>
+                    <div class="status-cor"><i class="fa-regular fa-user-shield"></i> Coraje <span
+                            id="drawer-courage">--</span></div>
+                </div>
+            </div>
+
+            <div class="drawer-stats">
+                <h3><i class="fa-solid fa-person"></i> Atributos</h3>
+                <div class="stats">
+                    <div class="stat"><i class="fa-regular fa-hand-fist"></i> FUE <span id="drawer-attr-fue">--</span>
+                    </div>
+                    <div class="stat"><i class="fa-regular fa-heart-pulse"></i> RES <span id="drawer-attr-res">--</span>
+                    </div>
+                    <div class="stat"><i class="fa-regular fa-bolt"></i> DES <span id="drawer-attr-des">--</span></div>
+                    <div class="stat"><i class="fa-regular fa-brain"></i> INT <span id="drawer-attr-int">--</span></div>
+                    <div class="stat"><i class="fa-regular fa-wind"></i> VEL <span id="drawer-attr-vel">--</span></div>
+                    <div class="stat"><i class="fa-regular fa-fire"></i> VOL <span id="drawer-attr-vol">--</span></div>
+                </div>
+            </div>
+
+            <div class="stats-derived">
+                <h3><i class="fa-solid fa-gears"></i> Derivados</h3>
+                <div class="derived">
+                    <div class="derived-stat"><i class="fa-regular fa-swords"></i> Físico <span
+                            id="drawer-phys-dmg">--</span></div>
+                    <div class="derived-stat"><i class="fa-regular fa-crosshairs"></i> Rango <span
+                            id="drawer-range-dmg">--</span></div>
+                    <div class="derived-stat"><i class="fa-regular fa-feather-pointed"></i> Iniciativa <span
+                            id="drawer-initiative">--</span></div>
+                    <div class="derived-stat"><i class="fa-regular fa-shield-minus"></i> Red. de Daño <span
+                            id="drawer-dmg-reduc">--</span></div>
+                    <div class="derived-stat"><i class="fa-solid fa-plus-minus"></i> Mod. FUE <span
+                            id="drawer-mod-fuerza">--</span></div>
+                    <div class="derived-stat"><i class="fa-solid fa-plus-minus"></i> Mod. DES <span
+                            id="drawer-mod-destreza">--</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Panel: Habilidades (data-tab="skills") -->
+        <div class="drawer-tab-pane" id="tab-skills">
+
+            <div class="traits">
+                <h3><i class="fa-regular fa-brain-circuit"></i> Rasgos</h3>
+                <div class="traits-list" id="drawer-traits">
+                </div>
+            </div>
+
+            <div class="weaknesses">
+                <h3><i class="fa-regular fa-arrow-turn-down"></i> Debilidades</h3>
+                <div class="traits-list" id="drawer-weaknesses">
+                </div>
+            </div>
+
+            <div class="skills">
+                <h3><i class="fa-regular fa-hand-sparkles"></i> Habilidades</h3>
+                <div class="skills-list" id="drawer-skills">
+                </div>
+            </div>
+
+        </div>
+        <!-- Panel: Técnicas (data-tab="techniques") -->
+        <div class="drawer-tab-pane" id="tab-techniques">
+            <div class="techniques">
+                <h3><i class="fa-regular fa-sparkles"></i> Técnicas</h3>
+                <div class="techniques-list" id="drawer-techniques">
+                </div>
+            </div>
+
+    </div>
+    <div class="drawer-tab-pane" id="tab-inventory">
+        <div class="inventory">
+            <h3><i class="fa-regular fa-box-open-full"></i> Inventario</h3>
+            <div class="inventory-list" id="drawer-inventory">
+            </div>
+        </div>
+</div>
+
+        <div id="shadow-overlay" class="shadow-drawer-overlay"></div>
+
+        <!-- ====================================================
+         JAVASCRIPT
+         ==================================================== -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+</body>
+
+</html>

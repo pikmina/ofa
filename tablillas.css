@@ -11,6 +11,7 @@
   --dark-graccent1: color-mix(in srgb, var(--graccent1), black 80%);
   --fs-base: 14px;
   --fs-bs: 90%;
+  --fs-nrm: 100%;
   --fs-sm: 80%;
   --fs-xs: 60%;
   --fs-lg: 120%;
@@ -19,11 +20,119 @@
   --bg-img-1: url(https://i.ibb.co/Dh4c1n6/avatar-duncan-8.jpg);
   --album: url(https://i.ibb.co/2YPWCQcq/ab67616d0000b2731596b18678ae04bd27f85f41.jpg);
   --w-square: 300px;
+  --avatar-size: 120px;
 }
 
 /** ==========================================================================
    Playlist - Test with global variables
    ========================================================================== */
+instahero {
+  display: block;
+  width: 60%;
+  max-width: 430px;
+  margin: 20px auto;
+  padding-bottom: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-image: radial-gradient(var(--bg3) 1px, transparent 0px);
+  background-size: 8px 8px;
+  background-color: var(--bg-secondary);
+  padding: 10px;
+}
+instahero header {
+  background: var(--bg3);
+  display: grid;
+  padding: 15px;
+  align-items: start;
+  grid-template-columns: 2fr 1fr;
+  border-bottom: 2px solid var(--accent2);
+  border-bottom-right-radius: 30px;
+  corner-shape: bevel;
+  border-right: 2px solid var(--accent2);
+  align-content: start;
+  justify-content: center;
+}
+instahero header .i-header {
+  min-width: 70%;
+}
+instahero header .i-header .i-name {
+  font-family: var(--font3);
+  font-size: var(--fs-xl);
+  color: var(--graccent1);
+  text-transform: uppercase;
+}
+instahero header .i-header .i-handle {
+  font-family: var(--font3);
+  font-size: var(--fs-nrm);
+  color: var(--text2);
+  margin-top: 5px;
+}
+instahero header .i-header .i-metrics {
+  font-size: var(--fs-bs);
+  color: var(--text2);
+  margin-top: 5px;
+}
+instahero header .i-header .i-metrics met {
+  color: var(--text1);
+  margin-right: 10px;
+}
+instahero header .i-header .i-metrics met span {
+  font-weight: bold;
+}
+instahero header .i-header .i-bio {
+  color: var(--text2);
+  margin-top: 5px;
+}
+instahero header .i-header .i-bio a {
+  color: var(--graccent2);
+  text-decoration: none;
+  display: block;
+  margin-top: 5px;
+}
+instahero header .i-header .i-bio a:before {
+  content: "\f0c1";
+  font-family: "Font Awesome 7 Pro" !important;
+  margin-right: 5px;
+}
+instahero header .i-avatar {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 100%;
+  overflow: hidden;
+  border: 3px solid var(--accent1);
+}
+instahero header .i-avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+instahero {
+  /* Header END*/
+}
+instahero cuerpo {
+  margin-top: 20px;
+  background: var(--bg3);
+  display: grid;
+  justify-content: space-between;
+  padding: 15px;
+  align-items: center;
+  border-bottom: 2px solid var(--accent2);
+  max-height: 400px;
+  overflow-y: scroll;
+}
+instahero cuerpo imgs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  padding: 10px;
+}
+instahero footer {
+  text-align: center;
+  padding: 10px 10px 5px;
+  font-size: var(--fs-sm);
+}
+
 song {
   display: block;
   width: 60%;
