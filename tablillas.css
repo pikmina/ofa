@@ -133,7 +133,7 @@ instahero footer {
   font-size: var(--fs-sm);
 }
 
-i-not {
+instahero i-not {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -145,11 +145,9 @@ i-not {
   justify-content: flex-start;
   align-items: center;
 }
-
 instahero i-not .i-avatar {
   padding: 5px;
 }
-
 instahero i-not .i-avatar img {
   max-width: 40px;
   border-radius: 100%;
@@ -161,14 +159,13 @@ instahero i-not .i-avatar img {
   line-height: 2em;
   margin-top: 10px;
 }
+.i-not-content span {
+  padding: 10px 0;
+}
 
 span.i-not-time {
   font-style: italic;
   font-size: var(--fs-bs);
-}
-
-.i-not-content span {
-  padding: 10px 0;
 }
 
 song {
