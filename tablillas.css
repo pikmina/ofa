@@ -134,15 +134,15 @@ instahero footer {
 }
 
 instahero i-not {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: center;
+  display: grid;
   margin: 10px;
   border: var(--border1);
   border-radius: 5px;
-  padding: 0px;
-  justify-content: flex-start;
+  padding: 10px 8px;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 5fr;
+  gap: 0;
+  justify-content: center;
   align-items: center;
 }
 instahero i-not .i-avatar {
@@ -156,11 +156,11 @@ instahero i-not .i-avatar img {
 
 .i-not-content {
   vertical-align: middle;
-  line-height: 2em;
-  margin-top: 10px;
+  line-height: 1.2em;
 }
 .i-not-content span {
-  padding: 10px 0;
+  padding: 0;
+  display: block;
 }
 
 span.i-not-time {
