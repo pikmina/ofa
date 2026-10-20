@@ -133,6 +133,44 @@ instahero footer {
   font-size: var(--fs-sm);
 }
 
+i-not {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  margin: 10px;
+  border: var(--border1);
+  border-radius: 5px;
+  padding: 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+instahero i-not .i-avatar {
+  padding: 5px;
+}
+
+instahero i-not .i-avatar img {
+  max-width: 40px;
+  border-radius: 100%;
+  border: 2px solid var(--accent1);
+}
+
+.i-not-content {
+  vertical-align: middle;
+  line-height: 2em;
+  margin-top: 10px;
+}
+
+span.i-not-time {
+  font-style: italic;
+  font-size: var(--fs-bs);
+}
+
+.i-not-content span {
+  padding: 10px 0;
+}
+
 song {
   display: block;
   width: 60%;
