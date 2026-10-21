@@ -167,16 +167,16 @@ instahero {
 
 instahero {
     i-not {
-      display: grid;
-    margin: 10px;
-    border: var(--border1);
-    border-radius: 5px;
-    padding: 10px 8px;
-    grid-auto-flow: column;
-    grid-template-columns: 1fr 5fr;
-    gap: 0;
-    justify-content: center;
-    align-items: center;
+        display: grid;
+        margin: 10px;
+        border: var(--border1);
+        border-radius: 5px;
+        padding: 10px 8px;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr 5fr;
+        gap: 0;
+        justify-content: center;
+        align-items: center;
 
         .i-avatar {
             padding: 5px;
@@ -198,7 +198,14 @@ instahero {
 
     span {
         padding: 0;
-    display: block;
+        display: block;
+
+        b {
+            color: var(--accent1);
+            font-weight: normal;
+            text-transform: uppercase;
+            font-family: var(--font3);
+        }
     }
 
 
@@ -209,7 +216,7 @@ span.i-not-time {
     font-size: var(--fs-bs);
 }
 
-song {
+instahero i-not .i-not-content span song {
     display: block;
     width: 60%;
     max-width: 430px;

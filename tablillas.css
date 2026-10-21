@@ -162,13 +162,19 @@ instahero i-not .i-avatar img {
   padding: 0;
   display: block;
 }
+.i-not-content span b {
+  color: var(--accent1);
+  font-weight: normal;
+  text-transform: uppercase;
+  font-family: var(--font3);
+}
 
 span.i-not-time {
   font-style: italic;
   font-size: var(--fs-bs);
 }
 
-song {
+instahero i-not .i-not-content span song {
   display: block;
   width: 60%;
   max-width: 430px;
