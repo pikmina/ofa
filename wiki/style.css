@@ -773,8 +773,6 @@ div#wiki-article-body h1 {
 }
 
 .wp-block-group .wp-block-font-awesome-icon {
-    clip-path: polygon(0% 0%, 100% 0%, 127% 46%, 51% 120%, 0% 100%);
-    background: var(--bg4);
     height: 50px;
     width: 50px;
     display: flex;
@@ -790,6 +788,15 @@ div#wiki-article-body h1 {
 .wp-block-group h2 {
     background: transparent !important;
     margin: 0;
+}
+
+button[onclick="renderDocs(ALL_DOCS)"] {
+    background: var(--accent1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--text1);
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 div#wiki-article-body h1 strong {
